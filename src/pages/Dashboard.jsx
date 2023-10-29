@@ -9,9 +9,10 @@ const Dashboard = () => {
   const [conversations, setConversations] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [newConversationUsername, setNewConversationUsername] = useState("");
+  // eslint-disable-next-line
   const [currentUser, setCurrentUser] = useState("");
+   // eslint-disable-next-line
   const [myId, setMyId] = useState("");
-  const [loader, setLoader] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const Dashboard = () => {
 
     fetchConversations();
     fetchUsers();
+  // eslint-disable-next-line
   }, []);
 
   const handleUserSearch = (username) => {
@@ -95,6 +97,23 @@ const Dashboard = () => {
     }
   };
 
+  const handleDeleteConversation = async (conversationId) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    try {
+      await axios.delete(`${CONVERSATIONS_ROUTE}/${conversationId}`, config);
+      setConversations(
+        conversations.filter((conversation) => conversation._id !== conversationId)
+      );
+    } catch (error) {
+      console.error("Error deleting conversation:", error);
+    }
+  }
+
   return (
     <>
       <main className="w-full flex flex-col justify-between align-middle min-h-screen">
@@ -109,7 +128,7 @@ const Dashboard = () => {
             {conversations.map((conversation) => (
               <li
                 key={conversation._id}
-                className="flex items-center justify-between bg-white rounded p-2 mt-2"
+                className="flex items-center justify-center bg-white rounded p-2 mt-2"
               >
                 <button
                   className="px-4 py-1 rounded-3xl bg-[#8251ED] text-white"
@@ -123,6 +142,15 @@ const Dashboard = () => {
                       ? conversation.participants[1].username
                       : conversation.participants[0].username}
                   </span>
+                </button>
+
+                <button
+                  className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-4"
+                  onClick={() => handleDeleteConversation(conversation._id)}
+                >
+                  <img src="https://cdn-icons-png.flaticon.com/512/542/542724.png" 
+                  alt="trash"
+                  className="w-4 py-1 invert" />
                 </button>
               </li>
             ))}

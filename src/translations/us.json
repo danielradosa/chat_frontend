@@ -17,5 +17,6 @@
     "NewConversationTitle": "New conversation",
     "CreateConversation": "New conversation with: ",
     "SearchUserPlaceholder": "Find user",
-    "OpenConversation": "Open conversation with:"
+    "OpenConversation": "Open conversation with:",
+    "LoginSuccess": "Logged in successfully."
 }

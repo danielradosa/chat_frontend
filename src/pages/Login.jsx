@@ -7,6 +7,7 @@ import { LOGIN_ROUTE } from "../utils/routes";
 const Login = () => {
   const { t } = useTranslation();
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [username, setUsername] = useState("");
@@ -23,6 +24,7 @@ const Login = () => {
       });
       if (res.data) {
         setLoading(true);
+        setSuccess(t("LoginSuccess"));
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("username", res.data.username);
         setTimeout(() => {
@@ -76,6 +78,7 @@ const Login = () => {
               {t("LoginButtonText")}
             </button>
 
+            {success && <p className="mt-4">{success}</p>}
             {error && <p className="mt-4">{error}</p>}
           </div>
         </form>

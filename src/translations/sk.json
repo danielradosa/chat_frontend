@@ -17,5 +17,6 @@
     "NewConversationTitle": "Nová konverzácia",
     "CreateConversation": "Vytvoriť konverzáciu s:",
     "SearchUserPlaceholder": "Nájdi používateľa",
-    "OpenConversation": "Otvoriť konverzáciu s:"
+    "OpenConversation": "Otvoriť konverzáciu s:",
+    "LoginSuccess": "Prihlásenie prebehlo úspešne."
 }
