@@ -1,10 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import sk from "../assets/sk.webp";
 import us from "../assets/us.webp";
 
 const Header = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const changeLang = () => {
     if (i18n.language === "sk") {
@@ -16,11 +17,15 @@ const Header = () => {
 
   return (
     <header>
-      <div className="flex justify-between items-center align-middle">
+      <div className="flex items-center justify-between">
         <h1 className="text-3xl p-4 items-center">
           <span className="font-bold text-[#8251ED]">dove</span>.me
         </h1>
-        <button onClick={changeLang} className="flex items-center justify-center mr-4">
+
+        <button
+          onClick={changeLang}
+          className="flex items-center justify-center mr-4"
+        >
           <img
             src={i18n.language === "sk" ? us : sk}
             alt="language icon"

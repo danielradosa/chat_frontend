@@ -2,5 +2,9 @@
     "HomeText": "Prihlás sa do appky.",
     "HomeText2": "Ak nemáš účet, zaregistruj sa.",
     "LoginButtonText": "Prihlásiť sa",
-    "SignupButtonText": "Registrovať sa"
+    "SignupButtonText": "Vytvoriť nový účet",
+    "LoginNamePlaceholder": "Meno",
+    "LoginPasswordPlaceholder": "Heslo",
+    "LoginTitle": "Prihlásenie",
+    "LoginError": "Nesprávne meno alebo heslo."
 }

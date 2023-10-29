@@ -2,5 +2,9 @@
     "HomeText": "Log in to the app.",
     "HomeText2": "If you don't have an account, sign up.",
     "LoginButtonText": "Log in",
-    "SignupButtonText": "Sign up"
+    "SignupButtonText": "Create a new account",
+    "LoginNamePlaceholder": "Username",
+    "LoginPasswordPlaceholder": "Password",
+    "LoginTitle": "Login",
+    "LoginError": "Invalid username or password."
 }
