@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Header, Footer } from "../components";
 import { useTranslation } from "react-i18next";
@@ -12,14 +12,6 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const isRemembered = localStorage.getItem("remember");
-
-    if (isRemembered === "true" && window.location.pathname === "/login") {
-      window.location.href = "/dashboard";
-    }
-  }, []);
-
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -32,13 +24,16 @@ const Login = () => {
       if (res.data) {
         setLoading(true);
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("remember", true);
+        localStorage.setItem("username", res.data.username);
         setTimeout(() => {
           window.location.href = "/dashboard";
-        }, 2000);
+        }, 1500);
       }
     } catch (err) {
-      setError(err.response.data.message);
+      setError(t("LoginError"));
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     }
   };
 
@@ -71,17 +66,17 @@ const Login = () => {
               placeholder={t("LoginPasswordPlaceholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="border border-[#8251ED] rounded-3xl px-4 py-2 mb-4"
+              className="border border-[#8251ED] rounded-3xl px-4 py-2 mb-5"
             />
             <button
               type="submit"
-              className="border hover:text-white transition-all border-[#8251ED] 
-                hover:bg-[#8251ED] text-[#8251ED] font-bold py-2 px-4 rounded-3xl"
+              className="hover:text-white transition-all bg-[#8251ED] 
+              text-white font-bold py-2 px-4 rounded-3xl"
             >
               {t("LoginButtonText")}
             </button>
 
-            {error && <p className="mt-2">{error}</p>}
+            {error && <p className="mt-4">{error}</p>}
           </div>
         </form>
 

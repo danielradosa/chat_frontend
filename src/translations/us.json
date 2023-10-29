@@ -6,5 +6,16 @@
     "LoginNamePlaceholder": "Username",
     "LoginPasswordPlaceholder": "Password",
     "LoginTitle": "Login",
-    "LoginError": "Invalid username or password."
+    "LoginError": "Invalid username or password.",
+    "SignupTitle": "Sign up",
+    "SignupError": "The passwords do not match.",
+    "SignupNamePlaceholder": "Username",
+    "SignupPasswordPlaceholder": "Password",
+    "SignupPasswordAgainPlaceholder": "Confirm password",
+    "SignupSuccess": "Account created successfully.",
+    "ConversationTitle": "All conversations",
+    "NewConversationTitle": "New conversation",
+    "CreateConversation": "New conversation with: ",
+    "SearchUserPlaceholder": "Find user",
+    "OpenConversation": "Open conversation with:"
 }

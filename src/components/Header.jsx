@@ -5,7 +5,7 @@ import sk from "../assets/sk.webp";
 import us from "../assets/us.webp";
 
 const Header = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   const changeLang = () => {
     if (i18n.language === "sk") {
@@ -19,7 +19,7 @@ const Header = () => {
     <header>
       <div className="flex items-center justify-between">
         <h1 className="text-3xl p-4 items-center">
-          <span className="font-bold text-[#8251ED]">dove</span>.me
+          <Link to={"/"}><span className="font-bold text-[#8251ED]">dove</span>.me</Link>
         </h1>
 
         <button

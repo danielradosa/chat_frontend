@@ -3,8 +3,19 @@
     "HomeText2": "Ak nemáš účet, zaregistruj sa.",
     "LoginButtonText": "Prihlásiť sa",
     "SignupButtonText": "Vytvoriť nový účet",
-    "LoginNamePlaceholder": "Meno",
+    "LoginNamePlaceholder": "Používateľské meno",
     "LoginPasswordPlaceholder": "Heslo",
     "LoginTitle": "Prihlásenie",
-    "LoginError": "Nesprávne meno alebo heslo."
+    "LoginError": "Nesprávne meno alebo heslo.",
+    "SignupTitle": "Registrácia",
+    "SignupError": "Heslá sa nezhodujú.",
+    "SignupNamePlaceholder": "Používateľské meno",
+    "SignupPasswordPlaceholder": "Heslo",
+    "SignupPasswordAgainPlaceholder": "Heslo znovu",
+    "SignupSuccess": "Registrácia prebehla úspešne.",
+    "ConversationTitle": "Všetky konverzácie",
+    "NewConversationTitle": "Nová konverzácia",
+    "CreateConversation": "Vytvoriť konverzáciu s:",
+    "SearchUserPlaceholder": "Nájdi používateľa",
+    "OpenConversation": "Otvoriť konverzáciu s:"
 }

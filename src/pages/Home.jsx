@@ -21,8 +21,8 @@ const Home = () => {
               </button>
             </Link>
             <Link to="/sign-up">
-            <button className="text-[#8251ED] transition-all hover:bg-[#8251ED] 
-            font-bold py-2 px-4 rounded-3xl hover:text-white mt-4">
+            <button className="transition-all bg-[#8251ED] 
+            font-bold py-2 px-4 rounded-3xl text-white mt-4">
               {t("SignupButtonText")}
             </button>
           </Link>
