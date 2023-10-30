@@ -18,5 +18,8 @@
     "CreateConversation": "New conversation with: ",
     "SearchUserPlaceholder": "Find user",
     "OpenConversation": "Open conversation with:",
-    "LoginSuccess": "Logged in successfully."
+    "LoginSuccess": "Logged in successfully.",
+    "ChatTitle": "Chat",
+    "ChatID": "Chat ID:",
+    "ChatPlaceholder": "Type a message..."
 }

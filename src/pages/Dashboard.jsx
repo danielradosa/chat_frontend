@@ -114,6 +114,10 @@ const Dashboard = () => {
     }
   }
 
+  const goToConversation = (conversationId) => {
+    window.location.href = `/chat/${conversationId}`;
+  }
+
   return (
     <>
       <main className="w-full flex flex-col justify-between align-middle min-h-screen">
@@ -132,7 +136,7 @@ const Dashboard = () => {
               >
                 <button
                   className="px-4 py-1 rounded-3xl bg-[#8251ED] text-white"
-                  onClick={() => {}}
+                  onClick={() => {goToConversation(conversation._id)}}
                 >
                   {t("OpenConversation")}
                   <span className="font-bold ml-2">
@@ -145,7 +149,7 @@ const Dashboard = () => {
                 </button>
 
                 <button
-                  className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-4"
+                  className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-2"
                   onClick={() => handleDeleteConversation(conversation._id)}
                 >
                   <img src="https://cdn-icons-png.flaticon.com/512/542/542724.png" 

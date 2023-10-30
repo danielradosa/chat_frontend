@@ -27,6 +27,7 @@ const Login = () => {
         setSuccess(t("LoginSuccess"));
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("username", res.data.username);
+        localStorage.setItem("userId", res.data.userId);
         setTimeout(() => {
           window.location.href = "/dashboard";
         }, 1500);
@@ -78,8 +79,8 @@ const Login = () => {
               {t("LoginButtonText")}
             </button>
 
-            {success && <p className="mt-4">{success}</p>}
-            {error && <p className="mt-4">{error}</p>}
+            {success && <p className="mt-3">{success}</p>}
+            {error && <p className="mt-3">{error}</p>}
           </div>
         </form>
 

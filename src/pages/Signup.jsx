@@ -83,8 +83,8 @@ const Signup = () => {
               {t("SignupButtonText")}
             </button>
 
-            {success && <p className="mt-4">{success}</p>}
-            {error && <p className="mt-4">{error}</p>}
+            {success && <p className="mt-3">{success}</p>}
+            {error && <p className="mt-3">{error}</p>}
           </div>
         </form>
 

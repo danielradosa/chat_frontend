@@ -13,16 +13,16 @@ const Home = () => {
         <div className="text-center">
           <p>{t("HomeText")} <br /> {t("HomeText2")}</p>
 
-          <div className="mt-4 flex justify-center align-middle flex-col items-center">
+          <div className="flex justify-center align-middle flex-col items-center">
             <Link to="/login">
               <button className="border hover:text-white transition-all border-[#8251ED] 
-              hover:bg-[#8251ED] text-[#8251ED] font-bold py-2 px-4 rounded-3xl">
+              hover:bg-[#8251ED] text-[#8251ED] font-bold py-2 px-4 rounded-3xl mt-4">
                 {t("LoginButtonText")}
               </button>
             </Link>
             <Link to="/sign-up">
             <button className="transition-all bg-[#8251ED] 
-            font-bold py-2 px-4 rounded-3xl text-white mt-4">
+            font-bold py-2 px-4 rounded-3xl text-white mt-5">
               {t("SignupButtonText")}
             </button>
           </Link>

@@ -18,5 +18,8 @@
     "CreateConversation": "Vytvoriť konverzáciu s:",
     "SearchUserPlaceholder": "Nájdi používateľa",
     "OpenConversation": "Otvoriť konverzáciu s:",
-    "LoginSuccess": "Prihlásenie prebehlo úspešne."
+    "LoginSuccess": "Prihlásenie prebehlo úspešne.",
+    "ChatTitle": "Čet",
+    "ChatID": "ID četu:",
+    "ChatPlaceholder": "Napíš správu..."
 }
