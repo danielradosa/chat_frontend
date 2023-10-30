@@ -15,7 +15,7 @@ const Chat = () => {
   const [myId, setMyId] = useState("");
   const messageContainerRef = useRef(null);
 
-  const socket = io("http://localhost:5432", {
+  const socket = io("https://chatappdoveme.fly.dev", {
     extraHeaders: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
