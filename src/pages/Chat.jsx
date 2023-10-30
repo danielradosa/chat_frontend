@@ -66,6 +66,7 @@ const Chat = () => {
   useEffect(() => {
     if (participants.length > 0) {
       const userId = localStorage.getItem("userId");
+      // eslint-disable-next-line
       const otherParticipant = participants.find((id) => id !== userId);
 
       setMyId(userId);
@@ -135,6 +136,7 @@ const Chat = () => {
     return () => {
       socket.off("receiveMessage");
     };
+    // eslint-disable-next-line
   }, [conversationId, myId]);
 
   useEffect(() => {
