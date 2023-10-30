@@ -73,18 +73,18 @@ const Signup = () => {
               placeholder={t("SignupPasswordAgainPlaceholder")}
               value={passwordAgain}
               onChange={(e) => setPasswordAgain(e.target.value)}
-              className="border border-[#8251ED] rounded-3xl px-4 py-2 mb-5"
+              className="border border-[#8251ED] rounded-3xl px-4 py-2 mb-4"
             />
             <button
               type="submit"
-              className="hover:text-white transition-all bg-[#8251ED] 
-              text-white font-bold py-2 px-4 rounded-3xl"
+              className="hover:text-white border border-[#8251ED] transition-all hover:bg-[#8251ED] 
+              text-[#8251ED] font-bold py-2 px-4 rounded-3xl"
             >
               {t("SignupButtonText")}
             </button>
 
-            {success && <p className="mt-3">{success}</p>}
-            {error && <p className="mt-3">{error}</p>}
+            {success && <p className="mt-4">{success}</p>}
+            {error && <p className="mt-4">{error}</p>}
           </div>
         </form>
 

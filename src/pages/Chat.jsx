@@ -13,14 +13,13 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [myId, setMyId] = useState("");
-  const [otherId, setOtherId] = useState("");
   const messageContainerRef = useRef(null);
 
-  const socket = io("https://chatappdoveme.fly.dev", {
-    transports: ["websocket"],
+  const socket = io("http://localhost:5432", {
     extraHeaders: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
+    transports: ["websocket"],
   });
 
   useEffect(() => {
@@ -70,19 +69,22 @@ const Chat = () => {
       const otherParticipant = participants.find((id) => id !== userId);
 
       setMyId(userId);
-      setOtherId(otherParticipant);
     }
   }, [participants]);
 
   const scrollToBottom = () => {
     if (messageContainerRef.current) {
-      messageContainerRef.current.scrollTop =
-        messageContainerRef.current.scrollHeight;
+      const container = messageContainerRef.current;
+      const lastMessage = container.lastElementChild;
+
+      if (lastMessage) {
+        lastMessage.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
   const sendMessage = () => {
-    const userId = localStorage.getItem("userId"); // Get the user's ID
+    const userId = localStorage.getItem("userId");
 
     if (!message) {
       console.log("Message content is empty.");
@@ -93,7 +95,7 @@ const Chat = () => {
       .post(
         MESSAGES_ROUTE(conversationId),
         {
-          sender: userId, // Set the sender to the user's ID
+          sender: userId,
           content: message,
         },
         {
@@ -104,14 +106,13 @@ const Chat = () => {
       )
       .then((response) => {
         const newMessage = response.data;
-        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        setMessages((prevMessages) => [...prevMessages, message]);
         setMessage("");
 
         socket.emit("sendMessage", {
           conversationId,
           message: newMessage,
         });
-        console.log("Sending message:", message);
 
         if (messageContainerRef.current) {
           messageContainerRef.current.scrollTop =
@@ -126,19 +127,19 @@ const Chat = () => {
   useEffect(() => {
     socket.emit("joinConversation", conversationId);
 
-    socket.on("receiveMessage", (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-      scrollToBottom(); // Scroll to the latest message when receiving a new message
+    socket.on("receiveMessage", (data) => {
+      console.log("Received a new message:", data.message);
+      setMessages((prevMessages) => [...prevMessages, data.message]);
     });
 
     return () => {
       socket.off("receiveMessage");
     };
-  }, [conversationId]);
+  }, [conversationId, myId]);
 
   useEffect(() => {
     scrollToBottom();
-  }, []);
+  }, [messages, conversationId]);
 
   return (
     <>
@@ -157,24 +158,31 @@ const Chat = () => {
             className="flex overflow-auto flex-col w-[95%] lg:w-[60%] max-h-[70%] rounded-3xl p-8 fixed top-[4.3rem]"
             ref={messageContainerRef}
           >
-            {messages.map((message) => (
-              <div
-                key={message._id}
-                className={`flex ${
-                  message.sender === myId ? "justify-end" : "justify-start"
-                }`}
-              >
+            {messages.map((message) => {
+              // Check if the message content is empty
+              if (!message.content) {
+                return null; // Skip rendering empty messages
+              }
+
+              return (
                 <div
-                  className={`${
-                    message.sender === myId
-                      ? "bg-[#8251ED] text-white self-end shadow-lg"
-                      : "bg-white text-[#8251ED] self-start border border-[#8251ED]"
-                  } rounded-3xl px-4 py-2 mb-2 mt-2`}
+                  key={message._id}
+                  className={`flex ${
+                    message.sender === myId ? "justify-end" : "justify-start"
+                  }`}
                 >
-                  {message.content}
+                  <div
+                    className={`${
+                      message.sender === myId
+                        ? "bg-[#8251ED] text-white self-end shadow-lg"
+                        : "bg-white text-[#8251ED] self-start border border-[#8251ED]"
+                    } rounded-3xl px-4 py-2 mb-2 mt-2`}
+                  >
+                    {message.content}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="flex justify-center align-middle items-center flex-col">
@@ -185,7 +193,13 @@ const Chat = () => {
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder={t("ChatPlaceholder")}
                 className="border border-[#8251ED] rounded-3xl w-[260px] px-4 py-2 mb-4 mt-4 lg:w-[720px]"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && message.trim() !== "") {
+                    sendMessage();
+                  }
+                }}
               />
+
               <button
                 className="bg-[#8251ED] rounded-full ml-2"
                 onClick={sendMessage}
