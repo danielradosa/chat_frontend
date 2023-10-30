@@ -1,4 +1,4 @@
-const apiURL = "https://chatappdoveme.fly.dev";
+const apiURL = "https://chatappdoveme.fly.dev/api";
 export const API_URL = apiURL;
 
 export const LOGIN_ROUTE = `${API_URL}/user/login`;
