@@ -167,6 +167,8 @@ const Chat = () => {
                 height={40}
                 width={40}
                 color="#8251ED"
+                wrapperStyle={{}}
+                wrapperClass=""
                 visible={true}
                 ariaLabel="oval-loading"
                 secondaryColor="#8251ED"

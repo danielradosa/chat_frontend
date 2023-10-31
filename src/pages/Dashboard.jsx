@@ -189,11 +189,14 @@ const Dashboard = () => {
                 height={40}
                 width={40}
                 color="#8251ED"
+                wrapperStyle={{}}
+                wrapperClass=""
                 visible={true}
                 ariaLabel="oval-loading"
                 secondaryColor="#8251ED"
                 strokeWidth={6}
                 strokeWidthSecondary={6}
+                className="mt-4"
               />
             </div>
           )}

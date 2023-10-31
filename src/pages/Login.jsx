@@ -12,6 +12,12 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const user = localStorage.getItem("token");
+
+  if (user) {
+    window.location.href = "/dashboard";
+  }
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
