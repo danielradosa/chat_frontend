@@ -147,7 +147,8 @@ const Dashboard = () => {
                       className="flex items-center justify-center bg-white rounded p-2 mt-2"
                     >
                       <button
-                        className="px-4 py-1 rounded-3xl bg-[#8251ED] text-white"
+                          className="px-4 py-1 w-[280px] truncate rounded-3xl bg-[#8251ED] lg:w-[350px] text-white
+                          transition-all"
                         onClick={() => {
                           goToConversation(conversation._id);
                         }}
@@ -163,7 +164,7 @@ const Dashboard = () => {
                       </button>
 
                       <button
-                        className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-2"
+                        className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-2 transition-all"
                         onClick={() =>
                           handleDeleteConversation(conversation._id)
                         }
@@ -184,7 +185,7 @@ const Dashboard = () => {
               )}
             </>
           ) : (
-            <div>
+            <div className="mt-4">
               <Oval
                 height={40}
                 width={40}
@@ -196,7 +197,6 @@ const Dashboard = () => {
                 secondaryColor="#8251ED"
                 strokeWidth={6}
                 strokeWidthSecondary={6}
-                className="mt-4"
               />
             </div>
           )}
@@ -219,7 +219,8 @@ const Dashboard = () => {
           />
 
           {loading ? (
-            <Oval
+           <div className="mt-2">
+             <Oval
               height={40}
               width={40}
               color="#8251ED"
@@ -231,6 +232,7 @@ const Dashboard = () => {
               strokeWidth={6}
               strokeWidthSecondary={6}
             />
+           </div>
           ) : (
             <ul>
               {filteredUsers.map((user) => (
@@ -239,7 +241,7 @@ const Dashboard = () => {
                   className="flex items-center justify-center bg-white rounded p-2 mt-2"
                 >
                   <button
-                    className="px-4 py-1 rounded-3xl bg-[#8251ED] text-white"
+                    className="px-4 py-1 rounded-3xl bg-[#8251ED] text-white w-[280px] truncate lg:w-[350px] transition-all"
                     onClick={() =>
                       handleCreateConversation(user._id, user.username)
                     }

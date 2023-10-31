@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import sk from "../assets/sk.webp";
-import us from "../assets/us.webp";
+import sk from "../assets/sk.png";
+import us from "../assets/us.png";
 import { t } from "i18next";
 
 const Header = () => {
@@ -36,7 +36,7 @@ const Header = () => {
           {user ? (
             <button
               onClick={handleLogout}
-              className="text-white bg-red-500 mr-4 px-4 py-1 rounded-3xl"
+              className="text-white bg-red-500 mr-4 px-4 py-1 rounded-3xl hover:bg-red-600 transition-all"
             >
               {t("Logout")}
             </button>
@@ -48,7 +48,7 @@ const Header = () => {
             <img
               src={i18n.language === "sk" ? us : sk}
               alt="language icon"
-              className="w-8"
+              className="w-10 saturate-150 p-1 border-2 rounded-3xl border-[#8251ED]"
             />
           </button>
         </div>

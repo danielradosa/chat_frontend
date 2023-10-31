@@ -19,8 +19,7 @@
     "SearchUserPlaceholder": "Find user",
     "OpenConversation": "Open conversation with:",
     "LoginSuccess": "Logged in successfully.",
-    "ChatTitle": "Chat",
-    "ChatID": "Chat ID:",
+    "ChatID": "You are chatting with:",
     "ChatPlaceholder": "Type a message...",
     "Logout": "Log out",
     "NoConversations": "No conversation, start one."

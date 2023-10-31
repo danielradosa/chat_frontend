@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { Header, Footer } from "../components";
 import { useTranslation } from "react-i18next";
@@ -132,13 +133,13 @@ const Chat = () => {
 
   useEffect(() => {
     console.log("Chat component rendered");
-    
+
     socket.emit("joinConversation", conversationId);
-  
+
     socket.on("receiveMessage", (data) => {
       setMessages((prevMessages) => [...prevMessages, data.message]);
     });
-  
+
     return () => {
       socket.off("receiveMessage");
     };
@@ -154,15 +155,22 @@ const Chat = () => {
         <Header />
 
         <div className="flex justify-center align-middle items-center flex-col">
-          <div className="text-center absolute top-3 text-gray-400 lg:block hidden">
-            <h1>{t("ChatTitle")}</h1>
+          <div className="text-center absolute top-6 text-black lg:block hidden">
             <h2>
-              {t("ChatID")} {conversationId}
+              {t("ChatID")}{" "}
+              <Link
+                className="text-[#8251ED]"
+                to={`/account/${
+                  participants.length > 0 ? participants[0].username : ""
+                }`}
+              >
+                {participants.length > 0 ? participants[0].username : ""}
+              </Link>
             </h2>
           </div>
 
           {loading ? (
-            <div>
+            <div className="mt-[-4rem]">
               <Oval
                 height={40}
                 width={40}
@@ -196,7 +204,7 @@ const Chat = () => {
                     <div
                       className={`${
                         message.sender === myId
-                          ? "bg-[#8251ED] text-white self-end shadow-lg"
+                          ? "bg-[#8251ED] text-white self-end"
                           : "bg-white text-[#8251ED] self-start border border-[#8251ED]"
                       } rounded-3xl px-4 py-2 mb-2 mt-2`}
                     >
@@ -210,11 +218,11 @@ const Chat = () => {
 
           <div className="flex justify-center align-middle items-center flex-col">
             <div className="flex items-center justify-center fixed bottom-16 text-center">
-            <input
+              <input
                 ref={messageInputRef}
                 type="text"
                 placeholder={t("ChatPlaceholder")}
-                className="border border-[#8251ED] rounded-3xl w-[260px] px-4 py-2 mb-4 mt-4 lg:w-[720px]"
+                className="border border-[#8251ED] rounded-3xl w-[260px] px-4 py-2 mb-4 mt-4 md:w-[660px]"
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && e.target.value.trim() !== "") {
                     sendMessage();
