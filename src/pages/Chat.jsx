@@ -5,15 +5,16 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { MESSAGES_ROUTE, CONVERSATIONS_ROUTE } from "../utils/routes";
 import io from "socket.io-client";
+import { Oval } from "react-loader-spinner";
 
 const Chat = () => {
   const { t } = useTranslation();
   const { conversationId } = useParams();
-  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [myId, setMyId] = useState("");
   const messageContainerRef = useRef(null);
+  const [loading, setLoading] = useState(true);
 
   const socket = io("https://chatappdoveme.fly.dev", {
     extraHeaders: {
@@ -21,6 +22,8 @@ const Chat = () => {
     },
     transports: ["websocket"],
   });
+
+  const messageInputRef = useRef(null);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -31,6 +34,7 @@ const Chat = () => {
           },
         });
         setMessages(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
@@ -55,6 +59,7 @@ const Chat = () => {
         } else {
           console.log("Conversation not found");
         }
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching conversations:", error);
       }
@@ -66,8 +71,6 @@ const Chat = () => {
   useEffect(() => {
     if (participants.length > 0) {
       const userId = localStorage.getItem("userId");
-      // eslint-disable-next-line
-      const otherParticipant = participants.find((id) => id !== userId);
 
       setMyId(userId);
     }
@@ -86,6 +89,7 @@ const Chat = () => {
 
   const sendMessage = () => {
     const userId = localStorage.getItem("userId");
+    const message = messageInputRef.current.value;
 
     if (!message) {
       console.log("Message content is empty.");
@@ -107,13 +111,14 @@ const Chat = () => {
       )
       .then((response) => {
         const newMessage = response.data;
-        setMessages((prevMessages) => [...prevMessages, message]);
-        setMessage("");
 
         socket.emit("sendMessage", {
           conversationId,
           message: newMessage,
         });
+
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        messageInputRef.current.value = "";
 
         if (messageContainerRef.current) {
           messageContainerRef.current.scrollTop =
@@ -126,18 +131,18 @@ const Chat = () => {
   };
 
   useEffect(() => {
+    console.log("Chat component rendered");
+    
     socket.emit("joinConversation", conversationId);
-
+  
     socket.on("receiveMessage", (data) => {
-      console.log("Received a new message:", data.message);
       setMessages((prevMessages) => [...prevMessages, data.message]);
     });
-
+  
     return () => {
       socket.off("receiveMessage");
     };
-    // eslint-disable-next-line
-  }, [conversationId, myId]);
+  }, [conversationId, myId, socket]);
 
   useEffect(() => {
     scrollToBottom();
@@ -156,47 +161,60 @@ const Chat = () => {
             </h2>
           </div>
 
-          <div
-            className="flex overflow-auto flex-col w-[95%] lg:w-[60%] max-h-[70%] rounded-3xl p-8 fixed top-[4.3rem]"
-            ref={messageContainerRef}
-          >
-            {messages.map((message) => {
-              // Check if the message content is empty
-              if (!message.content) {
-                return null; // Skip rendering empty messages
-              }
+          {loading ? (
+            <div>
+              <Oval
+                height={40}
+                width={40}
+                color="#8251ED"
+                visible={true}
+                ariaLabel="oval-loading"
+                secondaryColor="#8251ED"
+                strokeWidth={6}
+                strokeWidthSecondary={6}
+              />
+            </div>
+          ) : (
+            <div
+              className="flex overflow-auto flex-col w-[95%] lg:w-[60%] max-h-[70%] rounded-3xl p-8 fixed top-[4.3rem]"
+              ref={messageContainerRef}
+            >
+              {messages.map((message) => {
+                if (!message.content) {
+                  return null;
+                }
 
-              return (
-                <div
-                  key={message._id}
-                  className={`flex ${
-                    message.sender === myId ? "justify-end" : "justify-start"
-                  }`}
-                >
+                return (
                   <div
-                    className={`${
-                      message.sender === myId
-                        ? "bg-[#8251ED] text-white self-end shadow-lg"
-                        : "bg-white text-[#8251ED] self-start border border-[#8251ED]"
-                    } rounded-3xl px-4 py-2 mb-2 mt-2`}
+                    key={message._id}
+                    className={`flex ${
+                      message.sender === myId ? "justify-end" : "justify-start"
+                    }`}
                   >
-                    {message.content}
+                    <div
+                      className={`${
+                        message.sender === myId
+                          ? "bg-[#8251ED] text-white self-end shadow-lg"
+                          : "bg-white text-[#8251ED] self-start border border-[#8251ED]"
+                      } rounded-3xl px-4 py-2 mb-2 mt-2`}
+                    >
+                      {message.content}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
 
           <div className="flex justify-center align-middle items-center flex-col">
             <div className="flex items-center justify-center fixed bottom-16 text-center">
-              <input
+            <input
+                ref={messageInputRef}
                 type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
                 placeholder={t("ChatPlaceholder")}
                 className="border border-[#8251ED] rounded-3xl w-[260px] px-4 py-2 mb-4 mt-4 lg:w-[720px]"
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" && message.trim() !== "") {
+                  if (e.key === "Enter" && e.target.value.trim() !== "") {
                     sendMessage();
                   }
                 }}

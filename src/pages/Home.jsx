@@ -5,6 +5,11 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   const { t } = useTranslation();
+  const user = localStorage.getItem("token");
+
+  if (user) {
+    window.location.replace("/dashboard");
+  }
 
   return (
     <>

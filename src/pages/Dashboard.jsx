@@ -3,6 +3,7 @@ import axios from "axios";
 import { Header, Footer } from "../components";
 import { CONVERSATIONS_ROUTE, ALL_USERS } from "../utils/routes";
 import { useTranslation } from "react-i18next";
+import { Oval } from "react-loader-spinner";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -11,9 +12,10 @@ const Dashboard = () => {
   const [newConversationUsername, setNewConversationUsername] = useState("");
   // eslint-disable-next-line
   const [currentUser, setCurrentUser] = useState("");
-   // eslint-disable-next-line
+  // eslint-disable-next-line
   const [myId, setMyId] = useState("");
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -23,13 +25,15 @@ const Dashboard = () => {
         setMyId(localStorage.getItem("userId"));
         const currentUserUsername = localStorage.getItem("username");
         setCurrentUser(currentUserUsername);
-        const filteredExcludingCurrentUserAndInConversationsWith = allUsers.filter(
-          (user) =>
-            user.username !== currentUserUsername &&
-            isParticipantInConversations(user._id)
-        );
+        const filteredExcludingCurrentUserAndInConversationsWith =
+          allUsers.filter(
+            (user) =>
+              user.username !== currentUserUsername &&
+              isParticipantInConversations(user._id)
+          );
         setUsers(allUsers);
         setFilteredUsers(filteredExcludingCurrentUserAndInConversationsWith);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -43,6 +47,7 @@ const Dashboard = () => {
           },
         });
         setConversations(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching conversations:", error);
       }
@@ -50,7 +55,7 @@ const Dashboard = () => {
 
     fetchConversations();
     fetchUsers();
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   const handleUserSearch = (username) => {
@@ -67,7 +72,9 @@ const Dashboard = () => {
 
   const isParticipantInConversations = (userId) => {
     return conversations.some((conversation) =>
-      conversation.participants.some((participant) => participant._id === userId)
+      conversation.participants.some(
+        (participant) => participant._id === userId
+      )
     );
   };
 
@@ -107,16 +114,18 @@ const Dashboard = () => {
     try {
       await axios.delete(`${CONVERSATIONS_ROUTE}/${conversationId}`, config);
       setConversations(
-        conversations.filter((conversation) => conversation._id !== conversationId)
+        conversations.filter(
+          (conversation) => conversation._id !== conversationId
+        )
       );
     } catch (error) {
       console.error("Error deleting conversation:", error);
     }
-  }
+  };
 
   const goToConversation = (conversationId) => {
     window.location.href = `/chat/${conversationId}`;
-  }
+  };
 
   return (
     <>
@@ -128,37 +137,66 @@ const Dashboard = () => {
             {t("ConversationTitle")}
           </h3>
 
-          <ul>
-            {conversations.map((conversation) => (
-              <li
-                key={conversation._id}
-                className="flex items-center justify-center bg-white rounded p-2 mt-2"
-              >
-                <button
-                  className="px-4 py-1 rounded-3xl bg-[#8251ED] text-white"
-                  onClick={() => {goToConversation(conversation._id)}}
-                >
-                  {t("OpenConversation")}
-                  <span className="font-bold ml-2">
-                    {conversation.title.includes(
-                      localStorage.getItem("username")
-                    )
-                      ? conversation.participants[1].username
-                      : conversation.participants[0].username}
-                  </span>
-                </button>
+          {!loading ? (
+            <>
+              {conversations.length > 0 ? (
+                <ul>
+                  {conversations.map((conversation) => (
+                    <li
+                      key={conversation._id}
+                      className="flex items-center justify-center bg-white rounded p-2 mt-2"
+                    >
+                      <button
+                        className="px-4 py-1 rounded-3xl bg-[#8251ED] text-white"
+                        onClick={() => {
+                          goToConversation(conversation._id);
+                        }}
+                      >
+                        {t("OpenConversation")}
+                        <span className="font-bold ml-2">
+                          {conversation.title.includes(
+                            localStorage.getItem("username")
+                          )
+                            ? conversation.participants[1].username
+                            : conversation.participants[0].username}
+                        </span>
+                      </button>
 
-                <button
-                  className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-2"
-                  onClick={() => handleDeleteConversation(conversation._id)}
-                >
-                  <img src="https://cdn-icons-png.flaticon.com/512/542/542724.png" 
-                  alt="trash"
-                  className="w-4 py-1 invert" />
-                </button>
-              </li>
-            ))}
-          </ul>
+                      <button
+                        className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-2"
+                        onClick={() =>
+                          handleDeleteConversation(conversation._id)
+                        }
+                      >
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/542/542724.png"
+                          alt="trash"
+                          className="w-4 py-1 invert"
+                        />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="mt-4">
+                  {t("NoConversations")}
+                </div>
+              )}
+            </>
+          ) : (
+            <div>
+              <Oval
+                height={40}
+                width={40}
+                color="#8251ED"
+                visible={true}
+                ariaLabel="oval-loading"
+                secondaryColor="#8251ED"
+                strokeWidth={6}
+                strokeWidthSecondary={6}
+              />
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col justify-center items-center">
@@ -177,24 +215,39 @@ const Dashboard = () => {
             }}
           />
 
-          <ul>
-            {filteredUsers.map((user) => (
-              <li
-                key={user._id}
-                className="flex items-center justify-between bg-white rounded p-2"
-              >
-                <button
-                  className="px-4 py-1 rounded-3xl bg-[#8251ED] text-white"
-                  onClick={() =>
-                    handleCreateConversation(user._id, user.username)
-                  }
+          {loading ? (
+            <Oval
+              height={40}
+              width={40}
+              color="#8251ED"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+              ariaLabel="oval-loading"
+              secondaryColor="#8251ED"
+              strokeWidth={6}
+              strokeWidthSecondary={6}
+            />
+          ) : (
+            <ul>
+              {filteredUsers.map((user) => (
+                <li
+                  key={user._id}
+                  className="flex items-center justify-center bg-white rounded p-2 mt-2"
                 >
-                  {t("CreateConversation")}
-                  <span className="font-bold ml-2">{user.username}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
+                  <button
+                    className="px-4 py-1 rounded-3xl bg-[#8251ED] text-white"
+                    onClick={() =>
+                      handleCreateConversation(user._id, user.username)
+                    }
+                  >
+                    {t("CreateConversation")}
+                    <span className="font-bold ml-2">{user.username}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <Footer />

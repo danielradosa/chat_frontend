@@ -9,7 +9,6 @@ const Login = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -28,9 +27,8 @@ const Login = () => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("username", res.data.username);
         localStorage.setItem("userId", res.data.userId);
-        setTimeout(() => {
-          window.location.href = "/dashboard";
-        }, 1500);
+
+        window.location.href = "/dashboard";
       }
     } catch (err) {
       setError(t("LoginError"));
@@ -46,9 +44,9 @@ const Login = () => {
         <Header />
 
         <form onSubmit={handleLogin}>
-          <h1 className="text-center text-2xl font-bold mb-4">
+          <h2 className="text-center text-2xl font-bold mb-4">
             {t("LoginTitle")}
-          </h1>
+          </h2>
           {loading && (
             <img
               src="https://i.gifer.com/Pak.gif"

@@ -21,5 +21,7 @@
     "LoginSuccess": "Prihlásenie prebehlo úspešne.",
     "ChatTitle": "Čet",
     "ChatID": "ID četu:",
-    "ChatPlaceholder": "Napíš správu..."
+    "ChatPlaceholder": "Napíš správu...",
+    "Logout": "Odhlásiť sa",
+    "NoConversations": "Žiadne konverzácie, vytvor novú."
 }

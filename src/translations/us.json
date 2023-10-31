@@ -21,5 +21,7 @@
     "LoginSuccess": "Logged in successfully.",
     "ChatTitle": "Chat",
     "ChatID": "Chat ID:",
-    "ChatPlaceholder": "Type a message..."
+    "ChatPlaceholder": "Type a message...",
+    "Logout": "Log out",
+    "NoConversations": "No conversation, start one."
 }
