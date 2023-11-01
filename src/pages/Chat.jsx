@@ -116,15 +116,40 @@ const Chat = () => {
   }, [participants]);
 
   useEffect(() => {
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          const notification = new Notification(t("NotificationWelcome"), {
+            body: t("NotificationAllow"),
+          });
+  
+          notification.onclick = () => {
+            window.open('https://doveme.netlify.app');
+          };
+        }
+      });
+    }
+
     socket.emit("joinConversation", conversationId);
 
     socket.on("receiveMessage", (data) => {
       setMessages((prevMessages) => [...prevMessages, data.message]);
+
+      if (data.sender !== localStorage.getItem("userId")) {
+        const notification = new Notification(t("NotificationNewMessage"), {
+          body: t("NotificationNewMessageBody"),
+        });
+
+        notification.onclick = () => {
+          window.open('https://doveme.netlify.app/chat/' + conversationId);
+        };
+      }
     });
 
     return () => {
       socket.off("receiveMessage");
     };
+    // eslint-disable-next-line
   }, [conversationId, myId, socket]);
 
   useEffect(() => {
@@ -136,7 +161,7 @@ const Chat = () => {
         lastMessage.scrollIntoView({ behavior: "smooth" });
       }
     }
-  }, [messages, conversationId]);
+  }, [messages, conversationId, t]);
 
   return (
     <div className="w-full flex flex-col justify-between align-middle min-h-screen">
@@ -173,7 +198,7 @@ const Chat = () => {
             />
           </div>
         ) : (
-          <MessageList messages={messages} myId={myId} />
+          <MessageList messages={messages} myId={myId} chatId={conversationId} />
         )}
 
         <div className="flex justify-center align-middle items-center flex-col">

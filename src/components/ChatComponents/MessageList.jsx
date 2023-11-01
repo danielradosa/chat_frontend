@@ -7,7 +7,7 @@ const MessageList = ({ messages, myId }) => {
   const options = {
     target: "_blank",
     rel: "noopener noreferrer",
-    className: "font-bold",
+    className: "font-bold italic flex",
   };
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const MessageList = ({ messages, myId }) => {
           <div
             key={message._id}
             className={`flex ${
-              message.sender === myId ? "justify-end" : "justify-start"
+              message.sender === myId ? "justify-end " : "justify-start"
             }`}
           >
             <div

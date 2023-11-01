@@ -22,5 +22,8 @@
     "ChatID": "You are chatting with:",
     "ChatPlaceholder": "Type a message...",
     "Logout": "Log out",
-    "NoConversations": "No conversation, start one."
+    "NoConversations": "No conversation, start one.",
+    "NotificationWelcome": "Welcome in dove.me",
+    "NotificationAllow": "You now allowed notifications.",
+    "NotificationNewMessage": "New message received"
 }

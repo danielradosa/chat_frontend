@@ -22,5 +22,8 @@
     "ChatID": "Četuješ s používateľom:",
     "ChatPlaceholder": "Napíš správu...",
     "Logout": "Odhlásiť sa",
-    "NoConversations": "Žiadne konverzácie, vytvor novú."
+    "NoConversations": "Žiadne konverzácie, vytvor novú.",
+    "NotificationWelcome": "Vitajte v dove.me",
+    "NotificationAllow": "Teraz máte povolené notifikácie.",
+    "NotificationNewMessage": "Dostal si novú správu"
 }
