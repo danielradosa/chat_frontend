@@ -15,8 +15,8 @@ i18n
         translation: translationSK,
       },
     },
-    lng: 'sk',
-    fallbackLng: 'en',
+    lng: 'en',
+    fallbackLng: 'en'
   });
 
 export default i18n;

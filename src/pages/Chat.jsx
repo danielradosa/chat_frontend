@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Header, Footer } from "../components";
+import { MessageList } from "../components/ChatComponents";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { MESSAGES_ROUTE, CONVERSATIONS_ROUTE } from "../utils/routes";
@@ -26,65 +27,36 @@ const Chat = () => {
 
   const messageInputRef = useRef(null);
 
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const response = await axios.get(MESSAGES_ROUTE(conversationId), {
+  const fetchData = async () => {
+    try {
+      const [messagesResponse, conversationsResponse] = await Promise.all([
+        axios.get(MESSAGES_ROUTE(conversationId), {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        });
-        setMessages(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-      }
-    };
-
-    fetchMessages();
-
-    const fetchConversation = async () => {
-      try {
-        const response = await axios.get(CONVERSATIONS_ROUTE, {
+        }),
+        axios.get(CONVERSATIONS_ROUTE, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        });
+        }),
+      ]);
 
-        const conversation = response.data.find(
-          (conversation) => conversation._id === conversationId
-        );
+      setMessages(messagesResponse.data);
 
-        if (conversation) {
-          setParticipants(conversation.participants);
-        } else {
-          console.log("Conversation not found");
-        }
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching conversations:", error);
+      const conversation = conversationsResponse.data.find(
+        (conversation) => conversation._id === conversationId
+      );
+
+      if (conversation) {
+        setParticipants(conversation.participants);
+      } else {
+        console.log("Conversation not found");
       }
-    };
 
-    fetchConversation();
-  }, [conversationId]);
-
-  useEffect(() => {
-    if (participants.length > 0) {
-      const userId = localStorage.getItem("userId");
-
-      setMyId(userId);
-    }
-  }, [participants]);
-
-  const scrollToBottom = () => {
-    if (messageContainerRef.current) {
-      const container = messageContainerRef.current;
-      const lastMessage = container.lastElementChild;
-
-      if (lastMessage) {
-        lastMessage.scrollIntoView({ behavior: "smooth" });
-      }
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -132,8 +104,18 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    console.log("Chat component rendered");
+    fetchData();
+    // eslint-disable-next-line
+  }, [conversationId]);
 
+  useEffect(() => {
+    if (participants.length > 0) {
+      const userId = localStorage.getItem("userId");
+      setMyId(userId);
+    }
+  }, [participants]);
+
+  useEffect(() => {
     socket.emit("joinConversation", conversationId);
 
     socket.on("receiveMessage", (data) => {
@@ -146,107 +128,84 @@ const Chat = () => {
   }, [conversationId, myId, socket]);
 
   useEffect(() => {
-    scrollToBottom();
+    if (messageContainerRef.current) {
+      const container = messageContainerRef.current;
+      const lastMessage = container.lastElementChild;
+
+      if (lastMessage) {
+        lastMessage.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   }, [messages, conversationId]);
 
   return (
-    <>
-      <div className="w-full flex flex-col justify-between align-middle min-h-screen">
-        <Header />
+    <div className="w-full flex flex-col justify-between align-middle min-h-screen">
+      <Header />
 
-        <div className="flex justify-center align-middle items-center flex-col">
-          <div className="text-center absolute top-6 text-black lg:block hidden">
-            <h2>
-              {t("ChatID")}{" "}
-              <Link
-                className="text-[#8251ED]"
-                to={`/account/${
-                  participants.length > 0 ? participants[0].username : ""
-                }`}
-              >
-                {participants.length > 0 ? participants[0].username : ""}
-              </Link>
-            </h2>
-          </div>
-
-          {loading ? (
-            <div className="mt-[-4rem]">
-              <Oval
-                height={40}
-                width={40}
-                color="#8251ED"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-                ariaLabel="oval-loading"
-                secondaryColor="#8251ED"
-                strokeWidth={6}
-                strokeWidthSecondary={6}
-              />
-            </div>
-          ) : (
-            <div
-              className="flex overflow-auto flex-col w-[95%] lg:w-[60%] max-h-[70%] rounded-3xl p-8 fixed top-[4.3rem]"
-              ref={messageContainerRef}
+      <div className="flex justify-center align-middle items-center flex-col">
+        <div className="text-center absolute top-6 text-black lg:block hidden">
+          <h2>
+            {t("ChatID")}{" "}
+            <Link
+              className="text-[#8251ED]"
+              to={`/account/${
+                participants.length > 0 ? participants[0].username : ""
+              }`}
             >
-              {messages.map((message) => {
-                if (!message.content) {
-                  return null;
-                }
-
-                return (
-                  <div
-                    key={message._id}
-                    className={`flex ${
-                      message.sender === myId ? "justify-end" : "justify-start"
-                    }`}
-                  >
-                    <div
-                      className={`${
-                        message.sender === myId
-                          ? "bg-[#8251ED] text-white self-end"
-                          : "bg-white text-[#8251ED] self-start border border-[#8251ED]"
-                      } rounded-3xl px-4 py-2 mb-2 mt-2`}
-                    >
-                      {message.content}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
-          <div className="flex justify-center align-middle items-center flex-col">
-            <div className="flex items-center justify-center fixed bottom-16 text-center">
-              <input
-                ref={messageInputRef}
-                type="text"
-                placeholder={t("ChatPlaceholder")}
-                className="border border-[#8251ED] rounded-3xl w-[260px] px-4 py-2 mb-4 mt-4 md:w-[660px]"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && e.target.value.trim() !== "") {
-                    sendMessage();
-                  }
-                }}
-              />
-
-              <button
-                className="bg-[#8251ED] rounded-full ml-2"
-                onClick={sendMessage}
-              >
-                <img
-                  src="https://cdn.icon-icons.com/icons2/1678/PNG/512/wondicon-ui-free-send_111204.png"
-                  alt="send"
-                  className="w-10 p-2 invert rounded-full"
-                />
-              </button>
-            </div>
-          </div>
+              {participants.length > 0 ? participants[0].username : ""}
+            </Link>
+          </h2>
         </div>
 
-        <Footer />
+        {loading ? (
+          <div className="mt-[-4rem]">
+            <Oval
+              height={40}
+              width={40}
+              color="#8251ED"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+              ariaLabel="oval-loading"
+              secondaryColor="#8251ED"
+              strokeWidth={6}
+              strokeWidthSecondary={6}
+            />
+          </div>
+        ) : (
+          <MessageList messages={messages} myId={myId} />
+        )}
+
+        <div className="flex justify-center align-middle items-center flex-col">
+          <div className="flex items-center justify-center fixed bottom-16 text-center">
+            <input
+              ref={messageInputRef}
+              type="text"
+              placeholder={t("ChatPlaceholder")}
+              className="border border-[#8251ED] rounded-3xl w-[260px] px-4 py-2 mb-4 mt-4 md:w-[660px]"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && e.target.value.trim() !== "") {
+                  sendMessage();
+                }
+              }}
+            />
+
+            <button
+              className="bg-[#8251ED] rounded-full ml-2"
+              onClick={sendMessage}
+            >
+              <img
+                src="https://cdn.icon-icons.com/icons2/1678/PNG/512/wondicon-ui-free-send_111204.png"
+                alt="send"
+                className="w-10 p-2 invert rounded-full"
+              />
+            </button>
+          </div>
+        </div>
       </div>
-    </>
+
+      <Footer />
+    </div>
   );
 };
 
