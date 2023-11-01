@@ -135,9 +135,9 @@ const Chat = () => {
     socket.on("receiveMessage", (data) => {
       setMessages((prevMessages) => [...prevMessages, data.message]);
 
-      if (data.sender !== localStorage.getItem("userId")) {
+      if (data.sender !== localStorage.getItem("userId") && !conversationId) {
         const notification = new Notification(t("NotificationNewMessage"), {
-          body: t("NotificationNewMessageBody"),
+          body: t("NotificationNewMessageFrom") + data.sender.username,
         });
 
         notification.onclick = () => {

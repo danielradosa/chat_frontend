@@ -25,5 +25,6 @@
     "NoConversations": "No conversation, start one.",
     "NotificationWelcome": "Welcome in dove.me",
     "NotificationAllow": "You now allowed notifications.",
-    "NotificationNewMessage": "New message received"
+    "NotificationNewMessage": "New message received",
+    "NotificationNewMessageFrom": "From: "
 }
