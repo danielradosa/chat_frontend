@@ -1,7 +1,14 @@
 import React, { useEffect, useRef } from "react";
+import Linkify from 'linkify-react';
 
 const MessageList = ({ messages, myId }) => {
   const messageContainerRef = useRef(null);
+
+  const options = {
+    target: "_blank",
+    rel: "noopener noreferrer",
+    className: "font-bold",
+  };
 
   useEffect(() => {
     if (messageContainerRef.current) {
@@ -31,10 +38,10 @@ const MessageList = ({ messages, myId }) => {
               className={`${
                 message.sender === myId
                   ? "bg-[#8251ED] text-white self-end"
-                  : "bg-white text-[#8251ED] self-start border border-[#8251ED]"
+                  : "text-[#8251ED] self-start border border-[#8251ED]"
               } rounded-3xl px-4 py-2 mb-2 mt-2`}
             >
-              {message.content}
+              <Linkify options={options}>{message.content}</Linkify>
             </div>
           </div>
         );
