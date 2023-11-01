@@ -19,7 +19,8 @@ const MessageList = ({ messages, myId }) => {
 
   return (
     <div
-      className="flex overflow-auto flex-col w-[95%] lg:w-[60%] max-h-[70%] rounded-3xl p-8 fixed top-[4.3rem]"
+      className="flex overflow-auto flex-col w-[95%] lg:max-w-[900px] 
+      rounded-3xl p-4 lg:p-8 top-[4.3rem] md:bottom-28 bottom-32 absolute"
       ref={messageContainerRef}
     >
       {messages.map((message) => {

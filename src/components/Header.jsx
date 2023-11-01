@@ -6,7 +6,7 @@ const Header = () => {
   
   return (
     <header>
-      <div className="flex items-center justify-between align-middle">
+      <div className="flex items-center justify-between align-middle backdrop-blur-xl">
         <Logo />
 
         <div className="flex justify-center align-middle items-center p-4">

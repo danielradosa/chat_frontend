@@ -122,9 +122,9 @@ const Chat = () => {
           const notification = new Notification(t("NotificationWelcome"), {
             body: t("NotificationAllow"),
           });
-  
+
           notification.onclick = () => {
-            window.open('https://doveme.netlify.app');
+            window.open("https://doveme.netlify.app");
           };
         }
       });
@@ -141,7 +141,7 @@ const Chat = () => {
         });
 
         notification.onclick = () => {
-          window.open('https://doveme.netlify.app/chat/' + conversationId);
+          window.open("https://doveme.netlify.app/chat/" + conversationId);
         };
       }
     });
@@ -174,10 +174,18 @@ const Chat = () => {
             <Link
               className="text-[#8251ED]"
               to={`/account/${
-                participants.length > 0 ? participants[0].username : ""
+                participants.length > 0
+                  ? participants[0]._id === myId
+                    ? participants[1].username
+                    : participants[0].username
+                  : ""
               }`}
             >
-              {participants.length > 0 ? participants[0].username : ""}
+              {participants.length > 0
+                ? participants[0]._id === myId
+                  ? participants[1].username
+                  : participants[0].username
+                : ""}
             </Link>
           </h2>
         </div>
@@ -198,7 +206,11 @@ const Chat = () => {
             />
           </div>
         ) : (
-          <MessageList messages={messages} myId={myId} chatId={conversationId} />
+          <MessageList
+            messages={messages}
+            myId={myId}
+            chatId={conversationId}
+          />
         )}
 
         <div className="flex justify-center align-middle items-center flex-col">
@@ -207,7 +219,8 @@ const Chat = () => {
               ref={messageInputRef}
               type="text"
               placeholder={t("ChatPlaceholder")}
-              className="border border-[#8251ED] rounded-3xl w-[260px] px-4 py-2 mb-4 mt-4 md:w-[660px]"
+              className="border border-[#8251ED] rounded-3xl w-[290px] 
+              px-4 py-2 mb-4 mt-4 sm:w-[580px] md:w-[660px] lg:w-[790px]"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && e.target.value.trim() !== "") {
                   sendMessage();
