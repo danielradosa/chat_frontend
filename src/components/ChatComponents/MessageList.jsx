@@ -39,7 +39,7 @@ const MessageList = ({ messages, myId }) => {
                 message.sender === myId
                   ? "bg-[#8251ED] text-white self-end"
                   : "text-[#8251ED] self-start border border-[#8251ED]"
-              } rounded-3xl px-4 py-2 mb-2 mt-2`}
+              } rounded-3xl px-4 py-2 mb-2 mt-2 lg:max-w-[75%] max-w-[85%]`}
             >
               <Linkify options={options}>{message.content}</Linkify>
             </div>
