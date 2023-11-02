@@ -119,6 +119,20 @@ const Chat = () => {
   }, [participants]);
 
   useEffect(() => {
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          const notification = new Notification(t("NotificationWelcome"), {
+            body: t("NotificationAllow"),
+          });
+
+          notification.onclick = () => {
+            window.open("https://doveme.netlify.app");
+          };
+        }
+      });
+    }
+
     socket.emit("joinConversation", conversationId);
 
     socket.on("receiveMessage", (data) => {
@@ -133,7 +147,7 @@ const Chat = () => {
             : message
         )
       );
-    });  
+    });
 
     return () => {
       socket.off("receiveMessage");
