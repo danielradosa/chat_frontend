@@ -56,12 +56,14 @@ const Signup = () => {
           <div className="flex justify-center align-middle flex-col items-center">
             <input
               type="text"
+              required
               placeholder={t("SignupNamePlaceholder")}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="border border-[#8251ED] rounded-3xl px-4 py-2 mb-4"
             />
             <input
+              required
               type="password"
               placeholder={t("SignupPasswordPlaceholder")}
               value={password}
@@ -69,6 +71,7 @@ const Signup = () => {
               className="border border-[#8251ED] rounded-3xl px-4 py-2 mb-4"
             />
             <input
+              required
               type="password"
               placeholder={t("SignupPasswordAgainPlaceholder")}
               value={passwordAgain}

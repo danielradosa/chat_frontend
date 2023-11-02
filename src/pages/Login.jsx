@@ -63,6 +63,7 @@ const Login = () => {
           <div className="flex justify-center align-middle flex-col items-center">
             <input
               type="text"
+              required
               placeholder={t("LoginNamePlaceholder")}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -70,6 +71,7 @@ const Login = () => {
             />
             <input
               type="password"
+              required
               placeholder={t("LoginPasswordPlaceholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}

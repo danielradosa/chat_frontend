@@ -1,5 +1,6 @@
-const apiURL = "https://chatappdoveme.fly.dev/api"; // http://localhost:5432/api
-export const API_URL = apiURL;
+const apiURL = process.env.REACT_APP_API;
+const api = apiURL + '/api';
+export const API_URL = api;
 
 export const LOGIN_ROUTE = `${API_URL}/user/login`;
 export const REGISTER_ROUTE = `${API_URL}/user/register`;

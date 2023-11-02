@@ -17,8 +17,9 @@ const Chat = () => {
   const [myId, setMyId] = useState("");
   const messageContainerRef = useRef(null);
   const [loading, setLoading] = useState(true);
+  const apiURL = process.env.REACT_APP_API;
 
-  const socket = io("https://chatappdoveme.fly.dev", {
+  const socket = io(apiURL, {
     extraHeaders: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
@@ -69,6 +70,9 @@ const Chat = () => {
       return;
     }
 
+    messageInputRef.current.value = "";
+    messageInputRef.current.scrollTop = 0;
+
     axios
       .post(
         MESSAGES_ROUTE(conversationId),
@@ -91,7 +95,6 @@ const Chat = () => {
         });
 
         setMessages((prevMessages) => [...prevMessages, newMessage]);
-        messageInputRef.current.value = "";
 
         if (messageContainerRef.current) {
           messageContainerRef.current.scrollTop =
@@ -134,20 +137,21 @@ const Chat = () => {
 
     socket.on("receiveMessage", (data) => {
       setMessages((prevMessages) => [...prevMessages, data.message]);
+    });
 
-      if (data.sender !== localStorage.getItem("userId") && !conversationId) {
-        const notification = new Notification(t("NotificationNewMessage"), {
-          body: t("NotificationNewMessageFrom") + data.sender.username,
-        });
-
-        notification.onclick = () => {
-          window.open("https://doveme.netlify.app/chat/" + conversationId);
-        };
-      }
+    socket.on("messageDelivered", (data) => {
+      setMessages((prevMessages) =>
+        prevMessages.map((message) =>
+          message._id === data.messageId
+            ? { ...message, status: "delivered" }
+            : message
+        )
+      );
     });
 
     return () => {
       socket.off("receiveMessage");
+      socket.off("messageDelivered");
     };
     // eslint-disable-next-line
   }, [conversationId, myId, socket]);
@@ -215,15 +219,20 @@ const Chat = () => {
 
         <div className="flex justify-center align-middle items-center flex-col">
           <div className="flex items-center justify-center fixed bottom-16 text-center">
-            <input
+            <textarea
               ref={messageInputRef}
-              type="text"
+              rows={1}
               placeholder={t("ChatPlaceholder")}
+              maxLength={500}
+              style={{ resize: "none" }}
               className="border border-[#8251ED] rounded-3xl w-[290px] 
-              px-4 py-2 mb-4 mt-4 sm:w-[580px] md:w-[660px] lg:w-[790px]"
+              px-4 py-2 mb-4 mt-4 sm:w-[580px] md:w-[660px] lg:w-[790px] h-auto"
               onKeyDown={(e) => {
-                if (e.key === "Enter" && e.target.value.trim() !== "") {
-                  sendMessage();
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  if (e.target.value.trim() !== "") {
+                    sendMessage();
+                  }
                 }
               }}
             />
