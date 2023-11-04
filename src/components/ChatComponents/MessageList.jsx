@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Linkify from "linkify-react";
 
-const MessageList = ({ messages, myId, chatId, deliveredMessageIds }) => {
+const MessageList = ({ messages, myId }) => {
   const messageContainerRef = useRef(null);
 
   const options = {
@@ -28,10 +28,6 @@ const MessageList = ({ messages, myId, chatId, deliveredMessageIds }) => {
           return null;
         }
 
-        const isMyMessage = message.sender === myId;
-        const isLastMessage = index === messages.length - 1;
-        const isDelivered = deliveredMessageIds.includes(message._id);
-
         return (
           <div
             key={message._id}
@@ -48,13 +44,6 @@ const MessageList = ({ messages, myId, chatId, deliveredMessageIds }) => {
             >
               <Linkify options={options}>{message.content}</Linkify>
             </div>
-            {isLastMessage && isMyMessage && (
-              <p
-                className={`rounded-3xl w-2 h-2 my-auto relative ml-2 ${
-                  isDelivered ? "bg-[#8251ED]" : "bg-gray-300"
-                }`}
-              ></p>
-            )}
           </div>
         );
       })}

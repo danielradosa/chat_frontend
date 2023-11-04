@@ -17,7 +17,6 @@ const Chat = () => {
   const [myId, setMyId] = useState("");
   const messageContainerRef = useRef(null);
   const [loading, setLoading] = useState(true);
-  const [deliveredMessageIds, setDeliveredMessageIds] = useState([]);
   const apiURL = process.env.REACT_APP_API;
 
   const socket = io(apiURL, {
@@ -140,18 +139,30 @@ const Chat = () => {
     socket.emit("joinConversation", conversationId);
 
     socket.on("receiveMessage", (data) => {
-      setMessages((prevMessages) => [...prevMessages, data.message]);
-      setMessages((prevMessages) => prevMessages.sort((a, b) => a.timestamp - b.timestamp));
+      const receivedMessage = data.message;
+  
+      if (receivedMessage) {
+        setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+      }
     });
 
     socket.on("messageDelivered", (data) => {
-      const { messageId } = data;
-  
-      setDeliveredMessageIds((prevDeliveredMessageIds) => [
-        ...prevDeliveredMessageIds,
-        messageId,
-      ]);
-    });
+      const deliveredMessage = data.message;
+
+      if (deliveredMessage && deliveredMessage._id) {
+        const deliveredMessageId = deliveredMessage._id;
+
+        setMessages((prevMessages) =>
+          prevMessages.map((message) => {
+            if (message._id === deliveredMessageId) {
+              return deliveredMessage;
+            } else {
+              return message;
+            }
+          })
+        );
+      }
+    });    
 
     return () => {
       socket.off("receiveMessage");
@@ -217,7 +228,6 @@ const Chat = () => {
             messages={messages}
             myId={myId}
             chatId={conversationId}
-            deliveredMessageIds={deliveredMessageIds}
           />
         )}
 

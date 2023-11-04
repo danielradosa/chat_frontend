@@ -4,6 +4,7 @@ import { Header, Footer } from "../components";
 import { CONVERSATIONS_ROUTE, ALL_USERS } from "../utils/routes";
 import { useTranslation } from "react-i18next";
 import { Oval } from "react-loader-spinner";
+import io from "socket.io-client";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -16,6 +17,13 @@ const Dashboard = () => {
   const [myId, setMyId] = useState("");
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
+
+  const socket = io("http://localhost:5432", {
+    extraHeaders: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    transports: ["websocket"],
+  });
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -122,6 +130,25 @@ const Dashboard = () => {
       console.error("Error deleting conversation:", error);
     }
   };
+
+  useEffect(() => {
+    socket.on("receiveConversation", (conversation) => {
+      setConversations((prevConversations) => [...prevConversations, conversation]);
+    });
+
+    socket.on("deleteConversation", (conversationId) => {
+      setConversations((prevConversations) =>
+        prevConversations.filter(
+          (conversation) => conversation._id !== conversationId
+        )
+      );
+    });
+    
+    return () => {
+      socket.off("receiveConversation");
+      socket.off("deleteConversation");
+    };
+  }, [socket]);
 
   const goToConversation = (conversationId) => {
     window.location.href = `/chat/${conversationId}`;
