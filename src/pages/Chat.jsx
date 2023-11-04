@@ -17,13 +17,14 @@ const Chat = () => {
   const [myId, setMyId] = useState("");
   const messageContainerRef = useRef(null);
   const [loading, setLoading] = useState(true);
-  // const apiURL = process.env.REACT_APP_API;
+  const [deliveredMessageIds, setDeliveredMessageIds] = useState([]);
+  //const apiURL = process.env.REACT_APP_API;
 
-  const socket = io("https://chatappdoveme.fly.dev", {
+  const socket = io("//localhost:5432", {
     extraHeaders: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    transports: ["websocket"]
+    transports: ["websocket"],
   });
 
   const messageInputRef = useRef(null);
@@ -73,12 +74,15 @@ const Chat = () => {
     messageInputRef.current.value = "";
     messageInputRef.current.scrollTop = 0;
 
+    const timestamp = new Date().getTime();
+
     axios
       .post(
         MESSAGES_ROUTE(conversationId),
         {
           sender: userId,
           content: message,
+          timestamp: timestamp,
         },
         {
           headers: {
@@ -90,8 +94,8 @@ const Chat = () => {
         const newMessage = response.data;
 
         socket.emit("sendMessage", {
-          conversationId,
           message: newMessage,
+          conversationId,
         });
 
         setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -119,34 +123,41 @@ const Chat = () => {
   }, [participants]);
 
   useEffect(() => {
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          const notification = new Notification(t("NotificationWelcome"), {
+            body: t("NotificationAllow"),
+          });
+
+          notification.onclick = () => {
+            window.open("https://doveme.netlify.app");
+          };
+        }
+      });
+    }
+
     socket.emit("joinConversation", conversationId);
 
     socket.on("receiveMessage", (data) => {
       setMessages((prevMessages) => [...prevMessages, data.message]);
+      setMessages((prevMessages) => prevMessages.sort((a, b) => a.timestamp - b.timestamp));
     });
 
     socket.on("messageDelivered", (data) => {
       const { messageId } = data;
-      setMessages((prevMessages) =>
-        prevMessages.map((message) => {
-          if (message._id === messageId) {
-            return {
-              ...message,
-              status: "delivered",
-            };
-          } else {
-            return message;
-          }
-        })
-      );
+  
+      setDeliveredMessageIds((prevDeliveredMessageIds) => [
+        ...prevDeliveredMessageIds,
+        messageId,
+      ]);
     });
 
     return () => {
       socket.off("receiveMessage");
       socket.off("messageDelivered");
     };
-    // eslint-disable-next-line
-  }, [conversationId, myId, socket]);
+  }, [conversationId, myId, socket, t]);
 
   useEffect(() => {
     if (messageContainerRef.current) {
@@ -206,6 +217,7 @@ const Chat = () => {
             messages={messages}
             myId={myId}
             chatId={conversationId}
+            deliveredMessageIds={deliveredMessageIds}
           />
         )}
 
