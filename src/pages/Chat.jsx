@@ -139,34 +139,11 @@ const Chat = () => {
     socket.emit("joinConversation", conversationId);
 
     socket.on("receiveMessage", (data) => {
-      const receivedMessage = data.message;
-  
-      if (receivedMessage) {
-        setMessages((prevMessages) => [...prevMessages, receivedMessage]);
-      }
-    });
-
-    socket.on("messageDelivered", (data) => {
-      const deliveredMessage = data.message;
-
-      if (deliveredMessage && deliveredMessage._id) {
-        const deliveredMessageId = deliveredMessage._id;
-
-        setMessages((prevMessages) =>
-          prevMessages.map((message) => {
-            if (message._id === deliveredMessageId) {
-              return deliveredMessage;
-            } else {
-              return message;
-            }
-          })
-        );
-      }
-    });    
+      setMessages((prevMessages) => [...prevMessages, data.message]);
+    });   
 
     return () => {
       socket.off("receiveMessage");
-      socket.off("messageDelivered");
     };
   }, [conversationId, myId, socket, t]);
 
