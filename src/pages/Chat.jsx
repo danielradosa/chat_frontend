@@ -5,7 +5,7 @@ import { Header, Footer } from "../components";
 import { MessageList } from "../components/ChatComponents";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { MESSAGES_ROUTE, CONVERSATIONS_ROUTE } from "../utils/routes";
+import { MESSAGES_ROUTE, CONVERSATIONS_ROUTE, API_URL } from "../utils/routes";
 import io from "socket.io-client";
 import { Oval } from "react-loader-spinner";
 
@@ -18,9 +18,9 @@ const Chat = () => {
   const messageContainerRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [deliveredMessageIds, setDeliveredMessageIds] = useState([]);
-  //const apiURL = process.env.REACT_APP_API;
+  const apiURL = process.env.REACT_APP_API;
 
-  const socket = io("//localhost:5432", {
+  const socket = io(apiURL, {
     extraHeaders: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
