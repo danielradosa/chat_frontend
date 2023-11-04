@@ -17,8 +17,9 @@ const Dashboard = () => {
   const [myId, setMyId] = useState("");
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
+  const apiURL = process.env.REACT_APP_API;
 
-  const socket = io("http://localhost:5432", {
+  const socket = io(apiURL, {
     extraHeaders: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
