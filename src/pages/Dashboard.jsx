@@ -87,7 +87,37 @@ const Dashboard = () => {
     );
   };
 
+  const handleDeleteConversation = async (conversationId) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    try {
+      await axios.delete(`${CONVERSATIONS_ROUTE}/${conversationId}`, config);
+      setConversations((prevConversations) =>
+        prevConversations.filter(
+          (conversation) => conversation._id !== conversationId
+        )
+      );
+    } catch (error) {
+      console.error("Error deleting conversation:", error);
+    }
+  };
+
   const handleCreateConversation = async (participantId, participantName) => {
+    const existingConversation = conversations.find((conversation) =>
+      conversation.participants.some(
+        (participant) => participant._id === participantId
+      )
+    );
+
+    if (existingConversation) {
+      goToConversation(existingConversation._id);
+      return;
+    }
+
     try {
       const config = {
         headers: {
@@ -113,28 +143,12 @@ const Dashboard = () => {
     }
   };
 
-  const handleDeleteConversation = async (conversationId) => {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    };
-
-    try {
-      await axios.delete(`${CONVERSATIONS_ROUTE}/${conversationId}`, config);
-      setConversations(
-        conversations.filter(
-          (conversation) => conversation._id !== conversationId
-        )
-      );
-    } catch (error) {
-      console.error("Error deleting conversation:", error);
-    }
-  };
-
   useEffect(() => {
     socket.on("receiveConversation", (conversation) => {
-      setConversations((prevConversations) => [...prevConversations, conversation]);
+      setConversations((prevConversations) => [
+        ...prevConversations,
+        conversation,
+      ]);
     });
 
     socket.on("deleteConversation", (conversationId) => {
@@ -144,7 +158,7 @@ const Dashboard = () => {
         )
       );
     });
-    
+
     return () => {
       socket.off("receiveConversation");
       socket.off("deleteConversation");
@@ -175,7 +189,7 @@ const Dashboard = () => {
                       className="flex items-center justify-center bg-white rounded p-2 mt-2"
                     >
                       <button
-                          className="px-4 py-1 w-[280px] truncate rounded-3xl bg-[#8251ED] lg:w-[350px] text-white
+                        className="px-4 py-1 w-[280px] truncate rounded-3xl bg-[#8251ED] lg:w-[350px] text-white
                           transition-all"
                         onClick={() => {
                           goToConversation(conversation._id);
@@ -207,9 +221,7 @@ const Dashboard = () => {
                   ))}
                 </ul>
               ) : (
-                <div className="mt-4">
-                  {t("NoConversations")}
-                </div>
+                <div className="mt-4">{t("NoConversations")}</div>
               )}
             </>
           ) : (
@@ -247,20 +259,20 @@ const Dashboard = () => {
           />
 
           {loading ? (
-           <div className="mt-2">
-             <Oval
-              height={40}
-              width={40}
-              color="#8251ED"
-              wrapperStyle={{}}
-              wrapperClass=""
-              visible={true}
-              ariaLabel="oval-loading"
-              secondaryColor="#8251ED"
-              strokeWidth={6}
-              strokeWidthSecondary={6}
-            />
-           </div>
+            <div className="mt-2">
+              <Oval
+                height={40}
+                width={40}
+                color="#8251ED"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                ariaLabel="oval-loading"
+                secondaryColor="#8251ED"
+                strokeWidth={6}
+                strokeWidthSecondary={6}
+              />
+            </div>
           ) : (
             <ul>
               {filteredUsers.map((user) => (
