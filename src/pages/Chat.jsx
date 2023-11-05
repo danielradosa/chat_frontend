@@ -140,7 +140,7 @@ const Chat = () => {
 
     socket.on("receiveMessage", (data) => {
       setMessages((prevMessages) => [...prevMessages, data.message]);
-    });   
+    });
 
     return () => {
       socket.off("receiveMessage");
@@ -204,7 +204,8 @@ const Chat = () => {
           <MessageList
             messages={messages}
             myId={myId}
-            chatId={conversationId}
+            conversationId={conversationId}
+            setMessages={setMessages}
           />
         )}
 

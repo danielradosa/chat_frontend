@@ -35,3 +35,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.message-liked {
+  position: relative;
+}
+
+.liked-icon {
+  position: absolute;
+  bottom: 0;
+  left: -4px;
+  top: 24px;
+  font-size: 1.35rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.animate-heart {
+  animation: heartPulse 0.2s ease-in-out;
+}
+
+@keyframes heartPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
