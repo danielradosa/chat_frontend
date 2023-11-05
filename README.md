@@ -2,5 +2,5 @@
 
 ### Chat app made solely for 2 people texting.
 
-Simple chat app made for couples.
+Simple chat app.
 There is also a [backend]('https://')
