@@ -17,7 +17,11 @@ const Chat = () => {
   const [myId, setMyId] = useState("");
   const messageContainerRef = useRef(null);
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line
+  const [isTyping, setIsTyping] = useState(false);
+  const [typingUser, setTypingUser] = useState("");
   const apiURL = process.env.REACT_APP_API;
+  const currentUser = localStorage.getItem("username");
 
   const socket = io(apiURL, {
     extraHeaders: {
@@ -27,6 +31,7 @@ const Chat = () => {
   });
 
   const messageInputRef = useRef(null);
+  const typingTimeoutRef = useRef(null);
 
   const fetchData = async () => {
     try {
@@ -59,6 +64,17 @@ const Chat = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const handleTyping = () => {
+    setIsTyping(true);
+  
+    clearTimeout(typingTimeoutRef.current);
+    typingTimeoutRef.current = setTimeout(() => {
+      setIsTyping(false);
+    }, 1000);
+  
+    socket.emit("userTyping", { username: currentUser, conversationId });
   };
 
   const sendMessage = () => {
@@ -136,6 +152,21 @@ const Chat = () => {
       });
     }
 
+    socket.on("receiveTyping", (data) => {
+      console.log("Received typing:", data.username);
+      setTypingUser(data.username);
+  
+      clearTimeout(typingTimeoutRef.current);
+      typingTimeoutRef.current = setTimeout(() => {
+        setTypingUser("");
+      }, 1000);
+    });
+    
+    socket.on("receiveStoppedTyping", (data) => {
+      console.log("Received stopped typing:", data.username);
+      setTypingUser("");
+    });
+
     socket.emit("joinConversation", conversationId);
 
     socket.on("receiveMessage", (data) => {
@@ -144,6 +175,7 @@ const Chat = () => {
 
     return () => {
       socket.off("receiveMessage");
+      socket.off("receiveTyping");
     };
   }, [conversationId, myId, socket, t]);
 
@@ -206,6 +238,7 @@ const Chat = () => {
             myId={myId}
             conversationId={conversationId}
             setMessages={setMessages}
+            typingUser={typingUser}
           />
         )}
 
@@ -225,6 +258,8 @@ const Chat = () => {
                   if (e.target.value.trim() !== "") {
                     sendMessage();
                   }
+                } else {
+                  handleTyping();
                 }
               }}
             />

@@ -3,11 +3,18 @@ import Linkify from "linkify-react";
 import io from "socket.io-client";
 import { LIKE_MESSAGE } from "../../utils/routes";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
-const MessageList = ({ messages, myId, conversationId, setMessages }) => {
+const MessageList = ({
+  messages,
+  myId,
+  conversationId,
+  setMessages,
+  typingUser,
+}) => {
+  const { t } = useTranslation();
   const messageContainerRef = useRef(null);
   const apiURL = process.env.REACT_APP_API;
-
   const socket = io(apiURL, {
     extraHeaders: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -21,6 +28,8 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
     className: "font-bold italic flex",
   };
 
+  const [animatedHearts, setAnimatedHearts] = useState({});
+
   useEffect(() => {
     if (messageContainerRef.current) {
       const container = messageContainerRef.current;
@@ -28,10 +37,10 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
     }
   }, [messages]);
 
-  const [animatedHearts, setAnimatedHearts] = useState({});
-
   const handleLikeMessage = (messageId, isAlreadyLiked) => {
-    if (messages.find((message) => message._id === messageId)?.sender === myId) {
+    if (
+      messages.find((message) => message._id === messageId)?.sender === myId
+    ) {
       return;
     }
 
@@ -90,8 +99,7 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
 
   return (
     <div
-      className="flex overflow-auto flex-col w-[95%] lg:max-w-[900px] 
-      rounded-3xl p-4 lg:p-8 top-[4.3rem] md:bottom-28 bottom-32 absolute"
+      className="flex overflow-auto flex-col w-[95%] lg.max-w-[900px] rounded-3xl p-4 lg:p-8 top-[4.3rem] md:bottom-28 bottom-32 absolute"
       ref={messageContainerRef}
     >
       {messages.map((message, index) => {
@@ -114,16 +122,27 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
                 message.sender === myId
                   ? "bg-[#8251ED] text-white self-end"
                   : "text-[#8251ED] self-start border border-[#8251ED]"
-              } rounded-3xl px-4 py-2 mb-2 mt-2 lg:max-w-[75%] max-w-[85%] flex ${
+              } rounded-3xl px-4 py-2 mb-2 mt-2 lg.max-w-[75%] max-w-[85%] flex ${
                 isLiked ? "message-liked" : ""
               }`}
               onDoubleClick={() => handleLikeMessage(message._id)}
             >
               <Linkify options={options}>{message.content}</Linkify>
               {isLiked && (
-                <span className={`liked-icon ${animatedHearts[messageId] ? "animate-heart" : ""}`}>🩵</span>
+                <span
+                  className={`liked-icon ${
+                    animatedHearts[messageId] ? "animate-heart" : ""
+                  }`}
+                >
+                  🩵
+                </span>
               )}
             </div>
+            {index === messages.length - 1 && typingUser && (
+              <div className="typing-user left-0 absolute mt-6 p-8 text-[#8251ED]">
+                {t("IsTyping")}
+              </div>
+            )}
           </div>
         );
       })}

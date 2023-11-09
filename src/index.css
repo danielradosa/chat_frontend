@@ -51,7 +51,7 @@ code {
 }
 
 .animate-heart {
-  animation: heartPulse 0.2s ease-in-out;
+  animation: heartPulse 0.3s ease-in-out;
 }
 
 @keyframes heartPulse {
@@ -59,7 +59,7 @@ code {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.2);
+    transform: scale(1.4);
   }
   100% {
     transform: scale(1);

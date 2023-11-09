@@ -26,5 +26,6 @@
     "NotificationWelcome": "Welcome in dove.me",
     "NotificationAllow": "You now allowed notifications.",
     "NotificationNewMessage": "New message received",
-    "NotificationNewMessageFrom": "From: "
+    "NotificationNewMessageFrom": "From: ",
+    "IsTyping": "Is typing..."
 }

@@ -26,5 +26,6 @@
     "NotificationWelcome": "Vitajte v dove.me",
     "NotificationAllow": "Teraz máte povolené notifikácie.",
     "NotificationNewMessage": "Dostal si novú správu",
-    "NotificationNewMessageFrom": "Od: "
+    "NotificationNewMessageFrom": "Od: ",
+    "IsTyping": "Píše..."
 }
