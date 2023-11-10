@@ -72,7 +72,7 @@ const Chat = () => {
     clearTimeout(typingTimeoutRef.current);
     typingTimeoutRef.current = setTimeout(() => {
       setIsTyping(false);
-    }, 1000);
+    }, 500);
   
     socket.emit("userTyping", { username: currentUser, conversationId });
   };
