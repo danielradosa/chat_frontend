@@ -27,5 +27,6 @@
     "NotificationAllow": "You now allowed notifications.",
     "NotificationNewMessage": "New message received",
     "NotificationNewMessageFrom": "From: ",
-    "IsTyping": "Is typing..."
+    "IsTyping": "Is typing...",
+    "ProfileTitle": "@dove.me"
 }

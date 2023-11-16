@@ -200,7 +200,7 @@ const Chat = () => {
             {t("ChatID")}{" "}
             <Link
               className="text-[#8251ED]"
-              to={`/account/${
+              to={`/profile/${
                 participants.length > 0
                   ? participants[0]._id === myId
                     ? participants[1].username
