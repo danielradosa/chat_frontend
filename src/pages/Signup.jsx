@@ -28,6 +28,8 @@ const Signup = () => {
         setLoading(true);
         setSuccess(t("SignupSuccess"));
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("username", res.data.username);
+        localStorage.setItem("userId", res.data.userId);
         setTimeout(() => {
           window.location.href = "/login";
         }, 2000);
@@ -43,7 +45,7 @@ const Signup = () => {
         <Header />
 
         <form onSubmit={handleSignup}>
-          <h2 className="text-center text-2xl font-bold mb-4">
+          <h2 className="text-center text-2xl font-bold mb-4 text-violet-800">
             {t("SignupTitle")}
           </h2>
           {loading && (

@@ -19,7 +19,7 @@ main {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: white;
+  background-color: #8251ED;
 }
 
 ::-webkit-scrollbar-thumb {

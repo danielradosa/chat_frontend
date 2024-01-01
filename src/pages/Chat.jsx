@@ -72,7 +72,7 @@ const Chat = () => {
     clearTimeout(typingTimeoutRef.current);
     typingTimeoutRef.current = setTimeout(() => {
       setIsTyping(false);
-    }, 500);
+    }, 100);
   
     socket.emit("userTyping", { username: currentUser, conversationId });
   };
@@ -195,28 +195,6 @@ const Chat = () => {
       <Header />
 
       <div className="flex justify-center align-middle items-center flex-col">
-        <div className="text-center absolute top-6 text-black lg:block hidden">
-          <h2>
-            {t("ChatID")}{" "}
-            <Link
-              className="text-[#8251ED]"
-              to={`/profile/${
-                participants.length > 0
-                  ? participants[0]._id === myId
-                    ? participants[1].username
-                    : participants[0].username
-                  : ""
-              }`}
-            >
-              {participants.length > 0
-                ? participants[0]._id === myId
-                  ? participants[1].username
-                  : participants[0].username
-                : ""}
-            </Link>
-          </h2>
-        </div>
-
         {loading ? (
           <div className="mt-[-4rem]">
             <Oval

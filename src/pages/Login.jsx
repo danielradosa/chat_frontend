@@ -50,7 +50,7 @@ const Login = () => {
         <Header />
 
         <form onSubmit={handleLogin}>
-          <h2 className="text-center text-2xl font-bold mb-4">
+          <h2 className="text-center text-2xl font-bold mb-4 text-violet-800">
             {t("LoginTitle")}
           </h2>
           {loading && (

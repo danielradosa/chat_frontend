@@ -16,21 +16,27 @@ const Home = () => {
       <main className="w-full  flex flex-col justify-between align-middle min-h-screen">
         <Header />
         <div className="text-center">
-          <p>{t("HomeText")} <br /> {t("HomeText2")}</p>
+          <p>
+            {t("HomeText")} <br /> {t("HomeText2")}
+          </p>
 
           <div className="flex justify-center align-middle flex-col items-center">
             <Link to="/login">
-              <button className="border hover:text-white transition-all border-[#8251ED] 
-              hover:bg-[#8251ED] text-[#8251ED] font-bold py-2 px-4 rounded-3xl mt-4">
+              <button
+                className="border hover:text-white transition-all border-violet-500
+              hover:bg-violet-500 text-violet-500 font-bold py-2 px-4 rounded-3xl mt-4"
+              >
                 {t("LoginButtonText")}
               </button>
             </Link>
             <Link to="/sign-up">
-            <button className="transition-all bg-[#8251ED] 
-            font-bold py-2 px-4 rounded-3xl text-white mt-5">
-              {t("SignupButtonText")}
-            </button>
-          </Link>
+              <button
+                className="transition-all bg-violet-500
+            font-bold py-2 px-4 rounded-3xl text-white mt-5"
+              >
+                {t("SignupButtonText")}
+              </button>
+            </Link>
           </div>
         </div>
         <Footer />

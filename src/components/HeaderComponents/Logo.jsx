@@ -6,9 +6,9 @@ const Logo = () => {
 
   return (
     <>
-      <h1 className="text-3xl p-4 items-center">
+      <h1 className="text-3xl p-4 items-center text-violet-800">
         <Link to={user ? "/dashboard" : "/"}>
-          <span className="font-bold text-[#8251ED]">dove</span>.me
+          <span className="font-bold text-white">dove</span>.me
         </Link>
       </h1>
     </>
