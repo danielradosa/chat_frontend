@@ -137,20 +137,6 @@ const Chat = () => {
   }, [participants]);
 
   useEffect(() => {
-    if (Notification.permission !== "granted") {
-      Notification.requestPermission().then((permission) => {
-        if (permission === "granted") {
-          const notification = new Notification(t("NotificationWelcome"), {
-            body: t("NotificationAllow"),
-          });
-
-          notification.onclick = () => {
-            window.open("https://doveme.netlify.app");
-          };
-        }
-      });
-    }
-
     socket.on("receiveTyping", (data) => {
       console.log("Received typing:", data.username);
       setTypingUser(data.username);
