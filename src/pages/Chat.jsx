@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { Header, Footer } from "../components";
 import { MessageList } from "../components/ChatComponents";
