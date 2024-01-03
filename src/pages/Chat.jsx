@@ -67,12 +67,12 @@ const Chat = () => {
 
   const handleTyping = () => {
     setIsTyping(true);
-  
+
     clearTimeout(typingTimeoutRef.current);
     typingTimeoutRef.current = setTimeout(() => {
       setIsTyping(false);
     }, 100);
-  
+
     socket.emit("userTyping", { username: currentUser, conversationId });
   };
 
@@ -140,13 +140,13 @@ const Chat = () => {
     socket.on("receiveTyping", (data) => {
       console.log("Received typing:", data.username);
       setTypingUser(data.username);
-  
+
       clearTimeout(typingTimeoutRef.current);
       typingTimeoutRef.current = setTimeout(() => {
         setTypingUser("");
-      }, 1000);
+      }, 100);
     });
-    
+
     socket.on("receiveStoppedTyping", (data) => {
       console.log("Received stopped typing:", data.username);
       setTypingUser("");
@@ -205,39 +205,36 @@ const Chat = () => {
           />
         )}
 
-        <div className="flex justify-center align-middle items-center flex-col">
-          <div className="flex items-center justify-center fixed bottom-16 text-center">
-            <textarea
-              ref={messageInputRef}
-              rows={1}
-              placeholder={t("ChatPlaceholder")}
-              maxLength={500}
-              style={{ resize: "none" }}
-              className="border border-[#8251ED] rounded-3xl w-[290px] 
-              px-4 py-2 mb-4 mt-4 sm:w-[580px] md:w-[660px] lg:w-[790px] h-auto"
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  if (e.target.value.trim() !== "") {
-                    sendMessage();
-                  }
-                } else {
-                  handleTyping();
+        <div className="flex items-center justify-center fixed bottom-12 md:bottom-8 text-center w-full p-4 lg:p-8">
+        <textarea
+            ref={messageInputRef}
+            rows={1}
+            placeholder={t("ChatPlaceholder")}
+            maxLength={500}
+            style={{ resize: "none" }}
+            className="bg-violet-500/50 transition-all outline-none focus:bg-violet-500 placeholder:text-white/80 text-white rounded-3xl px-4 py-2 mb-4 mt-4 h-auto w-full"
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                if (e.target.value.trim() !== "") {
+                  sendMessage();
                 }
-              }}
-            />
+              } else {
+                handleTyping();
+              }
+            }}
+          />
 
-            <button
-              className="bg-[#8251ED] rounded-full ml-2"
-              onClick={sendMessage}
-            >
-              <img
-                src="https://cdn.icon-icons.com/icons2/1678/PNG/512/wondicon-ui-free-send_111204.png"
-                alt="send"
-                className="w-10 p-2 invert rounded-full"
-              />
-            </button>
-          </div>
+          <button
+            className="bg-[#8251ED] rounded-full ml-2"
+            onClick={sendMessage}
+          >
+            <img
+              src="https://cdn.icon-icons.com/icons2/1678/PNG/512/wondicon-ui-free-send_111204.png"
+              alt="send"
+              className="w-10 p-2 invert rounded-full"
+            />
+          </button>
         </div>
       </div>
 

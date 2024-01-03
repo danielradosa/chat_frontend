@@ -62,7 +62,8 @@ const Signup = () => {
               placeholder={t("SignupNamePlaceholder")}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="border border-[#8251ED] rounded-3xl px-4 py-2 mb-4"
+              className="bg-violet-500/50 placeholder:text-white/50 text-white focus:bg-violet-500 
+              outline-none transition-all rounded-3xl px-4 py-2 mb-4 shadow-lg"
             />
             <input
               required
@@ -70,7 +71,8 @@ const Signup = () => {
               placeholder={t("SignupPasswordPlaceholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="border border-[#8251ED] rounded-3xl px-4 py-2 mb-4"
+              className="bg-violet-500/50 placeholder:text-white/50 text-white focus:bg-violet-500 
+              outline-none transition-all rounded-3xl px-4 py-2 mb-4 shadow-lg"
             />
             <input
               required
@@ -78,12 +80,13 @@ const Signup = () => {
               placeholder={t("SignupPasswordAgainPlaceholder")}
               value={passwordAgain}
               onChange={(e) => setPasswordAgain(e.target.value)}
-              className="border border-[#8251ED] rounded-3xl px-4 py-2 mb-4"
+              className="bg-violet-500/50 placeholder:text-white/50 text-white focus:bg-violet-500 
+              outline-none transition-all rounded-3xl px-4 py-2 mb-4 shadow-lg"
             />
             <button
               type="submit"
               className="hover:text-white border border-[#8251ED] transition-all hover:bg-[#8251ED] 
-              text-[#8251ED] font-bold py-2 px-4 rounded-3xl"
+              text-[#8251ED] font-bold py-2 px-4 rounded-3xl shadow-lg mt-4"
             >
               {t("SignupButtonText")}
             </button>

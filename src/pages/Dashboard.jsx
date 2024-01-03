@@ -175,7 +175,7 @@ const Dashboard = () => {
         <Header />
 
         <div className="flex justify-center items-center align-middle flex-col">
-          <h3 className="text-center text-2xl font-bold">
+          <h3 className="text-center text-2xl font-bold text-violet-800">
             {t("ConversationTitle")}
           </h3>
 
@@ -186,11 +186,11 @@ const Dashboard = () => {
                   {conversations.map((conversation) => (
                     <li
                       key={conversation._id}
-                      className="flex items-center justify-center bg-white rounded p-2 mt-2"
+                      className="flex items-center justify-center rounded p-2 mt-2"
                     >
                       <button
-                        className="px-4 py-1 w-[280px] truncate rounded-3xl bg-[#8251ED] lg:w-[350px] text-white
-                          transition-all"
+                        className="px-4 py-2 w-[280px] truncate rounded-3xl bg-[#8251ED] lg:w-[350px] text-white
+                          transition-all shadow-lg"
                         onClick={() => {
                           goToConversation(conversation._id);
                         }}
@@ -206,7 +206,7 @@ const Dashboard = () => {
                       </button>
 
                       <button
-                        className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-2 transition-all"
+                        className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-2 transition-all shadow-lg"
                         onClick={() =>
                           handleDeleteConversation(conversation._id)
                         }
@@ -243,13 +243,13 @@ const Dashboard = () => {
         </div>
 
         <div className="flex flex-col justify-center items-center">
-          <h3 className="text-center text-2xl font-bold">
+          <h3 className="text-center text-2xl font-bold text-violet-800">
             {t("NewConversationTitle")}
           </h3>
 
           <input
             type="text"
-            className="border border-[#8251ED] rounded-3xl px-4 py-2 mb-4 mt-4"
+            className="border border-violet-500 font-bold placeholder:font-normal rounded-3xl px-4 py-2 mb-4 mt-4 bg-violet-500 placeholder:text-gray-200 text-white transition-all"
             placeholder={t("SearchUserPlaceholder")}
             value={newConversationUsername}
             onChange={(e) => {
@@ -274,14 +274,14 @@ const Dashboard = () => {
               />
             </div>
           ) : (
-            <ul>
+            <ul className="h-[30svh] overflow-auto">
               {filteredUsers.map((user) => (
                 <li
                   key={user._id}
-                  className="flex items-center justify-center bg-white rounded p-2 mt-2"
+                  className="flex items-center justify-center rounded p-2 mt-2"
                 >
                   <button
-                    className="px-4 py-1 rounded-3xl bg-[#8251ED] text-white w-[280px] truncate lg:w-[350px] transition-all"
+                    className="px-4 py-2 shadow-lg rounded-3xl bg-violet-500 text-white w-[280px] truncate lg:w-[350px] transition-all"
                     onClick={() =>
                       handleCreateConversation(user._id, user.username)
                     }

@@ -6,7 +6,7 @@ const Header = () => {
   const user = localStorage.getItem("token");
 
   return (
-    <header className="bg-violet-500">
+    <header className="bg-violet-500 border-b-4 ">
       <div className="flex items-center justify-between align-middle">
         <Logo />
 
@@ -30,11 +30,6 @@ const Header = () => {
           {user ? <LogoutButton /> : <div className="mr-4 px-4 py-1 rounded-full transition-all"></div>}
           <LanguageSwitcher />
         </div>
-      </div>
-
-      <div className="flex">
-        <div className="w-full bg-gradient-to-r from-violet-500 to-white"></div>
-        <div className="border-b-4 border-white border-dashed w-full"></div>
       </div>
     </header>
   );

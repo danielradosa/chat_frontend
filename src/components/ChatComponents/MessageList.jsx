@@ -50,12 +50,11 @@ const MessageList = ({
     }));
 
     setTimeout(() => {
-      // Reset the specific message's animatedHeart state to false.
       setAnimatedHearts((prevAnimatedHearts) => ({
         ...prevAnimatedHearts,
         [messageId]: false,
       }));
-    }, 200);
+    }, 100);
 
     const newIsLiked = !isAlreadyLiked;
 
@@ -99,7 +98,7 @@ const MessageList = ({
 
   return (
     <div
-      className="flex overflow-auto flex-col w-[95%] lg.max-w-[900px] rounded-3xl p-4 lg:p-8 top-[4.3rem] md:bottom-28 bottom-32 absolute"
+      className="flex overflow-auto flex-col w-full rounded-3xl p-4 lg:p-8 top-[4.3rem] md:bottom-28 bottom-32 absolute"
       ref={messageContainerRef}
     >
       {messages.map((message, index) => {
@@ -120,8 +119,8 @@ const MessageList = ({
             <div
               className={`${
                 message.sender === myId
-                  ? "bg-[#8251ED] text-white self-end"
-                  : "text-[#8251ED] self-start border border-[#8251ED]"
+                  ? "bg-violet-500 text-white self-end shadow-lg"
+                  : "text-violet-500 self-start bg-white shadow-lg"
               } rounded-3xl px-4 py-2 mb-2 mt-2 lg.max-w-[75%] max-w-[85%] flex ${
                 isLiked ? "message-liked" : ""
               }`}
@@ -134,7 +133,7 @@ const MessageList = ({
                     animatedHearts[messageId] ? "animate-heart" : ""
                   }`}
                 >
-                  🩵
+                  🩷
                 </span>
               )}
             </div>

@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100;300;400;500;700;900&display=swap');
 
 * {
@@ -29,10 +30,16 @@ main {
 }
 
 body {
-  font-family: "Hanken Grotesk", sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   max-height: 100vh;
+  background-image: url(./assets/bg.webp);
+  background-repeat: no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(12px);
+  line-height: 1.6;
+  letter-spacing: 0.05em;
 }
 
 code {
@@ -51,7 +58,7 @@ code {
   top: calc(100% - 15px);
   font-size: 1.35rem;
   transition: transform 0.2s ease-in-out;
-  border-radius: 22px;
+  border-radius: 30px;
 }
 
 .animate-heart {
