@@ -13,14 +13,16 @@ const Header = () => {
         <nav className="hidden md:flex justify-center p-4 items-center gap-4">
           { user ?
             <Link to="/dashboard">
-              <button className="bg-violet-800 text-white px-4 py-1 rounded-full">
+              <button className="bg-violet-800 text-white px-4 py-1 rounded-full
+              hover:bg-[#f3dae4] transition-all hover:text-violet-800">
                 Chats
               </button>
             </Link>
             : null
           }
           <Link to="/about">
-            <button className="bg-violet-800 text-white px-4 py-1 rounded-full">
+            <button className="bg-violet-800 text-white px-4 py-1 rounded-full
+            hover:bg-[#f3dae4] transition-all hover:text-violet-800">
               About
             </button>
           </Link>

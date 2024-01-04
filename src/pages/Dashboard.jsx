@@ -189,8 +189,8 @@ const Dashboard = () => {
                       className="flex items-center justify-center rounded p-2 mt-2"
                     >
                       <button
-                        className="px-4 py-2 w-[280px] truncate rounded-3xl bg-[#8251ED] lg:w-[350px] text-white
-                          transition-all shadow-lg"
+                        className="px-4 py-2 w-[280px] bg-[#f3dae4] truncate rounded-3xl lg:w-[350px] text-violet-500
+                          transition-all shadow-lg hover:bg-violet-500 hover:text-[#f3dae4]"
                         onClick={() => {
                           goToConversation(conversation._id);
                         }}
@@ -281,7 +281,8 @@ const Dashboard = () => {
                   className="flex items-center justify-center rounded p-2 mt-2"
                 >
                   <button
-                    className="px-4 py-2 shadow-lg rounded-3xl bg-violet-500 text-white w-[280px] truncate lg:w-[350px] transition-all"
+                    className="px-4 py-2 shadow-lg rounded-3xl bg-violet-500 text-white w-[280px] 
+                    truncate lg:w-[350px] transition-all hover:bg-violet-800"
                     onClick={() =>
                       handleCreateConversation(user._id, user.username)
                     }

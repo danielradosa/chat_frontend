@@ -17,64 +17,56 @@ const Chat = () => {
   const messageContainerRef = useRef(null);
   const [loading, setLoading] = useState(true);
   // eslint-disable-next-line
-  const [isTyping, setIsTyping] = useState(false);
-  const [typingUser, setTypingUser] = useState("");
   const apiURL = process.env.REACT_APP_API;
+  // eslint-disable-next-line
   const currentUser = localStorage.getItem("username");
 
   const socket = io(apiURL, {
     extraHeaders: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    transports: ["websocket"],
+    transports: ["websocket"]
   });
 
   const messageInputRef = useRef(null);
-  const typingTimeoutRef = useRef(null);
 
-  const fetchData = async () => {
-    try {
-      const [messagesResponse, conversationsResponse] = await Promise.all([
-        axios.get(MESSAGES_ROUTE(conversationId), {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }),
-        axios.get(CONVERSATIONS_ROUTE, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }),
-      ]);
 
-      setMessages(messagesResponse.data);
-
-      const conversation = conversationsResponse.data.find(
-        (conversation) => conversation._id === conversationId
-      );
-
-      if (conversation) {
-        setParticipants(conversation.participants);
-      } else {
-        console.log("Conversation not found");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [messagesResponse, conversationsResponse] = await Promise.all([
+          axios.get(MESSAGES_ROUTE(conversationId), {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }),
+          axios.get(CONVERSATIONS_ROUTE, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }),
+        ]);
+  
+        setMessages(messagesResponse.data);
+  
+        const conversation = conversationsResponse.data.find(
+          (conversation) => conversation._id === conversationId
+        );
+  
+        if (conversation) {
+          setParticipants(conversation.participants);
+        } else {
+          console.log("Conversation not found");
+        }
+  
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
+    };
 
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const handleTyping = () => {
-    setIsTyping(true);
-
-    clearTimeout(typingTimeoutRef.current);
-    typingTimeoutRef.current = setTimeout(() => {
-      setIsTyping(false);
-    }, 100);
-
-    socket.emit("userTyping", { username: currentUser, conversationId });
-  };
+    fetchData();
+  }, [conversationId]);
 
   const sendMessage = () => {
     const userId = localStorage.getItem("userId");
@@ -125,11 +117,6 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line
-  }, [conversationId]);
-
-  useEffect(() => {
     if (participants.length > 0) {
       const userId = localStorage.getItem("userId");
       setMyId(userId);
@@ -137,30 +124,20 @@ const Chat = () => {
   }, [participants]);
 
   useEffect(() => {
-    socket.on("receiveTyping", (data) => {
-      console.log("Received typing:", data.username);
-      setTypingUser(data.username);
-
-      clearTimeout(typingTimeoutRef.current);
-      typingTimeoutRef.current = setTimeout(() => {
-        setTypingUser("");
-      }, 100);
-    });
-
-    socket.on("receiveStoppedTyping", (data) => {
-      console.log("Received stopped typing:", data.username);
-      setTypingUser("");
-    });
-
     socket.emit("joinConversation", conversationId);
 
     socket.on("receiveMessage", (data) => {
       setMessages((prevMessages) => [...prevMessages, data.message]);
     });
 
+    socket.on("sendMessage", (data) => {
+      setMessages((prevMessages) => [...prevMessages, data.message]);
+    });
+
     return () => {
       socket.off("receiveMessage");
-      socket.off("receiveTyping");
+      socket.off("messageLiked");
+      socket.off("sendMessage");
     };
   }, [conversationId, myId, socket, t]);
 
@@ -201,12 +178,11 @@ const Chat = () => {
             myId={myId}
             conversationId={conversationId}
             setMessages={setMessages}
-            typingUser={typingUser}
           />
         )}
 
         <div className="flex items-center justify-center fixed bottom-12 md:bottom-8 text-center w-full p-4 lg:p-8">
-        <textarea
+          <textarea
             ref={messageInputRef}
             rows={1}
             placeholder={t("ChatPlaceholder")}
@@ -219,14 +195,12 @@ const Chat = () => {
                 if (e.target.value.trim() !== "") {
                   sendMessage();
                 }
-              } else {
-                handleTyping();
               }
             }}
           />
 
           <button
-            className="bg-[#8251ED] rounded-full ml-2"
+            className="bg-violet-500 rounded-full ml-2"
             onClick={sendMessage}
           >
             <img

@@ -3,16 +3,13 @@ import Linkify from "linkify-react";
 import io from "socket.io-client";
 import { LIKE_MESSAGE } from "../../utils/routes";
 import axios from "axios";
-import { useTranslation } from "react-i18next";
 
 const MessageList = ({
   messages,
   myId,
   conversationId,
   setMessages,
-  typingUser,
 }) => {
-  const { t } = useTranslation();
   const messageContainerRef = useRef(null);
   const apiURL = process.env.REACT_APP_API;
   const socket = io(apiURL, {
@@ -137,11 +134,6 @@ const MessageList = ({
                 </span>
               )}
             </div>
-            {index === messages.length - 1 && typingUser && (
-              <div className="typing-user left-0 absolute mt-6 p-8 text-[#8251ED]">
-                {t("IsTyping")}
-              </div>
-            )}
           </div>
         );
       })}

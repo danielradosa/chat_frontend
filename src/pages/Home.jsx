@@ -32,7 +32,7 @@ const Home = () => {
             <Link to="/sign-up">
               <button
                 className="text-white transition-all hover:bg-violet-800 w-64 
-                text-violet-500 font-bold py-2 px-4 rounded-3xl bg-violet-500 shadow-lg"
+                font-bold py-2 px-4 rounded-3xl bg-violet-500 shadow-lg"
               >
                 {t("SignupButtonText")}
               </button>
