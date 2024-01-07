@@ -28,5 +28,7 @@
     "NotificationNewMessage": "New message received",
     "NotificationNewMessageFrom": "From: ",
     "IsTyping": "Is typing...",
-    "ProfileTitle": "@dove.me"
+    "ProfileTitle": "@dove.me",
+    "LinkChats": "Chats",
+    "LinkAbout": "About"
 }

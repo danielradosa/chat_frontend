@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { LogoutButton, LanguageSwitcher, Logo } from "./HeaderComponents";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const user = localStorage.getItem("token");
+  const { t } = useTranslation();
 
   return (
     <header className="bg-violet-500 border-b-4 ">
@@ -15,7 +17,7 @@ const Header = () => {
             <Link to="/dashboard">
               <button className="bg-violet-800 text-white px-4 py-1 rounded-full
               hover:bg-[#f3dae4] transition-all hover:text-violet-800">
-                Chats
+                {t("LinkChats")}
               </button>
             </Link>
             : null
@@ -23,7 +25,7 @@ const Header = () => {
           <Link to="/about">
             <button className="bg-violet-800 text-white px-4 py-1 rounded-full
             hover:bg-[#f3dae4] transition-all hover:text-violet-800">
-              About
+              {t("LinkAbout")}
             </button>
           </Link>
         </nav>

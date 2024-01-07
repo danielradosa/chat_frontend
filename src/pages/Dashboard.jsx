@@ -189,8 +189,8 @@ const Dashboard = () => {
                       className="flex items-center justify-center rounded p-2 mt-2"
                     >
                       <button
-                        className="px-4 py-2 w-[280px] bg-[#f3dae4] truncate rounded-3xl lg:w-[350px] text-violet-500
-                          transition-all shadow-lg hover:bg-violet-500 hover:text-[#f3dae4]"
+                        className="px-4 py-2 w-full bg-white truncate rounded-3xl text-violet-500
+                          transition-all shadow-lg hover:bg-violet-500 hover:text-white"
                         onClick={() => {
                           goToConversation(conversation._id);
                         }}
@@ -206,7 +206,7 @@ const Dashboard = () => {
                       </button>
 
                       <button
-                        className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-2 transition-all shadow-lg"
+                        className="px-4 py-2 rounded-3xl bg-red-500 text-white ml-2 transition-all shadow-lg"
                         onClick={() =>
                           handleDeleteConversation(conversation._id)
                         }

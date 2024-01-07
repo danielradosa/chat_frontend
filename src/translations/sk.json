@@ -28,5 +28,7 @@
     "NotificationNewMessage": "Dostal si novú správu",
     "NotificationNewMessageFrom": "Od: ",
     "IsTyping": "Píše...",
-    "ProfileTitle": "@dove.me"
+    "ProfileTitle": "@dove.me",
+    "LinkChats": "Konverzácie",
+    "LinkAbout": "O nás"
 }

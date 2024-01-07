@@ -81,8 +81,8 @@ const Login = () => {
             />
             <button
               type="submit"
-              className="hover:text-white border border-[#8251ED] transition-all hover:bg-[#8251ED] 
-              text-[#8251ED] font-bold py-2 px-4 rounded-3xl shadow-lg mt-4"
+              className="hover:text-white transition-all hover:bg-[#8251ED] 
+              text-[#8251ED] font-bold py-2 px-4 rounded-3xl shadow-lg mt-4 bg-white"
             >
               {t("LoginButtonText")}
             </button>
