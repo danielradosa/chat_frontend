@@ -25,11 +25,10 @@ const Chat = () => {
     extraHeaders: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    transports: ["websocket"]
+    transports: ["websocket"],
   });
 
   const messageInputRef = useRef(null);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,19 +45,19 @@ const Chat = () => {
             },
           }),
         ]);
-  
+
         setMessages(messagesResponse.data);
-  
+
         const conversation = conversationsResponse.data.find(
           (conversation) => conversation._id === conversationId
         );
-  
+
         if (conversation) {
           setParticipants(conversation.participants);
         } else {
           console.log("Conversation not found");
         }
-  
+
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -188,7 +187,7 @@ const Chat = () => {
             placeholder={t("ChatPlaceholder")}
             maxLength={500}
             style={{ resize: "none" }}
-            className="bg-violet-500/50 transition-all outline-none focus:bg-violet-500 placeholder:text-white/80 text-white rounded-3xl px-4 py-2 mb-4 mt-4 h-auto w-full"
+            className="bg-blue-300 transition-all outline-none focus:bg-blue-400 placeholder:text-white text-white rounded-3xl px-4 py-2 mb-4 mt-4 h-auto w-full"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -200,7 +199,7 @@ const Chat = () => {
           />
 
           <button
-            className="bg-violet-500 rounded-full ml-2"
+            className="bg-blue-300 rounded-full ml-2"
             onClick={sendMessage}
           >
             <img

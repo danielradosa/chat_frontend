@@ -21,7 +21,8 @@ const LanguageSwitcher = () => {
         <img
           src={i18n.language === "sk" ? us : sk}
           alt="language icon"
-          className="w-10 saturate-150 p-1 border-2 rounded-3xl border-violet-800"
+          className="w-10 saturate-150 p-1 border-2 rounded-3xl border-blue-300 
+          hover:border-blue-400 transition-all"
         />
       </button>
     </>

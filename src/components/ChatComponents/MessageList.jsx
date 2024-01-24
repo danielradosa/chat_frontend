@@ -116,8 +116,8 @@ const MessageList = ({
             <div
               className={`${
                 message.sender === myId
-                  ? "bg-violet-500 text-white self-end shadow-lg"
-                  : "text-violet-500 self-start bg-white shadow-lg"
+                  ? "bg-blue-300 text-white self-end"
+                  : "text-blue-300 self-start bg-white"
               } rounded-3xl px-4 py-2 mb-2 mt-2 lg.max-w-[75%] max-w-[85%] flex ${
                 isLiked ? "message-liked" : ""
               }`}

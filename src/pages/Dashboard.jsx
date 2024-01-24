@@ -175,7 +175,7 @@ const Dashboard = () => {
         <Header />
 
         <div className="flex justify-center items-center align-middle flex-col">
-          <h3 className="text-center text-2xl font-bold text-violet-800">
+          <h3 className="text-center text-2xl font-bold text-white mb-6">
             {t("ConversationTitle")}
           </h3>
 
@@ -189,8 +189,8 @@ const Dashboard = () => {
                       className="flex items-center justify-center rounded p-2 mt-2"
                     >
                       <button
-                        className="px-4 py-2 w-full bg-white truncate rounded-3xl text-violet-500
-                          transition-all shadow-lg hover:bg-violet-500 hover:text-white"
+                        className="px-4 py-1 w-full bg-white truncate rounded-3xl text-blue-300
+                          transition-all hover:bg-blue-300 hover:text-white"
                         onClick={() => {
                           goToConversation(conversation._id);
                         }}
@@ -206,7 +206,7 @@ const Dashboard = () => {
                       </button>
 
                       <button
-                        className="px-4 py-2 rounded-3xl bg-red-500 text-white ml-2 transition-all shadow-lg"
+                        className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-2 transition-all"
                         onClick={() =>
                           handleDeleteConversation(conversation._id)
                         }
@@ -243,13 +243,14 @@ const Dashboard = () => {
         </div>
 
         <div className="flex flex-col justify-center items-center">
-          <h3 className="text-center text-2xl font-bold text-violet-800">
+          <h3 className="text-center text-2xl font-bold text-white mb-6">
             {t("NewConversationTitle")}
           </h3>
 
           <input
             type="text"
-            className="border border-violet-500 font-bold placeholder:font-normal rounded-3xl px-4 py-2 mb-4 mt-4 bg-violet-500 placeholder:text-gray-200 text-white transition-all"
+            className="font-bold placeholder:font-normal rounded-3xl 
+            px-4 py-2 mb-4 mt-4 bg-blue-300 placeholder:text-white text-white transition-all"
             placeholder={t("SearchUserPlaceholder")}
             value={newConversationUsername}
             onChange={(e) => {
@@ -281,8 +282,8 @@ const Dashboard = () => {
                   className="flex items-center justify-center rounded p-2 mt-2"
                 >
                   <button
-                    className="px-4 py-2 shadow-lg rounded-3xl bg-violet-500 text-white w-[280px] 
-                    truncate lg:w-[350px] transition-all hover:bg-violet-800"
+                    className="px-4 py-2 shadow-lg rounded-3xl bg-blue-300 text-white w-[280px] 
+                    truncate lg:w-[350px] transition-all hover:bg-blue-400"
                     onClick={() =>
                       handleCreateConversation(user._id, user.username)
                     }

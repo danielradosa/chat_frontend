@@ -41,11 +41,11 @@ const Signup = () => {
 
   return (
     <>
-      <main className="w-full  flex flex-col justify-between align-middle min-h-screen">
+      <main className="w-full flex flex-col justify-between align-middle min-h-screen">
         <Header />
 
         <form onSubmit={handleSignup}>
-          <h2 className="text-center text-2xl font-bold mb-4 text-violet-800">
+          <h2 className="text-center text-2xl font-bold mb-6 text-white">
             {t("SignupTitle")}
           </h2>
           {loading && (
@@ -63,8 +63,8 @@ const Signup = () => {
               placeholder={t("SignupNamePlaceholder")}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="bg-violet-500/50 placeholder:text-white/50 text-white focus:bg-violet-500 
-              outline-none transition-all rounded-3xl px-4 py-2 mb-4 shadow-lg selection:bg-white selection:text-violet-500"
+              className="bg-blue-300 placeholder:text-white text-white focus:bg-blue-400
+              outline-none transition-all rounded-3xl px-4 py-1 mb-4 selection:bg-white selection:text-blue-400"
             />
             <input
               required
@@ -74,8 +74,8 @@ const Signup = () => {
               placeholder={t("SignupPasswordPlaceholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-violet-500/50 placeholder:text-white/50 text-white focus:bg-violet-500 
-              outline-none transition-all rounded-3xl px-4 py-2 mb-4 shadow-lg selection:bg-white selection:text-violet-500"
+              className="bg-blue-300 placeholder:text-white text-white focus:bg-blue-400
+              outline-none transition-all rounded-3xl px-4 py-1 mb-4 selection:bg-white selection:text-blue-400"
             />
             <input
               required
@@ -85,13 +85,13 @@ const Signup = () => {
               placeholder={t("SignupPasswordAgainPlaceholder")}
               value={passwordAgain}
               onChange={(e) => setPasswordAgain(e.target.value)}
-              className="bg-violet-500/50 placeholder:text-white/50 text-white focus:bg-violet-500 
-              outline-none transition-all rounded-3xl px-4 py-2 mb-4 shadow-lg selection:bg-white selection:text-violet-500"
+              className="bg-blue-300 placeholder:text-white text-white focus:bg-blue-400
+              outline-none transition-all rounded-3xl px-4 py-1 mb-4 selection:bg-white selection:text-blue-400"
             />
             <button
               type="submit"
-              className="hover:text-white transition-all hover:bg-[#8251ED] 
-              text-[#8251ED] font-bold py-2 px-4 rounded-3xl shadow-lg mt-4 bg-white"
+              className="hover:text-white transition-all hover:bg-blue-300
+              text-blue-300 font-bold py-1 px-4 rounded-3xl shadow-lg mt-4 bg-white"
             >
               {t("SignupButtonText")}
             </button>

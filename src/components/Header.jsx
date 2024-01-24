@@ -8,30 +8,46 @@ const Header = () => {
   const { t } = useTranslation();
 
   return (
-    <header className="bg-violet-500 border-b-4 ">
-      <div className="flex items-center justify-between align-middle">
+    <header className="bg-white border-b-4">
+      <div className="p-4 hidden md:flex items-center justify-between w-full">
         <Logo />
 
-        <nav className="hidden md:flex justify-center p-4 items-center gap-4">
-          { user ?
+        <nav className="hidden md:flex gap-4">
+          {user ? (
             <Link to="/dashboard">
-              <button className="bg-violet-800 text-white px-4 py-1 rounded-full
-              hover:bg-[#f3dae4] transition-all hover:text-violet-800">
+              <button
+                className="text-white bg-blue-300 px-4 py-1 rounded-full
+       transition-all hover:bg-blue-400 hover:text-white"
+              >
                 {t("LinkChats")}
               </button>
             </Link>
-            : null
-          }
+          ) : (
+            <Link to="/">
+              <button
+                className="text-white bg-blue-300/50 px-4 py-1 rounded-full
+       transition-all hover:bg-blue-400/50 hover:text-white cursor-not-allowed"
+              >
+                {t("LinkChats")}
+              </button>
+            </Link>
+          )}
           <Link to="/about">
-            <button className="bg-violet-800 text-white px-4 py-1 rounded-full
-            hover:bg-[#f3dae4] transition-all hover:text-violet-800">
+            <button
+              className="text-white bg-blue-300 px-4 py-1 rounded-full
+       transition-all hover:bg-blue-400 hover:text-white"
+            >
               {t("LinkAbout")}
             </button>
           </Link>
         </nav>
 
-        <div className="flex justify-center align-middle items-center p-4">
-          {user ? <LogoutButton /> : <div className="mr-4 px-4 py-1 rounded-full transition-all"></div>}
+        <div className="flex justify-between items-center gap-4">
+          {user ? (
+            <LogoutButton />
+          ) : (
+            <div className="w-20"></div>
+          )}
           <LanguageSwitcher />
         </div>
       </div>
