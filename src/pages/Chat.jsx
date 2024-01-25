@@ -180,14 +180,16 @@ const Chat = () => {
           />
         )}
 
-        <div className="flex items-center justify-center fixed bottom-12 md:bottom-8 text-center w-full p-4 lg:p-8">
+        <div className="flex items-center justify-center fixed 
+        bottom-12 md:bottom-8 text-center w-full p-4 lg:p-8">
           <textarea
             ref={messageInputRef}
             rows={1}
             placeholder={t("ChatPlaceholder")}
             maxLength={500}
             style={{ resize: "none" }}
-            className="bg-blue-300 transition-all outline-none focus:bg-blue-400 placeholder:text-white text-white rounded-3xl px-4 py-2 mb-4 mt-4 h-auto w-full"
+            className="bg-blue-300 transition-all outline-none focus:bg-blue-400 placeholder:text-white 
+            text-white rounded-3xl px-4 py-2 mb-4 mt-4 h-auto w-full"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();

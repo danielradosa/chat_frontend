@@ -189,7 +189,7 @@ const Dashboard = () => {
                       className="flex items-center justify-center rounded p-2 mt-2"
                     >
                       <button
-                        className="px-4 py-1 w-full bg-white truncate rounded-3xl text-blue-300
+                        className="px-4 py-2 w-full bg-white truncate rounded-3xl text-blue-300
                           transition-all hover:bg-blue-300 hover:text-white"
                         onClick={() => {
                           goToConversation(conversation._id);
@@ -206,7 +206,7 @@ const Dashboard = () => {
                       </button>
 
                       <button
-                        className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-2 transition-all"
+                        className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-2 transition-all btnes"
                         onClick={() =>
                           handleDeleteConversation(conversation._id)
                         }
@@ -214,7 +214,7 @@ const Dashboard = () => {
                         <img
                           src="https://cdn-icons-png.flaticon.com/512/542/542724.png"
                           alt="trash"
-                          className="w-4 py-1 invert"
+                          className="w-4 py-2 invert"
                         />
                       </button>
                     </li>

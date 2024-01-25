@@ -1,6 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Home, Login, Dashboard, Signup, Chat, Profile, About } from "./pages/index";
+import {
+  Home,
+  Login,
+  Dashboard,
+  Signup,
+  Chat,
+  Profile,
+  About,
+} from "./pages/index";
 import IsAuthenticated from "./utils/isAuthenticated";
 import i18n from "./i18n";
 import { I18nextProvider } from "react-i18next";
