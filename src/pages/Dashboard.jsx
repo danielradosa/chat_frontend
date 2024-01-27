@@ -38,7 +38,7 @@ const Dashboard = () => {
           allUsers.filter(
             (user) =>
               user.username !== currentUserUsername &&
-              isParticipantInConversations(user._id)
+              isParticipantInConversations(user._id),
           );
         setUsers(allUsers);
         setFilteredUsers(filteredExcludingCurrentUserAndInConversationsWith);
@@ -82,8 +82,8 @@ const Dashboard = () => {
   const isParticipantInConversations = (userId) => {
     return conversations.some((conversation) =>
       conversation.participants.some(
-        (participant) => participant._id === userId
-      )
+        (participant) => participant._id === userId,
+      ),
     );
   };
 
@@ -98,8 +98,8 @@ const Dashboard = () => {
       await axios.delete(`${CONVERSATIONS_ROUTE}/${conversationId}`, config);
       setConversations((prevConversations) =>
         prevConversations.filter(
-          (conversation) => conversation._id !== conversationId
-        )
+          (conversation) => conversation._id !== conversationId,
+        ),
       );
     } catch (error) {
       console.error("Error deleting conversation:", error);
@@ -109,8 +109,8 @@ const Dashboard = () => {
   const handleCreateConversation = async (participantId, participantName) => {
     const existingConversation = conversations.find((conversation) =>
       conversation.participants.some(
-        (participant) => participant._id === participantId
-      )
+        (participant) => participant._id === participantId,
+      ),
     );
 
     if (existingConversation) {
@@ -132,7 +132,7 @@ const Dashboard = () => {
           title: participantName,
           createdAt: "",
         },
-        config
+        config,
       );
 
       setConversations([...conversations, response.data]);
@@ -154,8 +154,8 @@ const Dashboard = () => {
     socket.on("deleteConversation", (conversationId) => {
       setConversations((prevConversations) =>
         prevConversations.filter(
-          (conversation) => conversation._id !== conversationId
-        )
+          (conversation) => conversation._id !== conversationId,
+        ),
       );
     });
 
@@ -171,11 +171,11 @@ const Dashboard = () => {
 
   return (
     <>
-      <main className="w-full flex flex-col justify-between align-middle min-h-screen">
+      <main className="flex min-h-screen w-full flex-col justify-between align-middle">
         <Header />
 
-        <div className="flex justify-center items-center align-middle flex-col">
-          <h3 className="text-center text-2xl font-bold text-white mb-6">
+        <div className="flex flex-col items-center justify-center align-middle">
+          <h3 className="mb-6 text-center text-2xl font-bold text-white">
             {t("ConversationTitle")}
           </h3>
 
@@ -186,19 +186,19 @@ const Dashboard = () => {
                   {conversations.map((conversation) => (
                     <li
                       key={conversation._id}
-                      className="flex items-center justify-center rounded p-2 mt-2"
+                      className="mt-2 flex items-center justify-center rounded p-2"
                     >
                       <button
-                        className="px-4 py-2 w-full bg-white truncate rounded-3xl text-blue-300
+                        className="w-full truncate rounded-3xl bg-white px-4 py-2 text-blue-300
                           transition-all hover:bg-blue-300 hover:text-white"
                         onClick={() => {
                           goToConversation(conversation._id);
                         }}
                       >
                         {t("OpenConversation")}
-                        <span className="font-bold ml-2">
+                        <span className="ml-2 font-bold">
                           {conversation.title.includes(
-                            localStorage.getItem("username")
+                            localStorage.getItem("username"),
                           )
                             ? conversation.participants[1].username
                             : conversation.participants[0].username}
@@ -206,7 +206,7 @@ const Dashboard = () => {
                       </button>
 
                       <button
-                        className="px-4 py-1 rounded-3xl bg-red-500 text-white ml-2 transition-all btnes"
+                        className="btnes ml-2 rounded-3xl bg-red-500 px-4 py-1 text-white transition-all"
                         onClick={() =>
                           handleDeleteConversation(conversation._id)
                         }
@@ -229,12 +229,12 @@ const Dashboard = () => {
               <Oval
                 height={40}
                 width={40}
-                color="#8251ED"
+                color="#92c5fd"
                 wrapperStyle={{}}
                 wrapperClass=""
                 visible={true}
                 ariaLabel="oval-loading"
-                secondaryColor="#8251ED"
+                secondaryColor="#3696ff"
                 strokeWidth={6}
                 strokeWidthSecondary={6}
               />
@@ -242,15 +242,15 @@ const Dashboard = () => {
           )}
         </div>
 
-        <div className="flex flex-col justify-center items-center">
-          <h3 className="text-center text-2xl font-bold text-white mb-6">
+        <div className="flex flex-col items-center justify-center">
+          <h3 className="mb-6 text-center text-2xl font-bold text-white">
             {t("NewConversationTitle")}
           </h3>
 
           <input
             type="text"
-            className="font-bold placeholder:font-normal rounded-3xl 
-            px-4 py-2 mb-4 mt-4 bg-blue-300 placeholder:text-white text-white transition-all"
+            className="mb-4 mt-4 rounded-3xl
+            bg-blue-300 px-4 py-2 font-bold text-white transition-all placeholder:font-normal placeholder:text-white"
             placeholder={t("SearchUserPlaceholder")}
             value={newConversationUsername}
             onChange={(e) => {
@@ -264,12 +264,12 @@ const Dashboard = () => {
               <Oval
                 height={40}
                 width={40}
-                color="#8251ED"
+                color="#92c5fd"
                 wrapperStyle={{}}
                 wrapperClass=""
                 visible={true}
                 ariaLabel="oval-loading"
-                secondaryColor="#8251ED"
+                secondaryColor="#3696ff"
                 strokeWidth={6}
                 strokeWidthSecondary={6}
               />
@@ -279,17 +279,17 @@ const Dashboard = () => {
               {filteredUsers.map((user) => (
                 <li
                   key={user._id}
-                  className="flex items-center justify-center rounded p-2 mt-2"
+                  className="mt-2 flex items-center justify-center rounded p-2"
                 >
                   <button
-                    className="px-4 py-2 shadow-lg rounded-3xl bg-blue-300 text-white w-[280px] 
-                    truncate lg:w-[350px] transition-all hover:bg-blue-400"
+                    className="w-[280px] truncate rounded-3xl bg-blue-300 px-4 py-2 text-white
+                    shadow-lg transition-all hover:bg-blue-400 lg:w-[350px]"
                     onClick={() =>
                       handleCreateConversation(user._id, user.username)
                     }
                   >
                     {t("CreateConversation")}
-                    <span className="font-bold ml-2">{user.username}</span>
+                    <span className="ml-2 font-bold">{user.username}</span>
                   </button>
                 </li>
               ))}

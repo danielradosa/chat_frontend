@@ -41,21 +41,21 @@ const Signup = () => {
 
   return (
     <>
-      <main className="w-full flex flex-col justify-between align-middle min-h-screen">
+      <main className="flex min-h-screen w-full flex-col justify-between align-middle">
         <Header />
 
         <form onSubmit={handleSignup}>
-          <h2 className="text-center text-2xl font-bold mb-6 text-white">
+          <h2 className="mb-6 text-center text-2xl font-bold text-white">
             {t("SignupTitle")}
           </h2>
           {loading && (
             <img
               src="https://i.gifer.com/Pak.gif"
               alt="loader"
-              className="w-48 flex mx-auto mt-[-2rem]"
+              className="mx-auto mt-[-2rem] flex w-48"
             />
           )}
-          <div className="flex justify-center align-middle flex-col items-center">
+          <div className="flex flex-col items-center justify-center align-middle">
             <input
               type="text"
               autoComplete="off"
@@ -63,35 +63,35 @@ const Signup = () => {
               placeholder={t("SignupNamePlaceholder")}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="bg-blue-300 placeholder:text-white text-white focus:bg-blue-400
-              outline-none transition-all rounded-3xl px-4 py-2 mb-4 selection:bg-white selection:text-blue-400"
+              className="mb-4 rounded-3xl bg-blue-300 px-4
+              py-2 text-white outline-none transition-all selection:bg-white selection:text-blue-400 placeholder:text-white focus:bg-blue-400"
             />
             <input
               required
-              minLength={5}
+              minLength={6}
               type="password"
               autoComplete="new-password"
               placeholder={t("SignupPasswordPlaceholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-blue-300 placeholder:text-white text-white focus:bg-blue-400
-              outline-none transition-all rounded-3xl px-4 py-2 mb-4 selection:bg-white selection:text-blue-400"
+              className="mb-4 rounded-3xl bg-blue-300 px-4 py-2
+              text-white outline-none transition-all selection:bg-white selection:text-blue-400 placeholder:text-white focus:bg-blue-400"
             />
             <input
               required
-              minLength={5}
+              minLength={6}
               type="password"
               autoComplete="new-password"
               placeholder={t("SignupPasswordAgainPlaceholder")}
               value={passwordAgain}
               onChange={(e) => setPasswordAgain(e.target.value)}
-              className="bg-blue-300 placeholder:text-white text-white focus:bg-blue-400
-              outline-none transition-all rounded-3xl px-4 py-2 mb-4 selection:bg-white selection:text-blue-400"
+              className="mb-4 rounded-3xl bg-blue-300 px-4
+              py-2 text-white outline-none transition-all selection:bg-white selection:text-blue-400 placeholder:text-white focus:bg-blue-400"
             />
             <button
               type="submit"
-              className="hover:text-white transition-all hover:bg-blue-300
-              text-blue-300 font-bold py-2 px-4 rounded-3xl shadow-lg mt-4 bg-white"
+              className="mt-4 rounded-3xl bg-white
+              px-4 py-2 font-bold text-blue-300 shadow-lg transition-all hover:bg-blue-300 hover:text-white"
             >
               {t("SignupButtonText")}
             </button>

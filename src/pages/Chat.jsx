@@ -49,7 +49,7 @@ const Chat = () => {
         setMessages(messagesResponse.data);
 
         const conversation = conversationsResponse.data.find(
-          (conversation) => conversation._id === conversationId
+          (conversation) => conversation._id === conversationId,
         );
 
         if (conversation) {
@@ -93,7 +93,7 @@ const Chat = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        }
+        },
       )
       .then((response) => {
         const newMessage = response.data;
@@ -152,21 +152,21 @@ const Chat = () => {
   }, [messages, conversationId, t]);
 
   return (
-    <div className="w-full flex flex-col justify-between align-middle min-h-screen">
+    <div className="flex min-h-screen w-full flex-col justify-between align-middle">
       <Header />
 
-      <div className="flex justify-center align-middle items-center flex-col">
+      <div className="flex flex-col items-center justify-center align-middle">
         {loading ? (
           <div className="mt-[-4rem]">
             <Oval
               height={40}
               width={40}
-              color="#8251ED"
+              color="#92c5fd"
               wrapperStyle={{}}
               wrapperClass=""
               visible={true}
               ariaLabel="oval-loading"
-              secondaryColor="#8251ED"
+              secondaryColor="#3696ff"
               strokeWidth={6}
               strokeWidthSecondary={6}
             />
@@ -180,16 +180,18 @@ const Chat = () => {
           />
         )}
 
-        <div className="flex items-center justify-center fixed 
-        bottom-12 md:bottom-8 text-center w-full p-4 lg:p-8">
+        <div
+          className="fixed bottom-12 flex w-full
+        items-center justify-center p-4 text-center md:bottom-8 lg:p-8"
+        >
           <textarea
             ref={messageInputRef}
             rows={1}
             placeholder={t("ChatPlaceholder")}
             maxLength={500}
             style={{ resize: "none" }}
-            className="bg-blue-300 transition-all outline-none focus:bg-blue-400 placeholder:text-white 
-            text-white rounded-3xl px-4 py-2 mb-4 mt-4 h-auto w-full"
+            className="mb-4 mt-4 h-auto w-full rounded-3xl
+            bg-blue-300 px-4 py-2 text-white outline-none transition-all placeholder:text-white focus:bg-blue-400"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -201,13 +203,13 @@ const Chat = () => {
           />
 
           <button
-            className="bg-blue-300 rounded-full ml-2"
+            className="ml-2 rounded-full bg-blue-300"
             onClick={sendMessage}
           >
             <img
               src="https://cdn.icon-icons.com/icons2/1678/PNG/512/wondicon-ui-free-send_111204.png"
               alt="send"
-              className="w-10 p-2 invert rounded-full"
+              className="w-10 rounded-full p-2 invert"
             />
           </button>
         </div>
