@@ -4,12 +4,7 @@ import io from "socket.io-client";
 import { LIKE_MESSAGE } from "../../utils/routes";
 import axios from "axios";
 
-const MessageList = ({
-  messages,
-  myId,
-  conversationId,
-  setMessages,
-}) => {
+const MessageList = ({ messages, myId, conversationId, setMessages }) => {
   const messageContainerRef = useRef(null);
   const apiURL = process.env.REACT_APP_API;
   const socket = io(apiURL, {
@@ -22,7 +17,14 @@ const MessageList = ({
   const options = {
     target: "_blank",
     rel: "noopener noreferrer",
-    className: "font-bold italic flex",
+    className: "font-bold italic",
+    defaultProtocol: "//",
+    format: (value, type) => {
+      if (type === "url" && value.length > 30) {
+        return value.slice(0, 30) + "...";
+      }
+      return value;
+    },
   };
 
   const [animatedHearts, setAnimatedHearts] = useState({});
@@ -118,7 +120,7 @@ const MessageList = ({
                 message.sender === myId
                   ? "bg-blue-300 text-white self-end"
                   : "text-blue-300 self-start bg-white"
-              } rounded-3xl px-4 py-2 mb-2 mt-2 lg.max-w-[75%] max-w-[85%] flex ${
+              } rounded-3xl px-4 py-2 mb-2 mt-2 lg.max-w-[75%] max-w-[85%] ${
                 isLiked ? "message-liked" : ""
               }`}
               onDoubleClick={() => handleLikeMessage(message._id)}
