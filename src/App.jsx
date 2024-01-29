@@ -18,6 +18,11 @@ function App() {
   const selectedLanguage = Cookies.get("selectedLanguage");
   i18n.changeLanguage(selectedLanguage);
 
+  document.addEventListener("mousemove", (e) => {
+    document.body.style.backgroundPositionX = -e.pageX / 100 + "px";
+    document.body.style.backgroundPositionY = -e.pageY / 100 + "px";
+  });
+
   return (
     <Router>
       <I18nextProvider i18n={i18n}>

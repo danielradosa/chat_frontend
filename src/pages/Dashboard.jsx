@@ -186,7 +186,7 @@ const Dashboard = () => {
                   {conversations.map((conversation) => (
                     <li
                       key={conversation._id}
-                      className="mt-2 flex items-center justify-center rounded p-2"
+                      className="mt-2 flex items-center justify-center rounded p-2 md:w-full w-[85%] mx-auto"
                     >
                       <button
                         className="w-full truncate rounded-3xl bg-white px-4 py-2 text-blue-300
