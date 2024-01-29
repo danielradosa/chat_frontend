@@ -191,7 +191,8 @@ const Chat = () => {
             maxLength={500}
             style={{ resize: "none" }}
             className="mb-4 mt-4 h-auto w-full rounded-3xl
-            bg-blue-300 px-4 py-2 text-white outline-none transition-all placeholder:text-white focus:bg-blue-400"
+            bg-blue-300 px-4 py-2 text-white outline-none 
+            transition-all placeholder:text-white focus:bg-blue-400"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -203,13 +204,13 @@ const Chat = () => {
           />
 
           <button
-            className="ml-2 rounded-full bg-blue-300"
+            className="ml-2 rounded-full bg-blue-300 hover:bg-blue-400"
             onClick={sendMessage}
           >
             <img
-              src="https://cdn.icon-icons.com/icons2/1678/PNG/512/wondicon-ui-free-send_111204.png"
+              src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_send-512.png"
               alt="send"
-              className="w-10 rounded-full p-2 invert"
+              className="w-10 rounded-full p-2 invert hover:rotate-[-35deg] transition-all"
             />
           </button>
         </div>
