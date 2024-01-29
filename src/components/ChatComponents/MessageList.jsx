@@ -18,7 +18,6 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
     target: "_blank",
     rel: "noopener noreferrer",
     className: "font-bold italic",
-    defaultProtocol: "//",
     format: (value, type) => {
       if (type === "url" && value.length > 30) {
         return value.slice(0, 30) + "...";
