@@ -21,24 +21,18 @@ const Home = () => {
           alt=""
           width="256px"
         />
-        <p className="font-bold text-white md:text-2xl">
+        <p className="font-bold md:text-2xl">
           {t("HomeText")} <br /> {t("HomeText2")}
         </p>
 
         <div className="flex flex-col items-center justify-center gap-4">
           <Link to="/login">
-            <button
-              className="mt-8 w-48 rounded-3xl bg-white px-4
-                py-2 font-bold text-blue-300 transition-all hover:bg-blue-300 hover:text-white"
-            >
+            <button className="mt-8 w-48 px-4 py-2 font-bold">
               {t("LoginButtonText")}
             </button>
           </Link>
           <Link to="/sign-up">
-            <button
-              className="w-64 rounded-3xl bg-blue-300 px-4
-                py-2 font-bold text-white transition-all hover:bg-blue-400"
-            >
+            <button className="w-64 px-4 py-2 font-bold">
               {t("SignupButtonText")}
             </button>
           </Link>

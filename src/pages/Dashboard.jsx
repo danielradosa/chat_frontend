@@ -24,6 +24,7 @@ const Dashboard = () => {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     transports: ["websocket"],
+    autoConnect: true,
   });
 
   useEffect(() => {
@@ -38,7 +39,7 @@ const Dashboard = () => {
           allUsers.filter(
             (user) =>
               user.username !== currentUserUsername &&
-              isParticipantInConversations(user._id),
+              isParticipantInConversations(user._id)
           );
         setUsers(allUsers);
         setFilteredUsers(filteredExcludingCurrentUserAndInConversationsWith);
@@ -82,8 +83,8 @@ const Dashboard = () => {
   const isParticipantInConversations = (userId) => {
     return conversations.some((conversation) =>
       conversation.participants.some(
-        (participant) => participant._id === userId,
-      ),
+        (participant) => participant._id === userId
+      )
     );
   };
 
@@ -98,8 +99,8 @@ const Dashboard = () => {
       await axios.delete(`${CONVERSATIONS_ROUTE}/${conversationId}`, config);
       setConversations((prevConversations) =>
         prevConversations.filter(
-          (conversation) => conversation._id !== conversationId,
-        ),
+          (conversation) => conversation._id !== conversationId
+        )
       );
     } catch (error) {
       console.error("Error deleting conversation:", error);
@@ -109,8 +110,8 @@ const Dashboard = () => {
   const handleCreateConversation = async (participantId, participantName) => {
     const existingConversation = conversations.find((conversation) =>
       conversation.participants.some(
-        (participant) => participant._id === participantId,
-      ),
+        (participant) => participant._id === participantId
+      )
     );
 
     if (existingConversation) {
@@ -132,7 +133,7 @@ const Dashboard = () => {
           title: participantName,
           createdAt: "",
         },
-        config,
+        config
       );
 
       setConversations([...conversations, response.data]);
@@ -154,8 +155,8 @@ const Dashboard = () => {
     socket.on("deleteConversation", (conversationId) => {
       setConversations((prevConversations) =>
         prevConversations.filter(
-          (conversation) => conversation._id !== conversationId,
-        ),
+          (conversation) => conversation._id !== conversationId
+        )
       );
     });
 
@@ -175,7 +176,7 @@ const Dashboard = () => {
         <Header />
 
         <div className="flex flex-col items-center justify-center align-middle">
-          <h3 className="mb-6 text-center text-2xl font-bold text-white">
+          <h3 className="mb-6 text-center text-2xl font-bold">
             {t("ConversationTitle")}
           </h3>
 
@@ -186,11 +187,10 @@ const Dashboard = () => {
                   {conversations.map((conversation) => (
                     <li
                       key={conversation._id}
-                      className="mt-2 flex items-center justify-center rounded p-2 md:w-full w-[85%] mx-auto"
+                      className="mt-2 flex items-center justify-center p-2 md:w-full w-[85%] mx-auto"
                     >
                       <button
-                        className="w-full truncate rounded-3xl bg-white px-4 py-2 text-blue-300
-                          transition-all hover:bg-blue-300 hover:text-white"
+                        className="w-full truncate px-4 py-2"
                         onClick={() => {
                           goToConversation(conversation._id);
                         }}
@@ -198,7 +198,7 @@ const Dashboard = () => {
                         {t("OpenConversation")}
                         <span className="ml-2 font-bold">
                           {conversation.title.includes(
-                            localStorage.getItem("username"),
+                            localStorage.getItem("username")
                           )
                             ? conversation.participants[1].username
                             : conversation.participants[0].username}
@@ -206,7 +206,7 @@ const Dashboard = () => {
                       </button>
 
                       <button
-                        className="btnes ml-2 rounded-3xl bg-red-500 px-4 py-1 text-white transition-all"
+                        className="btnes ml-2 px-4 py-1 border-2"
                         onClick={() =>
                           handleDeleteConversation(conversation._id)
                         }
@@ -214,7 +214,7 @@ const Dashboard = () => {
                         <img
                           src="https://cdn-icons-png.flaticon.com/512/542/542724.png"
                           alt="trash"
-                          className="w-4 py-2 invert"
+                          className="w-4 py-2"
                         />
                       </button>
                     </li>
@@ -243,14 +243,13 @@ const Dashboard = () => {
         </div>
 
         <div className="flex flex-col items-center justify-center">
-          <h3 className="mb-6 text-center text-2xl font-bold text-white">
+          <h3 className="mb-6 text-center text-2xl font-bold">
             {t("NewConversationTitle")}
           </h3>
 
           <input
             type="text"
-            className="mb-4 mt-4 rounded-3xl
-            bg-blue-300 px-4 py-2 font-bold text-white transition-all placeholder:font-normal placeholder:text-white"
+            className="mb-4 mt-4 px-4 py-2 font-bold"
             placeholder={t("SearchUserPlaceholder")}
             value={newConversationUsername}
             onChange={(e) => {
@@ -279,11 +278,10 @@ const Dashboard = () => {
               {filteredUsers.map((user) => (
                 <li
                   key={user._id}
-                  className="mt-2 flex items-center justify-center rounded p-2"
+                  className="mt-2 flex items-center justify-center p-2"
                 >
                   <button
-                    className="w-[280px] truncate rounded-3xl bg-blue-300 px-4 py-2 text-white
-                    shadow-lg transition-all hover:bg-blue-400 lg:w-[350px]"
+                    className="w-[280px] truncate px-4 py-2 lg:w-[350px]"
                     onClick={() =>
                       handleCreateConversation(user._id, user.username)
                     }

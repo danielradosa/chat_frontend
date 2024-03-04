@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import { Header, Footer } from "../components";
 import { MessageList } from "../components/ChatComponents";
@@ -16,7 +16,6 @@ const Chat = () => {
   const [myId, setMyId] = useState("");
   const messageContainerRef = useRef(null);
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line
   const apiURL = process.env.REACT_APP_API;
   // eslint-disable-next-line
   const currentUser = localStorage.getItem("username");
@@ -26,46 +25,49 @@ const Chat = () => {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     transports: ["websocket"],
+    autoConnect: true,
   });
 
   const messageInputRef = useRef(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [messagesResponse, conversationsResponse] = await Promise.all([
-          axios.get(MESSAGES_ROUTE(conversationId), {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }),
-          axios.get(CONVERSATIONS_ROUTE, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }),
-        ]);
+  const fetchData = useCallback(async () => {
+    try {
+      const [messagesResponse, conversationsResponse] = await Promise.all([
+        axios.get(MESSAGES_ROUTE(conversationId), {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }),
+        axios.get(CONVERSATIONS_ROUTE, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }),
+      ]);
 
-        setMessages(messagesResponse.data);
+      setMessages(messagesResponse.data);
 
-        const conversation = conversationsResponse.data.find(
-          (conversation) => conversation._id === conversationId,
-        );
+      const conversation = conversationsResponse.data.find(
+        (conversation) => conversation._id === conversationId
+      );
 
-        if (conversation) {
-          setParticipants(conversation.participants);
-        } else {
-          console.log("Conversation not found");
-        }
-
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      if (conversation) {
+        setParticipants(conversation.participants);
+      } else {
+        console.log("Conversation not found");
       }
-    };
 
-    fetchData();
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }, [conversationId]);
+
+  useEffect(() => {
+    fetchData();
+
+    return () => {};
+  }, [conversationId, fetchData]);
 
   const sendMessage = () => {
     const userId = localStorage.getItem("userId");
@@ -93,7 +95,7 @@ const Chat = () => {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        },
+        }
       )
       .then((response) => {
         const newMessage = response.data;
@@ -123,7 +125,22 @@ const Chat = () => {
   }, [participants]);
 
   useEffect(() => {
-    socket.emit("joinConversation", conversationId);
+    socket.on("connect", () => {
+      socket.emit("joinConversation", conversationId);
+    });
+
+    const handleVisibilityChange = () => {
+      const isPageVisible = !document.hidden;
+
+      if (isPageVisible && !socket.connected) {
+        fetchData();
+        socket.connect();
+      } else if (!isPageVisible && socket.connected) {
+        socket.disconnect();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     socket.on("receiveMessage", (data) => {
       setMessages((prevMessages) => [...prevMessages, data.message]);
@@ -137,8 +154,9 @@ const Chat = () => {
       socket.off("receiveMessage");
       socket.off("messageLiked");
       socket.off("sendMessage");
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [conversationId, myId, socket, t]);
+  }, [conversationId, myId, socket, t, fetchData, participants]);
 
   useEffect(() => {
     if (messageContainerRef.current) {
@@ -190,9 +208,7 @@ const Chat = () => {
             placeholder={t("ChatPlaceholder")}
             maxLength={500}
             style={{ resize: "none" }}
-            className="mb-4 mt-4 h-auto w-full rounded-3xl
-            bg-blue-300 px-4 py-2 text-white outline-none 
-            transition-all placeholder:text-white focus:bg-blue-400"
+            className="mb-4 mt-4 h-auto w-full px-4 py-2 bg-slate-800 shadow-lg text-white"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -203,14 +219,11 @@ const Chat = () => {
             }}
           />
 
-          <button
-            className="ml-2 rounded-full bg-blue-300 hover:bg-blue-400"
-            onClick={sendMessage}
-          >
+          <button className="ml-2 bg-slate-800 shadow-lg" onClick={sendMessage}>
             <img
               src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_send-512.png"
               alt="send"
-              className="w-10 rounded-full p-2 invert hover:rotate-[-35deg] transition-all"
+              className="w-10 p-2 hover:rotate-[-35deg] transition-all invert"
             />
           </button>
         </div>

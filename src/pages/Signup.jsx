@@ -45,7 +45,7 @@ const Signup = () => {
         <Header />
 
         <form onSubmit={handleSignup}>
-          <h2 className="mb-6 text-center text-2xl font-bold text-white">
+          <h2 className="mb-6 text-center text-2xl font-bold">
             {t("SignupTitle")}
           </h2>
           {loading && (
@@ -63,8 +63,7 @@ const Signup = () => {
               placeholder={t("SignupNamePlaceholder")}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="mb-4 rounded-3xl bg-blue-300 px-4
-              py-2 text-white outline-none transition-all selection:bg-white selection:text-blue-400 placeholder:text-white focus:bg-blue-400"
+              className="mb-4 px-4 py-2"
             />
             <input
               required
@@ -74,8 +73,7 @@ const Signup = () => {
               placeholder={t("SignupPasswordPlaceholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mb-4 rounded-3xl bg-blue-300 px-4 py-2
-              text-white outline-none transition-all selection:bg-white selection:text-blue-400 placeholder:text-white focus:bg-blue-400"
+              className="mb-4 px-4 py-2"
             />
             <input
               required
@@ -85,13 +83,11 @@ const Signup = () => {
               placeholder={t("SignupPasswordAgainPlaceholder")}
               value={passwordAgain}
               onChange={(e) => setPasswordAgain(e.target.value)}
-              className="mb-4 rounded-3xl bg-blue-300 px-4
-              py-2 text-white outline-none transition-all selection:bg-white selection:text-blue-400 placeholder:text-white focus:bg-blue-400"
+              className="mb-4 px-4 py-2 transition-all"
             />
             <button
               type="submit"
-              className="mt-4 rounded-3xl bg-white
-              px-4 py-2 font-bold text-blue-300 shadow-lg transition-all hover:bg-blue-300 hover:text-white"
+              className="mt-4 px-4 py-2 font-bold"
             >
               {t("SignupButtonText")}
             </button>

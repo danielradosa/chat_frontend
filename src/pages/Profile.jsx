@@ -15,7 +15,7 @@ const Profile = () => {
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqflWrAdAOipG7MXbS-lwcfUNVVUqey6h3CHpy_U6aw-pp9Af35G0O2ZR2c28YTf5sJug&usqp=CAU"
           alt="profile"
-          className="rounded-full w-48 h-48 object-cover shadow-2xl"
+          className="w-48 h-48 object-cover"
         />
         <h1 className="text-2xl mt-8">
           <b> {username.current}</b>

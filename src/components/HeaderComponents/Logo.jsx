@@ -8,7 +8,7 @@ const Logo = () => {
     <>
       <h1 className="text-3xl items-center text-black">
         <Link to={user ? "/dashboard" : "/"}>
-          <span className="font-bold text-blue-300">dove</span>.me
+          <span className="font-bold">dove</span>.me
         </Link>
       </h1>
     </>

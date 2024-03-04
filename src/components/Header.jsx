@@ -8,37 +8,26 @@ const Header = () => {
   const { t } = useTranslation();
 
   return (
-    <header className="border-b-4 bg-white shadow-lg">
+    <header className="bg-slate-200 z-10 shadow-md border-b-4">
       <div className="flex items-center justify-between p-4 align-middle md:px-4 md:py-2">
         <Logo />
 
         <nav className="hidden items-center justify-center gap-4 p-4 md:flex">
           {user ? (
             <Link to="/dashboard">
-              <button
-                className="rounded-full bg-blue-300 px-4 py-1 text-white
-       transition-all hover:bg-blue-400 hover:text-white"
-              >
+              <button className="px-4 py-1">
                 {t("LinkChats")}
               </button>
             </Link>
           ) : (
             <Link to="/">
-              <button
-                className="cursor-not-allowed rounded-full bg-blue-300/50 px-4 py-1
-       text-white transition-all hover:bg-blue-400/50 hover:text-white"
-              >
+              <button className="cursor-not-allowed px-4 py-1">
                 {t("LinkChats")}
               </button>
             </Link>
           )}
           <Link to="/about">
-            <button
-              className="rounded-full bg-blue-300 px-4 py-1 text-white
-       transition-all hover:bg-blue-400 hover:text-white"
-            >
-              {t("LinkAbout")}
-            </button>
+            <button className="px-4 py-1">{t("LinkAbout")}</button>
           </Link>
         </nav>
 
