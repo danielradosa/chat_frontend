@@ -190,7 +190,7 @@ const Dashboard = () => {
                       className="mt-2 flex items-center justify-center p-2 md:w-full w-[85%] mx-auto"
                     >
                       <button
-                        className="w-full truncate px-4 py-2"
+                        className="w-full px-4 py-2"
                         onClick={() => {
                           goToConversation(conversation._id);
                         }}
@@ -281,7 +281,7 @@ const Dashboard = () => {
                   className="mt-2 flex items-center justify-center p-2"
                 >
                   <button
-                    className="w-[280px] truncate px-4 py-2 lg:w-[350px]"
+                    className="w-[280px] px-4 py-2 lg:w-[350px]"
                     onClick={() =>
                       handleCreateConversation(user._id, user.username)
                     }
