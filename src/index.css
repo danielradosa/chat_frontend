@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  background-color: rgb(217, 217, 217);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -13,14 +17,13 @@ main {
 }
 
 body {
-  font-family: serif;
+  font-family: system-ui;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   max-height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
   line-height: 1.6;
-  letter-spacing: 0.05em;
 }
 
 code {

@@ -96,7 +96,7 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
 
   return (
     <div
-      className="flex overflow-auto flex-col w-full p-4 lg:p-8 top-[4.3rem] md:bottom-28 bottom-32 absolute"
+      className="flex overflow-auto flex-col w-full p-4 lg:p-8 top-[4.3rem] bottom-[100px] absolute"
       ref={messageContainerRef}
     >
       {messages.map((message, index) => {
@@ -116,8 +116,10 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
           >
             <div
               className={`${
-                message.sender === myId ? "self-end bg-slate-500 text-white" : "self-start bg-slate-300"
-              } px-4 py-2 mb-2 mt-2 lg.max-w-[75%] max-w-[85%] ${
+                message.sender === myId
+                  ? "self-end bg-black text-white bg-cover leading-10 rounded-md shadow-lg"
+                  : "self-start bg-white bg-cover leading-10 rounded-md shadow-lg"
+              } px-4 py-1 mb-2 mt-2 lg.max-w-[75%] max-w-[85%] ${
                 isLiked ? "message-liked" : ""
               }`}
               onDoubleClick={() => handleLikeMessage(message._id)}

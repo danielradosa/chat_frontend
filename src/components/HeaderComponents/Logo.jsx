@@ -5,13 +5,13 @@ const Logo = () => {
   const user = localStorage.getItem("token");
 
   return (
-    <>
-      <h1 className="text-3xl items-center text-black">
+    <div>
+      <h1 className="text-3xl items-center">
         <Link to={user ? "/dashboard" : "/"}>
           <span className="font-bold">dove</span>.me
         </Link>
       </h1>
-    </>
+    </div>
   );
 };
 

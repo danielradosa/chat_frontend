@@ -16,22 +16,25 @@ const Home = () => {
       <Header />
 
       <div className="flex flex-col items-center text-center">
-        <img
-          src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/30f50151-92ad-4fd9-be87-6c7969f2d76d/d64a5uz-eabbc2bb-40ed-4ed7-8e76-2ae8bbc5f177.png/v1/fill/w_456,h_370/cinnamoroll_png_by_carolinachocofreak_d64a5uz-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MzcwIiwicGF0aCI6IlwvZlwvMzBmNTAxNTEtOTJhZC00ZmQ5LWJlODctNmM3OTY5ZjJkNzZkXC9kNjRhNXV6LWVhYmJjMmJiLTQwZWQtNGVkNy04ZTc2LTJhZThiYmM1ZjE3Ny5wbmciLCJ3aWR0aCI6Ijw9NDU2In1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.QS_Yxj3B9xDbhvRsRxRem4VXHYv9kqbjzXbU-Xg8ch0"
-          alt=""
-          width="256px"
-        />
-        <p className="font-bold md:text-2xl">
+        <p className="font-bold md:text-2xl mb-8">
           {t("HomeText")} <br /> {t("HomeText2")}
         </p>
 
         <div className="flex flex-col items-center justify-center gap-4">
-          <Link to="/login">
-            <button className="mt-8 w-48 px-4 py-2 font-bold">
+          <Link
+            to="/login"
+            className="bg-white rounded-md hover:bg-black hover:text-white transition-all
+            shadow-lg"
+          >
+            <button className="w-48 px-4 py-2 font-bold h-auto">
               {t("LoginButtonText")}
             </button>
           </Link>
-          <Link to="/sign-up">
+          <Link
+            to="/sign-up"
+            className="bg-white rounded-md hover:bg-black hover:text-white transition-all
+            shadow-lg"
+          >
             <button className="w-64 px-4 py-2 font-bold">
               {t("SignupButtonText")}
             </button>

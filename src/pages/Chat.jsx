@@ -199,8 +199,8 @@ const Chat = () => {
         )}
 
         <div
-          className="fixed bottom-12 flex w-full
-        items-center justify-center p-4 text-center md:bottom-8 lg:p-8"
+          className="fixed flex w-full items-center justify-center p-4 text-center 
+          bottom-[20px] lg:p-8"
         >
           <textarea
             ref={messageInputRef}
@@ -208,7 +208,7 @@ const Chat = () => {
             placeholder={t("ChatPlaceholder")}
             maxLength={500}
             style={{ resize: "none" }}
-            className="mb-4 mt-4 h-auto w-full px-4 py-2 bg-slate-800 shadow-lg text-white"
+            className="mb-4 mt-4 h-auto w-full px-4 py-2  shadow-lg text-white rounded-md"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -219,7 +219,7 @@ const Chat = () => {
             }}
           />
 
-          <button className="ml-2 bg-slate-800 shadow-lg" onClick={sendMessage}>
+          <button className="ml-2 bg-slate-800 shadow-lg rounded-md" onClick={sendMessage}>
             <img
               src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_send-512.png"
               alt="send"

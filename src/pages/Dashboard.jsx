@@ -5,6 +5,8 @@ import { CONVERSATIONS_ROUTE, ALL_USERS } from "../utils/routes";
 import { useTranslation } from "react-i18next";
 import { Oval } from "react-loader-spinner";
 import io from "socket.io-client";
+import trash from "../assets/trash.png";
+import avatar from "../assets/avatar.png";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -49,6 +51,8 @@ const Dashboard = () => {
       }
     };
 
+    fetchUsers();
+
     const fetchConversations = async () => {
       try {
         const response = await axios.get(CONVERSATIONS_ROUTE, {
@@ -64,26 +68,29 @@ const Dashboard = () => {
     };
 
     fetchConversations();
-    fetchUsers();
     // eslint-disable-next-line
   }, []);
 
   const handleUserSearch = (username) => {
     const currentUserUsername = localStorage.getItem("username");
+    if (!username.trim()) {
+      setFilteredUsers([]);
+      return;
+    }
     const filtered = users.filter((user) => {
       return (
         user.username.toLowerCase().includes(username.toLowerCase()) &&
         user.username !== currentUserUsername &&
-        !isParticipantInConversations(user._id)
+        !isParticipantInConversations(user.username)
       );
     });
     setFilteredUsers(filtered);
   };
 
-  const isParticipantInConversations = (userId) => {
+  const isParticipantInConversations = (username) => {
     return conversations.some((conversation) =>
       conversation.participants.some(
-        (participant) => participant._id === userId
+        (participant) => participant.username === username
       )
     );
   };
@@ -187,16 +194,21 @@ const Dashboard = () => {
                   {conversations.map((conversation) => (
                     <li
                       key={conversation._id}
-                      className="mt-2 flex items-center justify-center p-2 md:w-full w-[85%] mx-auto"
+                      className="mt-4 flex items-center justify-center p-2 md:w-full mx-auto bg-white 
+                      w-[280px] hover:bg-black hover:text-white transition-all rounded-md shadow-lg"
                     >
                       <button
-                        className="w-full px-4 py-2"
+                        className="w-full text-left"
                         onClick={() => {
                           goToConversation(conversation._id);
                         }}
                       >
-                        {t("OpenConversation")}
-                        <span className="ml-2 font-bold">
+                        <span className="ml-2 font-bold flex items-center gap-4">
+                          <img
+                            src={avatar}
+                            alt=""
+                            className="w-12"
+                          />
                           {conversation.title.includes(
                             localStorage.getItem("username")
                           )
@@ -205,16 +217,18 @@ const Dashboard = () => {
                         </span>
                       </button>
 
+                      <div className="w-1 bg-red-500 h-8 ml-4"></div>
+
                       <button
-                        className="btnes ml-2 px-4 py-1 border-2"
+                        className="btnes ml-2 px-4"
                         onClick={() =>
                           handleDeleteConversation(conversation._id)
                         }
                       >
                         <img
-                          src="https://cdn-icons-png.flaticon.com/512/542/542724.png"
+                          src={trash}
                           alt="trash"
-                          className="w-4 py-2"
+                          className="w-6"
                         />
                       </button>
                     </li>
@@ -229,12 +243,12 @@ const Dashboard = () => {
               <Oval
                 height={40}
                 width={40}
-                color="#92c5fd"
+                color="#000"
                 wrapperStyle={{}}
                 wrapperClass=""
                 visible={true}
                 ariaLabel="oval-loading"
-                secondaryColor="#3696ff"
+                secondaryColor="#333"
                 strokeWidth={6}
                 strokeWidthSecondary={6}
               />
@@ -249,7 +263,7 @@ const Dashboard = () => {
 
           <input
             type="text"
-            className="mb-4 mt-4 px-4 py-2 font-bold"
+            className="mt-4 p-2 font-bold w-[320px] rounded-md shadow-lg border-2"
             placeholder={t("SearchUserPlaceholder")}
             value={newConversationUsername}
             onChange={(e) => {
@@ -263,12 +277,12 @@ const Dashboard = () => {
               <Oval
                 height={40}
                 width={40}
-                color="#92c5fd"
+                color="#000"
                 wrapperStyle={{}}
                 wrapperClass=""
                 visible={true}
                 ariaLabel="oval-loading"
-                secondaryColor="#3696ff"
+                secondaryColor="#333"
                 strokeWidth={6}
                 strokeWidthSecondary={6}
               />
@@ -278,16 +292,17 @@ const Dashboard = () => {
               {filteredUsers.map((user) => (
                 <li
                   key={user._id}
-                  className="mt-2 flex items-center justify-center p-2"
+                  className="mt-4 flex items-center justify-center px-4 py-2 bg-white w-[320px] 
+                  hover:bg-black hover:text-white rounded-md"
                 >
                   <button
-                    className="w-[280px] px-4 py-2 lg:w-[350px]"
+                    className="w-full text-left"
                     onClick={() =>
                       handleCreateConversation(user._id, user.username)
                     }
                   >
                     {t("CreateConversation")}
-                    <span className="ml-2 font-bold">{user.username}</span>
+                    <span className="font-bold">{user.username}</span>
                   </button>
                 </li>
               ))}
