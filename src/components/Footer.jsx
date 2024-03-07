@@ -2,8 +2,8 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="sticky w-full bottom-0 text-center">
-      <p className="text-sm p-4">
+    <footer className="text-center hidden md:flex mx-auto">
+      <p className="text-sm p-4 text-center">
         US &copy; 2069{" "}
         <a href="https://www.dove.me">dove.me - simple chat app.</a>
       </p>

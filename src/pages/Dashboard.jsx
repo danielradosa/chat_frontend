@@ -195,7 +195,7 @@ const Dashboard = () => {
                     <li
                       key={conversation._id}
                       className="mt-4 flex items-center justify-center p-2 md:w-full mx-auto bg-white 
-                      w-[280px] hover:bg-black hover:text-white transition-all rounded-md shadow-lg"
+                      w-[320px] hover:bg-black hover:text-white transition-all rounded-md shadow-lg"
                     >
                       <button
                         className="w-full text-left"
