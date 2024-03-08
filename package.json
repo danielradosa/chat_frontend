@@ -16,6 +16,7 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^13.3.1",
     "react-loader-spinner": "^5.4.5",
+    "react-loading-skeleton": "^3.4.0",
     "react-router-dom": "^6.17.0",
     "react-scripts": "5.0.1",
     "socket.io-client": "^4.7.4",

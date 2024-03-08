@@ -7,6 +7,8 @@ import { Oval } from "react-loader-spinner";
 import io from "socket.io-client";
 import trash from "../assets/trash.png";
 import avatar from "../assets/avatar.png";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
