@@ -31,9 +31,23 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
   useEffect(() => {
     if (messageContainerRef.current) {
       const container = messageContainerRef.current;
-      container.scrollTop = container.scrollHeight;
+      const shouldScroll =
+        container.scrollHeight - container.scrollTop === container.clientHeight;
+
+      if (shouldScroll) {
+        container.scrollTop = container.scrollHeight;
+      }
     }
   }, [messages]);
+
+  const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
+
+  useEffect(() => {
+    if (messageContainerRef.current && shouldAutoScroll) {
+      const container = messageContainerRef.current;
+      container.scrollTop = container.scrollHeight;
+    }
+  }, [messages, shouldAutoScroll]);
 
   const handleLikeMessage = (messageId, isAlreadyLiked) => {
     if (
@@ -54,6 +68,7 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
       }));
     }, 100);
 
+    setShouldAutoScroll(false);
     const newIsLiked = !isAlreadyLiked;
 
     setMessages((prevMessages) =>
@@ -94,10 +109,19 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
     });
   }, [socket, setMessages]);
 
+  const handleScroll = () => {
+    setShouldAutoScroll(
+      messageContainerRef.current.scrollTop ===
+        messageContainerRef.current.scrollHeight -
+          messageContainerRef.current.clientHeight
+    );
+  };
+
   return (
     <div
       className="flex overflow-auto flex-col w-full p-4 lg:p-8 top-[4.3rem] bottom-[100px] absolute"
       ref={messageContainerRef}
+      onScroll={handleScroll}
     >
       {messages.map((message, index) => {
         if (!message.content) {
@@ -117,9 +141,9 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
             <div
               className={`${
                 message.sender === myId
-                  ? "self-end bg-black text-white bg-cover leading-10 rounded-md shadow-lg"
-                  : "self-start bg-white bg-cover leading-10 rounded-md shadow-lg"
-              } px-4 py-1 mb-2 mt-2 lg.max-w-[75%] max-w-[85%] ${
+                  ? "self-end bg-black text-white bg-cover leading-6 rounded-md shadow-lg break-words"
+                  : "self-start bg-white bg-cover leading-6 rounded-md shadow-lg break-words"
+              } px-4 py-3 mb-2 mt-2 lg:max-w-[75%] max-w-[85%] ${
                 isLiked ? "message-liked" : ""
               }`}
               onDoubleClick={() => handleLikeMessage(message._id)}

@@ -14,11 +14,8 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [myId, setMyId] = useState("");
-  const messageContainerRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const apiURL = process.env.REACT_APP_API;
-  // eslint-disable-next-line
-  const currentUser = localStorage.getItem("username");
 
   const socket = io(apiURL, {
     extraHeaders: {
@@ -106,11 +103,6 @@ const Chat = () => {
         });
 
         setMessages((prevMessages) => [...prevMessages, newMessage]);
-
-        if (messageContainerRef.current) {
-          messageContainerRef.current.scrollTop =
-            messageContainerRef.current.scrollHeight;
-        }
       })
       .catch((error) => {
         console.error("Error sending message:", error);
@@ -158,17 +150,6 @@ const Chat = () => {
     };
   }, [conversationId, myId, socket, t, fetchData, participants]);
 
-  useEffect(() => {
-    if (messageContainerRef.current) {
-      const container = messageContainerRef.current;
-      const lastMessage = container.lastElementChild;
-
-      if (lastMessage) {
-        lastMessage.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  }, [messages, conversationId, t]);
-
   return (
     <div className="flex min-h-screen w-full flex-col justify-between align-middle">
       <Header />
@@ -179,12 +160,12 @@ const Chat = () => {
             <Oval
               height={40}
               width={40}
-              color="#92c5fd"
+              color="#000"
               wrapperStyle={{}}
               wrapperClass=""
               visible={true}
               ariaLabel="oval-loading"
-              secondaryColor="#3696ff"
+              secondaryColor="#444"
               strokeWidth={6}
               strokeWidthSecondary={6}
             />
@@ -208,7 +189,7 @@ const Chat = () => {
             placeholder={t("ChatPlaceholder")}
             maxLength={500}
             style={{ resize: "none" }}
-            className="mb-4 mt-4 h-auto w-full px-4 py-2  shadow-lg text-white rounded-md"
+            className="mb-4 mt-4 h-auto w-full px-4 py-2  shadow-lg text-black rounded-md"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -219,11 +200,14 @@ const Chat = () => {
             }}
           />
 
-          <button className="ml-2 bg-slate-800 shadow-lg rounded-md" onClick={sendMessage}>
+          <button
+            className="ml-2 bg-slate-800 shadow-lg rounded-md"
+            onClick={sendMessage}
+          >
             <img
               src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_send-512.png"
               alt="send"
-              className="w-10 p-2 hover:rotate-[-35deg] transition-all invert"
+              className="w-12 p-2 hover:rotate-[-35deg] transition-all invert"
             />
           </button>
         </div>

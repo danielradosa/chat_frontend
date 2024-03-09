@@ -3,12 +3,11 @@ import axios from "axios";
 import { Header, Footer } from "../components";
 import { CONVERSATIONS_ROUTE, ALL_USERS } from "../utils/routes";
 import { useTranslation } from "react-i18next";
-import { Oval } from "react-loader-spinner";
 import io from "socket.io-client";
 import trash from "../assets/trash.png";
 import avatar from "../assets/avatar.png";
-import Skeleton from "react-loading-skeleton";
-import 'react-loading-skeleton/dist/skeleton.css';
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -22,6 +21,12 @@ const Dashboard = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const apiURL = process.env.REACT_APP_API;
+
+  const SkeletonConversationList = () => (
+    <SkeletonTheme baseColor="#fff" highlightColor="#f2f2f2">
+      <Skeleton width={320} height={128} count={1} />
+    </SkeletonTheme>
+  );
 
   const socket = io(apiURL, {
     extraHeaders: {
@@ -196,7 +201,7 @@ const Dashboard = () => {
                   {conversations.map((conversation) => (
                     <li
                       key={conversation._id}
-                      className="mt-4 flex items-center justify-center p-2 md:w-full mx-auto bg-white 
+                      className="mt-4 flex items-center justify-center p-2 mx-auto bg-white 
                       w-[320px] hover:bg-black hover:text-white transition-all rounded-md shadow-lg"
                     >
                       <button
@@ -206,11 +211,7 @@ const Dashboard = () => {
                         }}
                       >
                         <span className="ml-2 font-bold flex items-center gap-4">
-                          <img
-                            src={avatar}
-                            alt=""
-                            className="w-12"
-                          />
+                          <img src={avatar} alt="" className="w-12" />
                           {conversation.title.includes(
                             localStorage.getItem("username")
                           )
@@ -227,34 +228,17 @@ const Dashboard = () => {
                           handleDeleteConversation(conversation._id)
                         }
                       >
-                        <img
-                          src={trash}
-                          alt="trash"
-                          className="w-6"
-                        />
+                        <img src={trash} alt="trash" className="w-6" />
                       </button>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <div className="mt-4">{t("NoConversations")}</div>
+                <p>{t("NoConversations")}</p>
               )}
             </>
           ) : (
-            <div className="mt-4">
-              <Oval
-                height={40}
-                width={40}
-                color="#000"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-                ariaLabel="oval-loading"
-                secondaryColor="#333"
-                strokeWidth={6}
-                strokeWidthSecondary={6}
-              />
-            </div>
+            <SkeletonConversationList />
           )}
         </div>
 
@@ -263,52 +247,41 @@ const Dashboard = () => {
             {t("NewConversationTitle")}
           </h3>
 
-          <input
-            type="text"
-            className="mt-4 p-2 font-bold w-[320px] rounded-md shadow-lg border-2"
-            placeholder={t("SearchUserPlaceholder")}
-            value={newConversationUsername}
-            onChange={(e) => {
-              setNewConversationUsername(e.target.value);
-              handleUserSearch(e.target.value);
-            }}
-          />
-
           {loading ? (
-            <div className="mt-2">
-              <Oval
-                height={40}
-                width={40}
-                color="#000"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-                ariaLabel="oval-loading"
-                secondaryColor="#333"
-                strokeWidth={6}
-                strokeWidthSecondary={6}
-              />
-            </div>
+            <SkeletonConversationList />
           ) : (
-            <ul className="h-[30svh] overflow-auto">
-              {filteredUsers.map((user) => (
-                <li
-                  key={user._id}
-                  className="mt-4 flex items-center justify-center px-4 py-2 bg-white w-[320px] 
+            <div>
+              <input
+                type="text"
+                className="mt-4 p-2 font-bold w-[320px] rounded-md shadow-lg border-2"
+                placeholder={t("SearchUserPlaceholder")}
+                value={newConversationUsername}
+                onChange={(e) => {
+                  setNewConversationUsername(e.target.value);
+                  handleUserSearch(e.target.value);
+                }}
+              />
+
+              <ul className="h-[20svh] overflow-auto mb-8 rounded-md">
+                {filteredUsers.map((user) => (
+                  <li
+                    key={user._id}
+                    className="mt-4 flex items-center justify-center px-4 py-2 bg-white w-[320px] 
                   hover:bg-black hover:text-white rounded-md"
-                >
-                  <button
-                    className="w-full text-left"
-                    onClick={() =>
-                      handleCreateConversation(user._id, user.username)
-                    }
                   >
-                    {t("CreateConversation")}
-                    <span className="font-bold">{user.username}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+                    <button
+                      className="w-full text-left"
+                      onClick={() =>
+                        handleCreateConversation(user._id, user.username)
+                      }
+                    >
+                      {t("CreateConversation")}
+                      <span className="font-bold ml-2">{user.username}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
         </div>
 
