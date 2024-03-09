@@ -61,7 +61,7 @@ const Login = () => {
               placeholder={t("LoginNamePlaceholder")}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="px-4 py-2 mb-4 bg-white rounded-md hover:bg-black hover:text-white transition-all border-2"
+              className="px-4 py-2 mb-4 bg-white rounded-md hover:bg-gray-100 hover:text-white transition-all border-2"
             />
             <input
               type="password"
@@ -69,7 +69,7 @@ const Login = () => {
               placeholder={t("LoginPasswordPlaceholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="px-4 py-2 mb-4 bg-white rounded-md hover:bg-black hover:text-white transition-all border-2"
+              className="px-4 py-2 mb-4 bg-white rounded-md hover:bg-gray-100 hover:text-white transition-all border-2"
             />
             <button
               type="submit"

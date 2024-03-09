@@ -148,7 +148,10 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
               }`}
               onDoubleClick={() => handleLikeMessage(message._id)}
             >
-              <Linkify options={options}>{message.content}</Linkify>
+              <Linkify options={options}>
+                {message.content}
+              </Linkify>
+             
               {isLiked && (
                 <span
                   className={`liked-icon ${

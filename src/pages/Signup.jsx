@@ -63,7 +63,7 @@ const Signup = () => {
               placeholder={t("SignupNamePlaceholder")}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="mb-4 px-4 py-2 bg-white rounded-md hover:bg-black hover:text-white transition-all border-2"
+              className="mb-4 px-4 py-2 bg-white rounded-md hover:bg-gray-100 hover:text-white transition-all border-2"
             />
             <input
               required
@@ -73,7 +73,7 @@ const Signup = () => {
               placeholder={t("SignupPasswordPlaceholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mb-4 px-4 py-2 bg-white rounded-md hover:bg-black hover:text-white transition-all border-2"
+              className="mb-4 px-4 py-2 bg-white rounded-md hover:bg-gray-100 hover:text-white transition-all border-2"
             />
             <input
               required
@@ -83,7 +83,7 @@ const Signup = () => {
               placeholder={t("SignupPasswordAgainPlaceholder")}
               value={passwordAgain}
               onChange={(e) => setPasswordAgain(e.target.value)}
-              className="mb-4 px-4 py-2 bg-white rounded-md hover:bg-black hover:text-white transition-all border-2"
+              className="mb-4 px-4 py-2 bg-white rounded-md hover:bg-gray-100 hover:text-white transition-all border-2"
             />
             <button
               type="submit"

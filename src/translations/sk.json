@@ -29,5 +29,7 @@
     "IsTyping": "Píše...",
     "ProfileTitle": "@dove.me",
     "LinkChats": "Správy",
-    "LinkAbout": "O nás"
+    "LinkAbout": "O nás",
+    "DeleteConversationConfirmationMessage": "Priebeh zmazania konverzácie",
+    "Cancel": "Zrušiť"
 }

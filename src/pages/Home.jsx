@@ -6,14 +6,10 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const { t } = useTranslation();
 
-  let userExists = localStorage.getItem("token") ? true : false;
+  let userExists = localStorage.getItem("token");
 
   if (userExists) {
-    window.location.href = "/dashboard";
-  } else {
-    userExists = false;
-    const storage = window.localStorage;
-    storage.clear();
+    window.location.replace("/dashboard");
   }
 
   return (
@@ -38,7 +34,7 @@ const Home = () => {
             >
               {t("LoginButtonText")}
             </button>
-          </Link>
+          </Link> 
           <Link
             to="/sign-up"
             className="bg-white rounded-md transition-all

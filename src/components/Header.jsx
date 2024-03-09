@@ -12,26 +12,25 @@ const Header = () => {
       <div className="flex items-center justify-between p-4 align-middle md:px-8 md:py-2">
         <Logo />
 
-        <nav className="hidden items-center w-full justify-center 
-        gap-8 p-4 mx-auto text-center md:flex ml-12">
+        <nav className={`hidden items-center w-full justify-center ${user ? 'ml-[72px]' : 'mr-16'} gap-8 p-4 mx-auto text-center md:flex`}>
           {user ? (
-            <Link to="/dashboard">
+            <Link to="/dashboard" className="font-bold">
               <button>{t("LinkChats")}</button>
             </Link>
           ) : (
-            <Link to="/">
+            <Link to="/" className="font-bold">
               <button className="cursor-not-allowed text-white/40">
                 {t("LinkChats")}
               </button>
             </Link>
           )}
-          <Link to="/about">
+          <Link to="/about" className="font-bold">
             <button>{t("LinkAbout")}</button>
           </Link>
         </nav>
 
         <div className="flex items-center gap-8">
-          {user ? <LogoutButton /> : <div className="w-10"></div>}
+          {user ? <LogoutButton /> : null}
           <LanguageSwitcher />
         </div>
       </div>

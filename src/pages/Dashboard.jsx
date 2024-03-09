@@ -232,8 +232,8 @@ const Dashboard = () => {
                       <div className="w-1 bg-red-500 h-8 ml-4 rounded-md"></div>
 
                       <button
-                        className="btnes mx-4 border-red-500 border p-2 rounded-md 
-                        hover:bg-red-500/20 transitionl-all"
+                        className="btnes mx-4 border-red-500 border p-2 
+                        hover:bg-red-500/20 transition-all rounded-full hover:rotate-[45deg]"
                         onClick={() =>
                           handleDeleteConversation(conversation._id)
                         }

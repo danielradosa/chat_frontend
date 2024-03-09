@@ -29,5 +29,7 @@
     "IsTyping": "Is typing...",
     "ProfileTitle": "@dove.me",
     "LinkChats": "Messages",
-    "LinkAbout": "About"
+    "LinkAbout": "About",
+    "DeleteConversationConfirmationMessage": "Conversation deletion progress",
+    "Cancel": "Cancel"
 }
