@@ -5,10 +5,15 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   const { t } = useTranslation();
-  const user = localStorage.getItem("token");
 
-  if (user) {
-    window.location.replace("/dashboard");
+  let userExists = localStorage.getItem("token") ? true : false;
+
+  if (userExists) {
+    window.location.href = "/dashboard";
+  } else {
+    userExists = false;
+    const storage = window.localStorage;
+    storage.clear();
   }
 
   return (
@@ -23,19 +28,27 @@ const Home = () => {
         <div className="flex flex-col items-center justify-center gap-4">
           <Link
             to="/login"
-            className="bg-white rounded-md hover:bg-black hover:text-white transition-all
+            className="bg-white rounded-md transition-all
             shadow-lg"
           >
-            <button className="w-48 px-4 py-2 font-bold h-auto">
+            <button
+              className="w-48 px-4 py-2 font-bold h-auto
+            hover:bg-gray-100 focus:outline-none focus:ring-2 
+      focus:ring-gray-300 focus:ring-offset-2 rounded-md"
+            >
               {t("LoginButtonText")}
             </button>
           </Link>
           <Link
             to="/sign-up"
-            className="bg-white rounded-md hover:bg-black hover:text-white transition-all
+            className="bg-white rounded-md transition-all
             shadow-lg"
           >
-            <button className="w-64 px-4 py-2 font-bold">
+            <button
+              className="px-4 py-2 font-bold h-auto w-64
+              hover:bg-gray-100 focus:outline-none focus:ring-2 
+        focus:ring-gray-300 focus:ring-offset-2 rounded-md"
+            >
               {t("SignupButtonText")}
             </button>
           </Link>

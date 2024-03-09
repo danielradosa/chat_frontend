@@ -119,7 +119,7 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
 
   return (
     <div
-      className="flex overflow-auto flex-col w-full p-4 lg:p-8 top-[4.3rem] bottom-[100px] absolute"
+      className="flex overflow-auto flex-col w-full p-4 lg:p-8 top-[4.3rem] bottom-[80px] absolute"
       ref={messageContainerRef}
       onScroll={handleScroll}
     >

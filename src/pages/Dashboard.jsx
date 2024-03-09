@@ -22,6 +22,14 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const apiURL = process.env.REACT_APP_API;
 
+  let userExists = localStorage.getItem("token") ? true : false;
+
+  if (!userExists) {
+    window.location.href = "/";
+  } else {
+    userExists = true;
+  }
+
   const SkeletonConversationList = () => (
     <SkeletonTheme baseColor="#fff" highlightColor="#f2f2f2">
       <Skeleton width={320} height={128} count={1} />
@@ -201,11 +209,12 @@ const Dashboard = () => {
                   {conversations.map((conversation) => (
                     <li
                       key={conversation._id}
-                      className="mt-4 flex items-center justify-center p-2 mx-auto bg-white 
-                      w-[320px] hover:bg-black hover:text-white transition-all rounded-md shadow-lg"
+                      className="mt-4 flex items-center justify-center mx-auto bg-white 
+                      w-[320px] transition-all rounded-md shadow-lg hover:bg-gray-100"
                     >
                       <button
-                        className="w-full text-left"
+                        className="w-full text-left focus:outline-none focus:ring-2 
+                        focus:ring-gray-300 focus:ring-offset-2 p-2 rounded-md"
                         onClick={() => {
                           goToConversation(conversation._id);
                         }}
@@ -220,10 +229,11 @@ const Dashboard = () => {
                         </span>
                       </button>
 
-                      <div className="w-1 bg-red-500 h-8 ml-4"></div>
+                      <div className="w-1 bg-red-500 h-8 ml-4 rounded-md"></div>
 
                       <button
-                        className="btnes ml-2 px-4"
+                        className="btnes mx-4 border-red-500 border p-2 rounded-md 
+                        hover:bg-red-500/20 transitionl-all"
                         onClick={() =>
                           handleDeleteConversation(conversation._id)
                         }

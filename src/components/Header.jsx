@@ -8,11 +8,12 @@ const Header = () => {
   const { t } = useTranslation();
 
   return (
-    <header className="bg-gray-300 z-10 shadow-md">
+    <header className="bg-gray-300 z-10 shadow-lg w-full border-b-2">
       <div className="flex items-center justify-between p-4 align-middle md:px-8 md:py-2">
         <Logo />
 
-        <nav className="hidden items-center justify-center gap-8 p-4 md:flex ml-8">
+        <nav className="hidden items-center w-full justify-center 
+        gap-8 p-4 mx-auto text-center md:flex ml-12">
           {user ? (
             <Link to="/dashboard">
               <button>{t("LinkChats")}</button>
@@ -25,12 +26,12 @@ const Header = () => {
             </Link>
           )}
           <Link to="/about">
-            <button className="">{t("LinkAbout")}</button>
+            <button>{t("LinkAbout")}</button>
           </Link>
         </nav>
 
-        <div className="flex gap-8">
-          {user ? <LogoutButton /> : <div className="w-20"></div>}
+        <div className="flex items-center gap-8">
+          {user ? <LogoutButton /> : <div className="w-10"></div>}
           <LanguageSwitcher />
         </div>
       </div>

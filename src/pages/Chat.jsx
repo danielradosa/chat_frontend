@@ -66,7 +66,9 @@ const Chat = () => {
     return () => {};
   }, [conversationId, fetchData]);
 
-  const sendMessage = () => {
+  const sendMessage = (e) => {
+    e.preventDefault();
+
     const userId = localStorage.getItem("userId");
     const message = messageInputRef.current.value;
 
@@ -150,6 +152,13 @@ const Chat = () => {
     };
   }, [conversationId, myId, socket, t, fetchData, participants]);
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(e);
+    }
+  };
+
   return (
     <div className="flex min-h-screen w-full flex-col justify-between align-middle">
       <Header />
@@ -180,36 +189,35 @@ const Chat = () => {
         )}
 
         <div
-          className="fixed flex w-full items-center justify-center p-4 text-center 
-          bottom-[20px] lg:p-8"
+          className="fixed flex w-full items-center justify-center p-4 text-center lg:p-8
+          bottom-0"
         >
-          <textarea
-            ref={messageInputRef}
-            rows={1}
-            placeholder={t("ChatPlaceholder")}
-            maxLength={500}
-            style={{ resize: "none" }}
-            className="mb-4 mt-4 h-auto w-full px-4 py-2  shadow-lg text-black rounded-md"
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                if (e.target.value.trim() !== "") {
-                  sendMessage();
-                }
-              }
-            }}
-          />
-
-          <button
-            className="ml-2 bg-slate-800 shadow-lg rounded-md"
-            onClick={sendMessage}
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="flex items-center w-full"
           >
-            <img
-              src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_send-512.png"
-              alt="send"
-              className="w-12 p-2 hover:rotate-[-35deg] transition-all invert"
+            <textarea
+              ref={messageInputRef}
+              rows={1}
+              inputMode="text"
+              placeholder={t("ChatPlaceholder")}
+              maxLength={500}
+              style={{ resize: "none" }}
+              className="mb-4 mt-4 h-auto w-full px-4 py-2 shadow-lg text-black rounded-md"
+              onKeyDown={handleKeyDown}
             />
-          </button>
+
+            <button
+              className="ml-2 bg-slate-800 shadow-lg rounded-md"
+              onClick={sendMessage}
+            >
+              <img
+                src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_send-512.png"
+                alt="send"
+                className="w-12 md:w-11 p-2 hover:rotate-[-35deg] transition-all invert"
+              />
+            </button>
+          </form>
         </div>
       </div>
 
