@@ -185,6 +185,7 @@ const Chat = () => {
             myId={myId}
             conversationId={conversationId}
             setMessages={setMessages}
+            participants={participants}
           />
         )}
 

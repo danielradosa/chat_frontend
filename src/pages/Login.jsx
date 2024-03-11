@@ -27,6 +27,7 @@ const Login = () => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("username", res.data.username);
         localStorage.setItem("userId", res.data.userId);
+        localStorage.setItem("profilePicture", res.data.profilePicture);
 
         window.location.href = "/dashboard";
       }

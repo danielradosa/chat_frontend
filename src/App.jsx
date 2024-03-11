@@ -7,7 +7,6 @@ import {
   Signup,
   Chat,
   Profile,
-  About,
 } from "./pages/index";
 import IsAuthenticated from "./utils/isAuthenticated";
 import i18n from "./i18n";
@@ -31,7 +30,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<Signup />} />
-          <Route path="/about" element={<About />} />
 
           {/* Private Routes */}
           <Route element={<IsAuthenticated />}>
@@ -39,7 +37,7 @@ function App() {
 
             {/* Dynamic Routes */}
             <Route path="/chat/:conversationId" element={<Chat />} />
-            <Route path="/profile/:userName" element={<Profile />} />
+            <Route path="/profile/:userId" element={<Profile />} />
           </Route>
         </Routes>
       </I18nextProvider>

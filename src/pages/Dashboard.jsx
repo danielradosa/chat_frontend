@@ -220,7 +220,17 @@ const Dashboard = () => {
                         }}
                       >
                         <span className="ml-2 font-bold flex items-center gap-4">
-                          <img src={avatar} alt="" className="w-12" />
+                          {conversation.participants.map(
+                            (participant) =>
+                              participant._id !== myId && (
+                                <img
+                                  key={participant._id}
+                                  src={participant.profilePicture || avatar}
+                                  alt="prof-pic"
+                                  className="w-12 rounded-md"
+                                />
+                              )
+                          )}
                           {conversation.title.includes(
                             localStorage.getItem("username")
                           )

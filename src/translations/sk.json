@@ -27,9 +27,9 @@
     "NotificationNewMessage": "Dostal si novú správu",
     "NotificationNewMessageFrom": "Od: ",
     "IsTyping": "Píše...",
-    "ProfileTitle": "@dove.me",
     "LinkChats": "Správy",
     "LinkAbout": "O nás",
+    "LinkProfile": "Účet",
     "DeleteConversationConfirmationMessage": "Priebeh zmazania konverzácie",
     "Cancel": "Zrušiť"
 }

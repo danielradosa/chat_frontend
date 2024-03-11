@@ -4,7 +4,13 @@ import io from "socket.io-client";
 import { LIKE_MESSAGE } from "../../utils/routes";
 import axios from "axios";
 
-const MessageList = ({ messages, myId, conversationId, setMessages }) => {
+const MessageList = ({
+  messages,
+  myId,
+  conversationId,
+  setMessages,
+  participants,
+}) => {
   const messageContainerRef = useRef(null);
   const apiURL = process.env.REACT_APP_API;
   const socket = io(apiURL, {
@@ -138,6 +144,18 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
               message.sender === myId ? "justify-end " : "justify-start"
             }`}
           >
+            {message.sender !== myId &&
+              participants &&
+              participants.length > 0 && (
+                <img
+                  src={
+                    participants.find((p) => p._id === message.sender)
+                      .profilePicture
+                  }
+                  alt="sender-profile-pic"
+                  className="w-8 h-8 rounded-full mt-4 mr-2 md:mr-4"
+                />
+              )}
             <div
               className={`${
                 message.sender === myId
@@ -148,10 +166,8 @@ const MessageList = ({ messages, myId, conversationId, setMessages }) => {
               }`}
               onDoubleClick={() => handleLikeMessage(message._id)}
             >
-              <Linkify options={options}>
-                {message.content}
-              </Linkify>
-             
+              <Linkify options={options}>{message.content}</Linkify>
+
               {isLiked && (
                 <span
                   className={`liked-icon ${

@@ -27,9 +27,9 @@
     "NotificationNewMessage": "New message received",
     "NotificationNewMessageFrom": "From: ",
     "IsTyping": "Is typing...",
-    "ProfileTitle": "@dove.me",
     "LinkChats": "Messages",
     "LinkAbout": "About",
+    "LinkProfile": "Account",
     "DeleteConversationConfirmationMessage": "Conversation deletion progress",
     "Cancel": "Cancel"
 }
