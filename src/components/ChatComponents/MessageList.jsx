@@ -3,6 +3,7 @@ import Linkify from "linkify-react";
 import io from "socket.io-client";
 import { LIKE_MESSAGE } from "../../utils/routes";
 import axios from "axios";
+import avatar from "../../assets/avatar.png";
 
 const MessageList = ({
   messages,
@@ -150,10 +151,10 @@ const MessageList = ({
                 <img
                   src={
                     participants.find((p) => p._id === message.sender)
-                      .profilePicture
+                      .profilePicture || avatar
                   }
                   alt="sender-profile-pic"
-                  className="w-8 h-8 rounded-full mt-4 mr-2 md:mr-4"
+                  className="w-8 h-8 rounded-full mt-4 mr-2 md:mr-4 bg-white"
                 />
               )}
             <div
