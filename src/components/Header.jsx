@@ -15,9 +15,9 @@ const Header = () => {
         <Logo />
 
         <nav
-          className={`hidden items-center w-full justify-center ${
-            user ? "ml-[72px]" : "mr-16"
-          } gap-8 p-4 mx-auto text-center md:flex`}
+          className={`items-center w-full md:justify-center ${
+            user ? "md:ml-[72px]" : "md:mr-16"
+          } gap-8 md:p-4 mx-auto text-center md:flex flex`}
         >
           {user ? (
             <>
