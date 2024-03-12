@@ -8,6 +8,7 @@ import avatar from "../assets/avatar.png";
 const Profile = () => {
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
+  const profilePicture = localStorage.getItem("profilePicture");
 
   useEffect(() => {
     const getUser = async () => {
@@ -53,7 +54,7 @@ const Profile = () => {
 
       <div className="w-full grid place-items-center">
         <img
-          src={userData?.profilePicture || avatar}
+          src={profilePicture || userData?.profilePicture || avatar}
           alt="profile"
           className="w-48 h-48 object-cover rounded-md shadow-md bg-white"
         />
@@ -61,7 +62,7 @@ const Profile = () => {
           type="file"
           accept="image/*"
           onChange={handleImageUpload}
-          className="mt-8 bg-white p-2 rounded-md shadow-md"
+          className="mt-8 bg-white p-2 rounded-md shadow-md w-[320px]"
         />
         <h1 className="mt-8 text-2xl">
           <b>@{userData?.username}</b>

@@ -29,11 +29,7 @@ const Header = () => {
               </Link>
             </>
           ) : (
-            <Link to="/" className="font-bold">
-              <button className="cursor-not-allowed text-white/40">
-                {t("LinkChats")}
-              </button>
-            </Link>
+            <Logo />
           )}
         </nav>
 
