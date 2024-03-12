@@ -29,7 +29,7 @@ const Header = () => {
               </Link>
             </>
           ) : (
-            <Logo />
+            <h1 className="text-3xl"><b>dove</b>.me</h1>
           )}
         </nav>
 
