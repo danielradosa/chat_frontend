@@ -16,7 +16,7 @@ const Header = () => {
 
         <nav
           className={`items-center w-full md:justify-center ${
-            user ? "md:ml-[72px]" : "md:mr-16"
+            user ? "md:ml-[60px]" : "md:mr-16"
           } gap-8 md:p-4 mx-auto text-center md:flex flex`}
         >
           {user ? (

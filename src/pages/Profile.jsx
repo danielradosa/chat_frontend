@@ -56,17 +56,18 @@ const Profile = () => {
         <img
           src={profilePicture || userData?.profilePicture || avatar}
           alt="profile"
-          className="w-48 h-48 object-cover rounded-md shadow-md bg-white"
+          className="w-[320px] h-[320px] object-cover rounded-full shadow-md bg-white"
         />
+        <h1 className="mt-8 text-2xl bg-white border-2 rounded-md w-[320px] text-center py-2 shadow-md">
+          <b>@{userData?.username}</b>
+        </h1>
         <input
+          id="file"
           type="file"
           accept="image/*"
           onChange={handleImageUpload}
-          className="mt-8 bg-white p-2 rounded-md shadow-md w-[320px]"
+          className="bg-white p-2 rounded-md shadow-md w-[320px] mt-8"
         />
-        <h1 className="mt-8 text-2xl">
-          <b>@{userData?.username}</b>
-        </h1>
       </div>
 
       <Footer />
