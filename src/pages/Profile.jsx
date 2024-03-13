@@ -4,11 +4,14 @@ import { Header, Footer } from "../components";
 import { SINGLE_USER, UPLOAD_PICTURE } from "../utils/routes";
 import { uploadImageToCloudinary } from "../utils/cloudinaryUploads";
 import avatar from "../assets/avatar.png";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Profile = () => {
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
-  const profilePicture = localStorage.getItem("profilePicture");
+  const user = localStorage.getItem("token");
+  const loading = !userData;
 
   useEffect(() => {
     const getUser = async () => {
@@ -54,20 +57,28 @@ const Profile = () => {
 
       <div className="w-full grid place-items-center">
         <img
-          src={profilePicture || userData?.profilePicture || avatar}
+          src={userData?.profilePicture || loading || avatar}
           alt="profile"
           className="w-[320px] h-[320px] object-cover rounded-full shadow-md bg-white"
         />
         <h1 className="mt-8 text-2xl bg-white border-2 rounded-md w-[320px] text-center py-2 shadow-md">
-          <b>@{userData?.username}</b>
+          <b>
+            {userData ? (
+              `@` + userData.username
+            ) : (
+              <Skeleton width={320} height={52} />
+            )}
+          </b>
         </h1>
-        <input
-          id="file"
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          className="bg-white p-2 rounded-md shadow-md w-[320px] mt-8"
-        />
+        {user && userId === localStorage.getItem("userId") && (
+          <input
+            id="file"
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="bg-white p-2 rounded-md shadow-md w-[320px] mt-8"
+          />
+        )}
       </div>
 
       <Footer />

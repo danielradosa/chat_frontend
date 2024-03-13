@@ -29,7 +29,14 @@ const Header = () => {
               </Link>
             </>
           ) : (
-            <h1 className="text-3xl"><b>dove</b>.me</h1>
+            <>
+              <Link to="/" className="font-bold text-gray-100">
+                <button className="line-through cursor-not-allowed">{t("LinkChats")}</button>
+              </Link>
+              <Link to="/" className="font-bold text-gray-100">
+                <button className="line-through cursor-not-allowed">{t("LinkProfile")}</button>
+              </Link>
+            </>
           )}
         </nav>
 

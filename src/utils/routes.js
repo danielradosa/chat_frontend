@@ -2,6 +2,7 @@ const apiURL = process.env.REACT_APP_API;
 export const API_URL = apiURL;
 
 export const LOGIN_ROUTE = `${API_URL}/api/user/login`;
+export const VALIDATE_TOKEN = `${API_URL}/api/user/validate-token`;
 export const REGISTER_ROUTE = `${API_URL}/api/user/register`;
 export const ALL_USERS = `${API_URL}/api/user/users`;
 export const CONVERSATIONS_ROUTE = `${API_URL}/api/conversation/conversations`;

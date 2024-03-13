@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
 import { Header, Footer } from "../components";
 import { useTranslation } from "react-i18next";
@@ -11,9 +12,12 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate(); // Initialize navigate hook
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
 
     try {
       setError("");
@@ -22,20 +26,20 @@ const Login = () => {
         password,
       });
       if (res.data) {
-        setLoading(true);
         setSuccess(t("LoginSuccess"));
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("username", res.data.username);
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("profilePicture", res.data.profilePicture);
-
-        window.location.href = "/dashboard";
+        navigate("/dashboard"); // Navigate to dashboard after successful login
       }
     } catch (err) {
       setError(t("LoginError"));
       setTimeout(() => {
         setError("");
       }, 3000);
+    } finally {
+      setLoading(false);
     }
   };
 

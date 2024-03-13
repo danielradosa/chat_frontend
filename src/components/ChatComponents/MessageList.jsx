@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import { LIKE_MESSAGE } from "../../utils/routes";
 import axios from "axios";
 import avatar from "../../assets/avatar.png";
+import { Link } from "react-router-dom";
 
 const MessageList = ({
   messages,
@@ -126,7 +127,7 @@ const MessageList = ({
 
   return (
     <div
-      className="flex overflow-auto flex-col w-full p-4 lg:p-8 top-[4.3rem] bottom-[80px] absolute"
+      className="flex overflow-auto flex-col w-full md:p-4 lg:p-8 top-[4.3rem] bottom-[80px] absolute"
       ref={messageContainerRef}
       onScroll={handleScroll}
     >
@@ -148,14 +149,16 @@ const MessageList = ({
             {message.sender !== myId &&
               participants &&
               participants.length > 0 && (
-                <img
-                  src={
-                    participants.find((p) => p._id === message.sender)
-                      .profilePicture || avatar
-                  }
-                  alt="sender-profile-pic"
-                  className="w-8 h-8 rounded-full mt-4 mr-2 md:mr-4 bg-white"
-                />
+                <Link to={`/profile/${message.sender}`} className="mr-2 md:mr-4">
+                  <img
+                    src={
+                      participants.find((p) => p._id === message.sender)
+                        .profilePicture || avatar
+                    }
+                    alt="sender-profile-pic"
+                    className="w-8 h-8 rounded-full mt-4 bg-white"
+                  />
+                </Link>
               )}
             <div
               className={`${

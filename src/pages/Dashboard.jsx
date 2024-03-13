@@ -32,7 +32,7 @@ const Dashboard = () => {
 
   const SkeletonConversationList = () => (
     <SkeletonTheme baseColor="#fff" highlightColor="#f2f2f2">
-      <Skeleton width={320} height={128} count={1} />
+      <Skeleton width={320} height={64} count={1} />
     </SkeletonTheme>
   );
 
@@ -210,11 +210,11 @@ const Dashboard = () => {
                     <li
                       key={conversation._id}
                       className="mt-4 flex items-center justify-center mx-auto bg-white 
-                      w-[320px] transition-all rounded-md shadow-lg hover:bg-gray-100"
+              w-[320px] transition-all rounded-md shadow-lg hover:bg-gray-100"
                     >
                       <button
                         className="w-full text-left focus:outline-none focus:ring-2 
-                        focus:ring-gray-300 focus:ring-offset-2 p-2 rounded-md"
+                focus:ring-gray-300 focus:ring-offset-2 p-2 rounded-md"
                         onClick={() => {
                           goToConversation(conversation._id);
                         }}
@@ -243,7 +243,7 @@ const Dashboard = () => {
 
                       <button
                         className="btnes mx-4 border-red-500 border p-2 
-                        hover:bg-red-500/20 transition-all rounded-full hover:rotate-[45deg]"
+                hover:bg-red-500/20 transition-all rounded-full hover:rotate-[45deg]"
                         onClick={() =>
                           handleDeleteConversation(conversation._id)
                         }
@@ -253,6 +253,14 @@ const Dashboard = () => {
                     </li>
                   ))}
                 </ul>
+              ) : loading ? (
+                <>
+                  {Array.from({ length: conversations.length }).map(
+                    (_, index) => (
+                      <SkeletonConversationList key={index} />
+                    )
+                  )}
+                </>
               ) : (
                 <p>{t("NoConversations")}</p>
               )}
