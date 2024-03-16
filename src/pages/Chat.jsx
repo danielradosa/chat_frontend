@@ -167,7 +167,7 @@ const Chat = () => {
     <div className="flex min-h-screen w-full flex-col align-middle">
       <div>
         <Header />
-        <div className="w-full p-6 h-16 flex items-center gap-8 bg-slate-400 z-[1000] relative">
+        <div className="w-full p-3 md:p-6 h-16 flex items-center gap-4 md:gap-8 bg-slate-400 z-[1000] relative">
           <button onClick={goBack}>
             <img
               src="https://cdn-icons-png.freepik.com/512/7792/7792299.png"
