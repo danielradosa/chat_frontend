@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
-import { Header, Footer } from "../components";
+import { Header } from "../components";
 import { MessageList } from "../components/ChatComponents";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -159,13 +159,44 @@ const Chat = () => {
     }
   };
 
+  const goBack = () => {
+    window.history.back();
+  };
+
   return (
-    <div className="flex min-h-screen w-full flex-col justify-between align-middle">
-      <Header />
+    <div className="flex min-h-screen w-full flex-col align-middle">
+      <div>
+        <Header />
+        <div className="w-full p-6 h-16 flex items-center gap-8 bg-slate-400 z-[1000] relative">
+          <button onClick={goBack}>
+            <img
+              src="https://cdn-icons-png.freepik.com/512/7792/7792299.png"
+              alt=""
+              className="w-10 invert"
+            />
+          </button>
+          <div className="flex items-center gap-2">
+            <img
+              src={
+                participants[0]?._id === myId
+                  ? participants[1]?.profilePicture
+                  : participants[0]?.profilePicture
+              }
+              alt=""
+              className="w-10 border-2 rounded-full border-white"
+            />
+            <h1 className="font-bold text-white text-lg">
+              {participants[0]?._id === myId
+                ? participants[1]?.username
+                : participants[0]?.username}
+            </h1>
+          </div>
+        </div>
+      </div>
 
       <div className="flex flex-col items-center justify-center align-middle">
         {loading ? (
-          <div className="mt-[-4rem]">
+          <div className="mt-12">
             <Oval
               height={40}
               width={40}
@@ -221,8 +252,6 @@ const Chat = () => {
           </form>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

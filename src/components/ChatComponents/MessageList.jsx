@@ -127,7 +127,8 @@ const MessageList = ({
 
   return (
     <div
-      className="flex overflow-auto flex-col w-full p-2 md:p-4 lg:p-8 top-[4.3rem] bottom-[80px] absolute"
+      className="flex overflow-auto flex-col w-full p-4 md:p-4 lg:pl-8 lg:pr-8 lg:pb-8
+       md:top-[8.7rem] bottom-[85px] absolute top-[8.1rem]"
       ref={messageContainerRef}
       onScroll={handleScroll}
     >
@@ -163,8 +164,8 @@ const MessageList = ({
             <div
               className={`${
                 message.sender === myId
-                  ? "self-end bg-black text-white bg-cover leading-6 rounded-md shadow-lg break-words"
-                  : "self-start bg-white bg-cover leading-6 rounded-md shadow-lg break-words"
+                  ? "self-end bg-black text-white bg-cover leading-6 rounded-full break-words"
+                  : "self-start bg-white bg-cover leading-6 rounded-full break-words"
               } px-4 py-3 mb-2 mt-2 lg:max-w-[75%] max-w-[85%] ${
                 isLiked ? "message-liked" : ""
               }`}

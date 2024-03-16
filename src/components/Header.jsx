@@ -10,8 +10,8 @@ const Header = () => {
   const profileId = localStorage.getItem("userId");
 
   return (
-    <header className="bg-gray-300 z-10 shadow-lg w-full border-b-2">
-      <div className="flex items-center justify-between p-4 align-middle md:px-8 md:py-2">
+    <header className="bg-gray-300 z-10 shadow-lg w-full">
+      <div className="flex items-center justify-between px-8 py-4 align-middle md:px-8 md:py-2">
         <Logo />
 
         <nav

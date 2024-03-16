@@ -12,6 +12,7 @@ const Profile = () => {
   const [userData, setUserData] = useState(null);
   const user = localStorage.getItem("token");
   const loading = !userData;
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const getUser = async () => {
@@ -32,7 +33,16 @@ const Profile = () => {
 
     if (file) {
       try {
-        const imageUrl = await uploadImageToCloudinary(file);
+        const imageUrl = await uploadImageToCloudinary(
+          file,
+          (progressEvent) => {
+            const progress = Math.round(
+              (progressEvent.loaded / progressEvent.total) * 100
+            );
+            setProgress(progress);
+          }
+        );
+
         await fetch(UPLOAD_PICTURE, {
           method: "POST",
           headers: {
@@ -43,10 +53,16 @@ const Profile = () => {
             profilePicture: imageUrl,
           }),
         });
+
         localStorage.setItem("profilePicture", imageUrl);
         setUserData({ ...userData, profilePicture: imageUrl });
       } catch (error) {
         console.error("Error uploading image:", error.message);
+      } finally {
+        setProgress(100);
+        setTimeout(() => {
+          setProgress(0);
+        }, 2000);
       }
     }
   };
@@ -71,13 +87,26 @@ const Profile = () => {
           </b>
         </h1>
         {user && userId === localStorage.getItem("userId") && (
-          <input
-            id="file"
-            type="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            className="bg-white p-2 rounded-md shadow-md w-[320px] mt-8"
-          />
+          <>
+            <input
+              id="file"
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="bg-white p-2 rounded-md shadow-md w-[320px] mt-8"
+            />
+            <div className="rounded-md w-[320px] mt-2">
+              <progress
+                value={progress}
+                max="100"
+                className="w-full h-2 rounded-md"
+                style={{
+                  transition:"all 0.15s ease-in-out",
+                  width: `${progress}%`,
+                }}
+              ></progress>
+            </div>
+          </>
         )}
       </div>
 

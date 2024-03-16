@@ -15,11 +15,11 @@ const IsAuthenticated = () => {
           token: token
         });
         setIsAuthenticated(response.data.valid);
+        setLoading(false);
       } catch (error) {
         console.error("Token validation error:", error);
         setIsAuthenticated(false);
-      } finally {
-        setLoading(false); // Set loading to false after token validation completes
+        setLoading(false);
       }
     };
 
@@ -27,11 +27,19 @@ const IsAuthenticated = () => {
       validateToken();
     } else {
       setIsAuthenticated(false);
-      setLoading(false); // Set loading to false if no token is present
+      setLoading(false);
     }
   }, [token]);
 
-  return loading ? null : isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+  if (loading) {
+    return null;
+  }
+
+  if (!token || !isAuthenticated) {
+    return <Navigate to="/" />;
+  }
+
+  return <Outlet />;
 };
 
 export default IsAuthenticated;
