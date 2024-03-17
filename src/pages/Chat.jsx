@@ -11,6 +11,7 @@ import avatar from "../assets/avatar.png";
 
 const Chat = () => {
   const { t } = useTranslation();
+  const [content, setContent] = useState('');
   const { conversationId } = useParams();
   const [messages, setMessages] = useState([]);
   const [participants, setParticipants] = useState([]);
@@ -164,6 +165,10 @@ const Chat = () => {
     window.history.back();
   };
 
+  const handleChange = (event) => {
+    setContent(event.target.innerText);
+  };
+
   return (
     <div className="flex min-h-screen w-full flex-col align-middle">
       <div>
@@ -233,9 +238,8 @@ const Chat = () => {
               ref={messageInputRef}
               aria-describedby=":r2r:"
               inputMode="text"
-              placeholder={t("ChatPlaceholder")}
               className="bg-white w-full rounded-md h-auto max-h-[124px] outline-none
-              p-2 leading-5 text-left min-h-[36px] resize-none overflow-auto mt-0 mb-0"
+              p-2 leading-5 text-left min-h-[36px] resize-none overflow-auto mb-4 md:mb-0"
               contentEditable={true}
               spellCheck={true}
               tabIndex={0}
@@ -247,12 +251,17 @@ const Chat = () => {
               role="textbox"
               data-lexical-editor="true"
               dir="ltr"
+              onInput={handleChange}
               onKeyDown={handleKeyDown}
               data-lexical-text="true"
-            />
+            >
+              {content === "" && (
+                <input type="text" placeholder={t("ChatPlaceholder")} />
+              )}
+            </div>
 
             <button
-              className="ml-2 bg-slate-800 shadow-lg rounded-md w-9"
+              className="ml-2 bg-slate-800 shadow-lg rounded-md w-9 mb-4 md:mb-0"
               onClick={sendMessage}
             >
               <img
