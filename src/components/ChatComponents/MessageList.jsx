@@ -127,8 +127,8 @@ const MessageList = ({
 
   return (
     <div
-      className="flex overflow-auto flex-col w-full p-4 md:p-4 lg:pl-8 lg:pr-8 lg:pb-8
-       md:top-[8.6rem] bottom-[85px] absolute top-[8.1rem]"
+      className="flex overflow-auto flex-col w-full p-4 md:p-4 lg:pl-8 lg:pr-8
+      md:top-[8.6rem] absolute top-[8.1rem] bottom-[65px]"
       ref={messageContainerRef}
       onScroll={handleScroll}
     >
@@ -150,7 +150,10 @@ const MessageList = ({
             {message.sender !== myId &&
               participants &&
               participants.length > 0 && (
-                <Link to={`/profile/${message.sender}`} className="mr-2 md:mr-4">
+                <Link
+                  to={`/profile/${message.sender}`}
+                  className="mr-2 md:mr-4"
+                >
                   <img
                     src={
                       participants.find((p) => p._id === message.sender)
@@ -164,8 +167,8 @@ const MessageList = ({
             <div
               className={`${
                 message.sender === myId
-                  ? "self-end bg-black text-white bg-cover leading-6 rounded-full break-words"
-                  : "self-start bg-white bg-cover leading-6 rounded-full break-words"
+                  ? "self-end bg-black text-white bg-cover leading-6 rounded-md break-words"
+                  : "self-start bg-white bg-cover leading-6 rounded-md break-words"
               } px-4 py-3 mb-2 mt-2 lg:max-w-[75%] max-w-[85%] ${
                 isLiked ? "message-liked" : ""
               }`}

@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { MESSAGES_ROUTE, CONVERSATIONS_ROUTE } from "../utils/routes";
 import io from "socket.io-client";
 import { Oval } from "react-loader-spinner";
+import avatar from "../assets/avatar.png";
 
 const Chat = () => {
   const { t } = useTranslation();
@@ -70,15 +71,15 @@ const Chat = () => {
     e.preventDefault();
 
     const userId = localStorage.getItem("userId");
-    const message = messageInputRef.current.value;
+    const message = messageInputRef.current.innerText.trim();
 
     if (!message) {
       console.log("Message content is empty.");
       return;
     }
 
-    messageInputRef.current.value = "";
     messageInputRef.current.scrollTop = 0;
+    messageInputRef.current.innerText = "";
 
     const timestamp = new Date().getTime();
 
@@ -179,8 +180,8 @@ const Chat = () => {
             <img
               src={
                 participants[0]?._id === myId
-                  ? participants[1]?.profilePicture
-                  : participants[0]?.profilePicture
+                  ? participants[1]?.profilePicture || avatar
+                  : participants[0]?.profilePicture || avatar
               }
               alt=""
               className="w-10 border-2 rounded-full border-white"
@@ -222,31 +223,42 @@ const Chat = () => {
 
         <div
           className="fixed flex w-full items-center justify-center p-4 text-center lg:p-8
-          bottom-0"
+          bottom-0 bg-[#d9d9d9]"
         >
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="flex items-center w-full"
+            className="flex items-center w-full relative"
           >
-            <textarea
+            <div
               ref={messageInputRef}
-              rows={1}
+              aria-describedby=":r2r:"
               inputMode="text"
               placeholder={t("ChatPlaceholder")}
-              maxLength={500}
-              style={{ resize: "none" }}
-              className="mb-4 mt-4 h-auto w-full px-4 py-2 shadow-lg text-black rounded-md"
+              className="bg-white w-full rounded-md h-auto max-h-[124px] outline-none
+              p-2 leading-5 text-left min-h-[36px] resize-none overflow-auto mt-0 mb-0"
+              contentEditable={true}
+              spellCheck={true}
+              tabIndex={0}
+              style={{
+                userSelect: "text",
+                whiteSpace: "pre-wrap",
+                wordBreak: "break-word",
+              }}
+              role="textbox"
+              data-lexical-editor="true"
+              dir="ltr"
               onKeyDown={handleKeyDown}
+              data-lexical-text="true"
             />
 
             <button
-              className="ml-2 bg-slate-800 shadow-lg rounded-md"
+              className="ml-2 bg-slate-800 shadow-lg rounded-md w-9"
               onClick={sendMessage}
             >
               <img
                 src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_send-512.png"
                 alt="send"
-                className="w-12 md:w-11 p-2 hover:rotate-[-35deg] transition-all invert"
+                className="p-2 hover:rotate-[-35deg] transition-all invert"
               />
             </button>
           </form>
