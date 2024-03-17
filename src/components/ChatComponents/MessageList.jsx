@@ -140,12 +140,23 @@ const MessageList = ({
         const isLiked = message.isLiked;
         const messageId = message._id;
 
+        const nextMessage = messages[index + 1];
+        const timeDifference = nextMessage
+          ? (new Date(nextMessage.timestamp) - new Date(message.timestamp)) /
+            1000
+          : 0;
+
+        const shouldGroup = timeDifference <= 10;
+
         return (
           <div
             key={message._id}
             className={`flex ${
-              message.sender === myId ? "justify-end " : "justify-start"
+              message.sender === myId ? "justify-end" : "justify-start"
             }`}
+            style={{
+              marginBottom: shouldGroup ? "-14px" : "0",
+            }}
           >
             {message.sender !== myId &&
               participants &&

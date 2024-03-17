@@ -11,7 +11,6 @@ import avatar from "../assets/avatar.png";
 
 const Chat = () => {
   const { t } = useTranslation();
-  const [content, setContent] = useState('');
   const { conversationId } = useParams();
   const [messages, setMessages] = useState([]);
   const [participants, setParticipants] = useState([]);
@@ -165,20 +164,17 @@ const Chat = () => {
     window.history.back();
   };
 
-  const handleChange = (event) => {
-    setContent(event.target.innerText);
-  };
-
   return (
     <div className="flex min-h-screen w-full flex-col align-middle">
       <div>
         <Header />
-        <div className="w-full p-3 md:p-6 h-16 flex items-center gap-4 md:gap-8 bg-slate-400 z-[1000] relative">
+        <div className="w-full md:p-6 h-16 flex items-center gap-4 md:gap-8 bg-slate-400 z-[1000] fixed
+        top-[65px] md:top-[74px] pl-7">
           <button onClick={goBack}>
             <img
               src="https://cdn-icons-png.freepik.com/512/7792/7792299.png"
               alt=""
-              className="w-10 invert"
+              className="w-10 invert ml-1"
             />
           </button>
           <div className="flex items-center gap-2">
@@ -202,7 +198,7 @@ const Chat = () => {
 
       <div className="flex flex-col items-center justify-center align-middle">
         {loading ? (
-          <div className="mt-12">
+          <div className="mt-36">
             <Oval
               height={40}
               width={40}
@@ -227,7 +223,7 @@ const Chat = () => {
         )}
 
         <div
-          className="fixed flex w-full items-center justify-center p-4 text-center lg:p-8
+          className="fixed flex w-full items-center justify-center py-2 px-4 text-center lg:p-8
           bottom-0 bg-[#d9d9d9]"
         >
           <form
@@ -251,17 +247,13 @@ const Chat = () => {
               role="textbox"
               data-lexical-editor="true"
               dir="ltr"
-              onInput={handleChange}
               onKeyDown={handleKeyDown}
               data-lexical-text="true"
             >
-              {content === "" && (
-                <input type="text" placeholder={t("ChatPlaceholder")} />
-              )}
             </div>
 
             <button
-              className="ml-2 bg-slate-800 shadow-lg rounded-md w-9 mb-4 md:mb-0"
+              className="ml-2 bg-slate-800 shadow-lg rounded-md w-10 md:w-9 mb-4 md:mb-0"
               onClick={sendMessage}
             >
               <img
