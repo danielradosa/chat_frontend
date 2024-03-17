@@ -170,7 +170,7 @@ const MessageList = ({
               message.sender === myId ? "justify-end" : "justify-start"
             }`}
             style={{
-              marginBottom: shouldGroup ? "-12px" : "0",
+              marginBottom: shouldGroup ? "-14px" : "0",
             }}
           >
             {message.sender !== myId &&
