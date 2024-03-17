@@ -165,7 +165,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex min-h-screen w-full flex-col align-middle">
+    <div className="">
       <div>
         <Header />
         <div className="w-full md:p-6 h-16 flex items-center gap-4 md:gap-8 bg-slate-400 z-[1000] fixed
@@ -223,7 +223,7 @@ const Chat = () => {
         )}
 
         <div
-          className="flex w-full items-center justify-center p-4 text-center lg:p-8
+          className="flex w-full items-center justify-center py-8 px-4 text-center lg:p-8
           bottom-0 bg-[#d9d9d9] absolute"
         >
           <form
@@ -242,7 +242,7 @@ const Chat = () => {
               style={{
                 userSelect: "text",
                 whiteSpace: "pre-wrap",
-                wordBreak: "break-word",
+                wordBreak: "break-word"
               }}
               role="textbox"
               data-lexical-editor="true"

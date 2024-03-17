@@ -20,10 +20,11 @@ body {
   font-family: system-ui;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  max-height: 100vh;
+  max-height: 100svh;
   background-repeat: no-repeat;
   background-size: cover;
   line-height: 1.6;
+  overflow: hidden;
 }
 
 code {
