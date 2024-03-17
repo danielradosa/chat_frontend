@@ -127,8 +127,8 @@ const MessageList = ({
 
   return (
     <div
-      className="flex overflow-auto flex-col w-full p-4 md:p-4 lg:pl-8 lg:pr-8
-      md:top-[8.6rem] absolute top-[8.1rem] h-[73svh]"
+      className="flex overflow-auto flex-col w-full p-4 md:p-4 lg:pl-8 lg:pr-8 bg-[#d9d9d9]
+      md:top-[8.6rem] absolute top-[8.1rem] max-h-[73svh]"
       ref={messageContainerRef}
       onScroll={handleScroll}
     >
@@ -148,6 +148,21 @@ const MessageList = ({
 
         const shouldGroup = timeDifference <= 10;
 
+        const prevMessage = messages[index - 1];
+
+        const isFirstInGroup =
+          !prevMessage ||
+          (prevMessage &&
+            (new Date(message.timestamp) - new Date(prevMessage.timestamp)) /
+              1000 >
+              10);
+        const isLastInGroup =
+          !nextMessage ||
+          (nextMessage &&
+            (new Date(nextMessage.timestamp) - new Date(message.timestamp)) /
+              1000 >
+              10);
+
         return (
           <div
             key={message._id}
@@ -155,7 +170,7 @@ const MessageList = ({
               message.sender === myId ? "justify-end" : "justify-start"
             }`}
             style={{
-              marginBottom: shouldGroup ? "-14px" : "0",
+              marginBottom: shouldGroup ? "-12px" : "0",
             }}
           >
             {message.sender !== myId &&
@@ -178,11 +193,31 @@ const MessageList = ({
             <div
               className={`${
                 message.sender === myId
-                  ? "self-end bg-black text-white bg-cover leading-6 rounded-md break-words"
-                  : "self-start bg-white bg-cover leading-6 rounded-md break-words"
-              } px-4 py-3 mb-2 mt-2 lg:max-w-[75%] max-w-[85%] ${
-                isLiked ? "message-liked" : ""
-              }`}
+                  ? "self-end bg-black text-white bg-cover leading-6 rounded-3xl break-words"
+                  : "self-start bg-white text-black bg-cover leading-6 rounded-3xl break-words"
+              } px-4 py-3 mb-2 mt-2 lg:max-w-[75%] max-w-[85%]
+              ${
+                isLastInGroup
+                  ? message.sender === myId
+                    ? "rounded-br-3xl"
+                    : "rounded-bl-3xl"
+                  : ""
+              }
+              ${
+                isFirstInGroup
+                  ? message.sender === myId
+                    ? "rounded-tr-3xl"
+                    : "rounded-tl-3xl"
+                  : ""
+              }
+              ${
+                isFirstInGroup && isLastInGroup
+                  ? ""
+                  : message.sender === myId
+                  ? "rounded-r-lg"
+                  : "rounded-l-lg"
+              }
+              ${isLiked ? "message-liked mb-6" : ""}`}
               onDoubleClick={() => handleLikeMessage(message._id)}
             >
               <Linkify options={options}>{message.content}</Linkify>

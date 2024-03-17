@@ -169,7 +169,7 @@ const Chat = () => {
       <div>
         <Header />
         <div className="w-full md:p-6 h-16 flex items-center gap-4 md:gap-8 bg-slate-400 z-[1000] fixed
-        top-[65px] md:top-[74px] pl-7">
+        top-[65px] md:top-[74px] pl-2">
           <button onClick={goBack}>
             <img
               src="https://cdn-icons-png.freepik.com/512/7792/7792299.png"
@@ -223,8 +223,8 @@ const Chat = () => {
         )}
 
         <div
-          className="fixed flex w-full items-center justify-center py-2 px-4 text-center lg:p-8
-          bottom-0 bg-[#d9d9d9]"
+          className="flex w-full items-center justify-center p-4 text-center lg:p-8
+          bottom-0 bg-[#d9d9d9] absolute"
         >
           <form
             onSubmit={(e) => e.preventDefault()}
@@ -235,7 +235,7 @@ const Chat = () => {
               aria-describedby=":r2r:"
               inputMode="text"
               className="bg-white w-full rounded-md h-auto max-h-[124px] outline-none
-              p-2 leading-5 text-left min-h-[36px] resize-none overflow-auto mb-4 md:mb-0"
+              p-2 leading-5 text-left min-h-[36px] resize-none overflow-auto md:mb-0"
               contentEditable={true}
               spellCheck={true}
               tabIndex={0}
@@ -253,7 +253,7 @@ const Chat = () => {
             </div>
 
             <button
-              className="ml-2 bg-slate-800 shadow-lg rounded-md w-10 md:w-9 mb-4 md:mb-0"
+              className="ml-2 bg-slate-800 shadow-lg rounded-md w-10 md:w-9"
               onClick={sendMessage}
             >
               <img
