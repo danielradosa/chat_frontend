@@ -168,8 +168,8 @@ const Chat = () => {
     <div className="">
       <div>
         <Header />
-        <div className="w-full md:p-6 h-16 flex items-center gap-4 md:gap-8 bg-slate-400 z-[1000] fixed
-        top-[65px] md:top-[74px] pl-2">
+        <div className="w-full md:p-6 h-16 flex items-center gap-4 md:gap-8 z-[1000] fixed
+        top-[64px] md:top-[73px] pl-2 bg-gray-400">
           <button onClick={goBack}>
             <img
               src="https://cdn-icons-png.freepik.com/512/7792/7792299.png"
@@ -224,7 +224,7 @@ const Chat = () => {
 
         <div
           className="flex w-full items-center justify-center py-8 px-4 text-center lg:p-8
-          bottom-0 bg-[#d9d9d9] absolute"
+          bottom-0 bg-black absolute backdrop-blur-sm"
         >
           <form
             onSubmit={(e) => e.preventDefault()}
@@ -234,8 +234,8 @@ const Chat = () => {
               ref={messageInputRef}
               aria-describedby=":r2r:"
               inputMode="text"
-              className="bg-white w-full rounded-md h-auto max-h-[124px] outline-none
-              p-2 leading-5 text-left min-h-[36px] resize-none overflow-auto md:mb-0"
+              className="bg-black text-white w-full rounded-3xl h-auto max-h-[124px] outline-none
+              p-2 px-4 leading-6 text-left min-h-[36px] resize-none overflow-auto md:mb-0 border border-gray-600"
               contentEditable={true}
               spellCheck={true}
               tabIndex={0}
@@ -253,13 +253,13 @@ const Chat = () => {
             </div>
 
             <button
-              className="ml-2 bg-slate-800 shadow-lg rounded-md w-10 md:w-9"
+              className="ml-2 bg-white shadow-lg rounded-full w-11"
               onClick={sendMessage}
             >
               <img
                 src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_send-512.png"
                 alt="send"
-                className="p-2 hover:rotate-[-35deg] transition-all invert"
+                className="p-2 rotate-[-35deg]"
               />
             </button>
           </form>

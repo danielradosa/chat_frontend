@@ -31,5 +31,6 @@
     "LinkAbout": "About",
     "LinkProfile": "Account",
     "DeleteConversationConfirmationMessage": "Conversation deletion progress",
-    "Cancel": "Cancel"
+    "Cancel": "Cancel",
+    "Send": "Send"
 }

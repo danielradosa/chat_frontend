@@ -5,7 +5,7 @@ import { VALIDATE_TOKEN } from "./routes";
 
 const IsAuthenticated = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true); // Set loading to true initially
+  const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -14,12 +14,13 @@ const IsAuthenticated = () => {
         const response = await axios.post(VALIDATE_TOKEN, {
           token: token
         });
-        setIsAuthenticated(response.data.valid);
         setLoading(false);
+        setIsAuthenticated(response.data.valid);
       } catch (error) {
         console.error("Token validation error:", error);
         setIsAuthenticated(false);
         setLoading(false);
+        // window.localStorage.removeItem("token");
       }
     };
 
@@ -35,7 +36,7 @@ const IsAuthenticated = () => {
     return null;
   }
 
-  if (!token || !isAuthenticated) {
+  if (!token && !isAuthenticated) {
     return <Navigate to="/" />;
   }
 
