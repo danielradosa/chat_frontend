@@ -128,7 +128,7 @@ const MessageList = ({
   return (
     <div
       className="flex overflow-auto flex-col w-full p-4 md:p-4 lg:pl-8 lg:pr-8 bg-black
-      md:top-[8.6rem] absolute top-[8rem] max-h-[73svh] md:bottom-[65px] bottom-[105px]"
+      md:top-[8.6rem] absolute top-[8.1rem] max-h-[73svh] md:bottom-[65px] bottom-[105px]"
       ref={messageContainerRef}
       onScroll={handleScroll}
     >
