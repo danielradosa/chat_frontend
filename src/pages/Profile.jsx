@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { Header, Footer } from "../components";
 import { SINGLE_USER, UPLOAD_PICTURE } from "../utils/routes";
@@ -8,6 +9,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const Profile = () => {
+  const { t } = useTranslation();
   const { userId } = useParams();
   const [userData, setUserData] = useState(null);
   const user = localStorage.getItem("token");
@@ -67,6 +69,11 @@ const Profile = () => {
     }
   };
 
+  const changeBGColor = () => {
+    const label = document.querySelector("label[for=file]");
+    label.style.backgroundColor = "rgba(255, 0, 0, 1)";
+  }
+
   return (
     <div className="w-full flex flex-col justify-between align-middle min-h-screen">
       <Header />
@@ -88,20 +95,28 @@ const Profile = () => {
         </h1>
         {user && userId === localStorage.getItem("userId") && (
           <>
+            <label 
+              htmlFor="file"
+              onChange={changeBGColor}
+              className="mt-8 w-[320px] bg-white py-2 px-4 text-center rounded-md cursor-pointer
+              shadow-md hover:shadow-lg transition ease-in-out hover:bg-gray-100 flex items-center
+              justify-between"
+            >{t("uploadPicture")}... <strong>+</strong></label>
             <input
               id="file"
               type="file"
               accept="image/*"
+              style={{ visibility: "hidden" }}
               onChange={handleImageUpload}
               className="bg-white p-2 rounded-md shadow-md w-[320px] mt-8"
             />
-            <div className="rounded-md w-[320px] mt-2">
+            <div className="rounded-md w-[320px] mt-[-4em]">
               <progress
                 value={progress}
                 max="100"
                 className="w-full h-2 rounded-md"
                 style={{
-                  transition:"all 0.15s ease-in-out",
+                  transition: "all 0.15s ease-in-out",
                   width: `${progress}%`,
                 }}
               ></progress>

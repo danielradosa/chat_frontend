@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Header, Footer } from "../components";
 import { useTranslation } from "react-i18next";
@@ -12,7 +12,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // Initialize navigate hook
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ const Login = () => {
         localStorage.setItem("username", res.data.username);
         localStorage.setItem("userId", res.data.userId);
         localStorage.setItem("profilePicture", res.data.profilePicture);
-        navigate("/dashboard"); // Navigate to dashboard after successful login
+        navigate("/dashboard");
       }
     } catch (err) {
       setError(t("LoginError"));

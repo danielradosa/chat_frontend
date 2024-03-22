@@ -20,7 +20,6 @@ const IsAuthenticated = () => {
         console.error("Token validation error:", error);
         setIsAuthenticated(false);
         setLoading(false);
-        // window.localStorage.removeItem("token");
       }
     };
 
@@ -36,11 +35,7 @@ const IsAuthenticated = () => {
     return null;
   }
 
-  if (!token && !isAuthenticated) {
-    return <Navigate to="/" />;
-  }
-
-  return <Outlet />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default IsAuthenticated;

@@ -168,7 +168,7 @@ const Chat = () => {
     <div className="">
       <div>
         <Header />
-        <div className="w-full md:p-6 h-[65px] flex items-center gap-4 md:gap-8 z-[1000] fixed
+        <div className="w-full md:p-6 h-[64px] flex items-center gap-4 md:gap-8 z-[1000] fixed
         top-[64px] md:top-[73px] pl-2 bg-gray-400">
           <button onClick={goBack}>
             <img
@@ -224,7 +224,7 @@ const Chat = () => {
 
         <div
           className="flex w-full items-center justify-center py-8 px-4 text-center lg:p-8
-          bottom-0 bg-black absolute backdrop-blur-sm"
+          bottom-0 bg-[#d9d9d9] absolute backdrop-blur-sm"
         >
           <form
             onSubmit={(e) => e.preventDefault()}
@@ -234,8 +234,8 @@ const Chat = () => {
               ref={messageInputRef}
               aria-describedby=":r2r:"
               inputMode="text"
-              className="bg-black text-white w-full rounded-3xl h-auto max-h-[124px] outline-none
-              p-2 px-4 leading-6 text-left min-h-[36px] resize-none overflow-auto md:mb-0 border border-gray-600"
+              className="bg-white text-black w-full rounded-3xl h-auto max-h-[124px] outline-none
+              p-2 px-4 leading-6 text-left min-h-[36px] resize-none overflow-auto md:mb-0"
               contentEditable={true}
               spellCheck={true}
               tabIndex={0}

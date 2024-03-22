@@ -32,5 +32,6 @@
     "LinkProfile": "Účet",
     "DeleteConversationConfirmationMessage": "Priebeh zmazania konverzácie",
     "Cancel": "Zrušiť",
-    "Send": "Odoslať"
+    "Send": "Odoslať",
+    "uploadPicture": "Nahrať obrázok"
 }

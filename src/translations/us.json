@@ -32,5 +32,6 @@
     "LinkProfile": "Account",
     "DeleteConversationConfirmationMessage": "Conversation deletion progress",
     "Cancel": "Cancel",
-    "Send": "Send"
+    "Send": "Send",
+    "uploadPicture": "Upload a picture"
 }
