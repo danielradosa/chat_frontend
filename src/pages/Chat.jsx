@@ -16,6 +16,9 @@ const Chat = () => {
   const [participants, setParticipants] = useState([]);
   const [myId, setMyId] = useState("");
   const [loading, setLoading] = useState(true);
+  const [notificationPermission, setNotificationPermission] = useState(
+    localStorage.getItem("notificationPermission") || "default"
+  );
   const apiURL = process.env.REACT_APP_API;
 
   const socket = io(apiURL, {
@@ -139,10 +142,11 @@ const Chat = () => {
 
     socket.on("receiveMessage", (data) => {
       setMessages((prevMessages) => [...prevMessages, data.message]);
-    });
 
-    socket.on("sendMessage", (data) => {
-      setMessages((prevMessages) => [...prevMessages, data.message]);
+      // Show notification if page is not visible
+      if (document.visibilityState === "hidden") {
+        showNotification(data.message.content);
+      }
     });
 
     return () => {
@@ -151,7 +155,8 @@ const Chat = () => {
       socket.off("sendMessage");
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [conversationId, myId, socket, t, fetchData, participants]);
+    // eslint-disable-next-line
+  }, [conversationId, myId, socket, fetchData, participants]);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -164,12 +169,60 @@ const Chat = () => {
     window.history.back();
   };
 
+  const allowNotifications = () => {
+    if (!('Notification' in window)) {
+      console.log('This browser does not support desktop notification');
+      return;
+    }
+  
+    Notification.requestPermission().then(permission => {
+      setNotificationPermission(permission);
+      localStorage.setItem('notificationPermission', permission);
+    });
+  };
+  
+
+  useEffect(() => {
+    if (Notification.permission === "granted") {
+      setNotificationPermission("granted");
+    }
+  }, []);
+
+  const showNotification = (message) => {
+    const senderUsername =
+    participants[0]?._id === myId
+      ? participants[1]?.username
+      : participants[0]?.username;
+
+    if (Notification.permission === "granted") {
+      new Notification(senderUsername, {
+        body: message,
+        vibrate: [200],
+        icon: "logo.png",
+        tag: "NewMessage",
+      });
+    } else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          new Notification(senderUsername, {
+            body: message,
+            vibrate: [200],
+            icon: "logo.png",
+            tag: "NewMessage",
+          });
+        }
+      });
+    }
+  };
+
   return (
     <div className="">
       <div>
         <Header />
-        <div className="w-full md:p-6 h-[64px] flex items-center gap-4 md:gap-8 z-[1000] fixed
-        top-[64px] md:top-[73px] pl-2 bg-gray-400">
+        <div
+          className="w-full md:p-6 h-[64px] flex items-center gap-4 md:gap-8 z-[1000] fixed
+        top-[64px] md:top-[73px] pl-2"
+        >
           <button onClick={goBack}>
             <img
               src="https://cdn-icons-png.freepik.com/512/7792/7792299.png"
@@ -193,6 +246,21 @@ const Chat = () => {
                 : participants[0]?.username}
             </h1>
           </div>
+          {notificationPermission === "granted" ? (
+            <button
+              onClick={allowNotifications}
+              className="py-2 px-4 bg-red-500 rounded-xl text-white font-semibold"
+            >
+              {t("notifs-disable")}
+            </button>
+          ) : (
+            <button
+              onClick={allowNotifications}
+              className="py-2 px-4 bg-green-500 rounded-xl text-white font-semibold"
+            >
+              {t("notifs")}
+            </button>
+          )}
         </div>
       </div>
 
@@ -224,7 +292,7 @@ const Chat = () => {
 
         <div
           className="flex w-full items-center justify-center py-8 px-4 text-center lg:p-8
-          bottom-0 bg-[#d9d9d9] absolute backdrop-blur-sm"
+          bottom-0 absolute"
         >
           <form
             onSubmit={(e) => e.preventDefault()}
@@ -242,15 +310,14 @@ const Chat = () => {
               style={{
                 userSelect: "text",
                 whiteSpace: "pre-wrap",
-                wordBreak: "break-word"
+                wordBreak: "break-word",
               }}
               role="textbox"
               data-lexical-editor="true"
               dir="ltr"
               onKeyDown={handleKeyDown}
               data-lexical-text="true"
-            >
-            </div>
+            ></div>
 
             <button
               className="ml-2 bg-white shadow-lg rounded-full w-11"

@@ -22,14 +22,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const apiURL = process.env.REACT_APP_API;
 
-  let userExists = localStorage.getItem("token") ? true : false;
-
-  if (!userExists) {
-    window.location.href = "/";
-  } else {
-    userExists = true;
-  }
-
   const SkeletonConversationList = () => (
     <SkeletonTheme baseColor="#fff" highlightColor="#f2f2f2">
       <Skeleton width={320} height={64} count={1} />
@@ -198,7 +190,7 @@ const Dashboard = () => {
         <Header />
 
         <div className="flex flex-col items-center justify-center align-middle">
-          <h3 className="mb-6 text-center text-2xl font-bold">
+          <h3 className="mb-6 text-center text-2xl font-bold text-white">
             {t("ConversationTitle")}
           </h3>
 
@@ -271,7 +263,7 @@ const Dashboard = () => {
         </div>
 
         <div className="flex flex-col items-center justify-center">
-          <h3 className="mb-6 text-center text-2xl font-bold">
+          <h3 className="mb-6 text-center text-2xl font-bold text-white">
             {t("NewConversationTitle")}
           </h3>
 
@@ -290,15 +282,15 @@ const Dashboard = () => {
                 }}
               />
 
-              <ul className="h-[20svh] overflow-auto mb-8 rounded-md">
+              <ul className="h-[20svh] overflow-auto mb-8 rounded-md z-10 relative">
                 {filteredUsers.map((user) => (
                   <li
                     key={user._id}
-                    className="mt-4 flex items-center justify-center px-4 py-2 bg-white w-[320px] 
-                  hover:bg-black hover:text-white rounded-md"
+                    className="mt-4 flex items-center px-4 py-2 bg-white w-[320px] 
+                  hover:bg-gray-100 hover:text-black rounded-md shadow-lg transition-all"
                   >
                     <button
-                      className="w-full text-left"
+                      className="w-full text-left focus:outline-none focus:ring-2"
                       onClick={() =>
                         handleCreateConversation(user._id, user.username)
                       }

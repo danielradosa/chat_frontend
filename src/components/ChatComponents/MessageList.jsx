@@ -127,8 +127,8 @@ const MessageList = ({
 
   return (
     <div
-      className="flex overflow-auto flex-col w-full p-4 md:p-4 lg:pl-8 lg:pr-8 bg-[#d9d9d9]
-      md:top-[8.6rem] absolute top-[8rem] max-h-[73svh] md:bottom-[65px] bottom-[105px]"
+      className="flex overflow-auto flex-col w-full p-4 md:p-4 lg:pl-8 lg:pr-8 md:top-[8.6rem] 
+      absolute top-[8rem] max-h-[73svh] md:bottom-[65px] bottom-[105px]"
       ref={messageContainerRef}
       onScroll={handleScroll}
     >
@@ -193,9 +193,9 @@ const MessageList = ({
             <div
               className={`${
                 message.sender === myId
-                  ? "self-end bg-purple-600 text-white bg-cover leading-6 rounded-3xl break-words"
-                  : "self-start bg-white text-black bg-cover leading-6 rounded-3xl break-words"
-              } px-3 py-2 mb-2 mt-2 lg:max-w-[75%] max-w-[85%]
+                  ? "self-end bg-cover leading-6 rounded-3xl break-words bg-black/80 text-white"
+                  : "self-start bg-cover leading-6 rounded-3xl break-words bg-black/20 text-white"
+              } px-4 py-2 mb-2 mt-2 lg:max-w-[75%] max-w-[85%]
               ${
                 isLastInGroup
                   ? message.sender === myId
@@ -228,7 +228,7 @@ const MessageList = ({
                     animatedHearts[messageId] ? "animate-heart" : ""
                   }`}
                 >
-                  🩷
+                  💙
                 </span>
               )}
             </div>

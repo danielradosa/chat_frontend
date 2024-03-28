@@ -33,5 +33,7 @@
     "DeleteConversationConfirmationMessage": "Conversation deletion progress",
     "Cancel": "Cancel",
     "Send": "Send",
-    "uploadPicture": "Upload a picture"
+    "uploadPicture": "Upload a picture",
+    "notifs": "Allow notifications",
+    "notifs-disable": "Disable notifications"
 }

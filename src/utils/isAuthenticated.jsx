@@ -12,10 +12,10 @@ const IsAuthenticated = () => {
     const validateToken = async () => {
       try {
         const response = await axios.post(VALIDATE_TOKEN, {
-          token: token
+          token: token,
         });
-        setLoading(false);
         setIsAuthenticated(response.data.valid);
+        setLoading(false);
       } catch (error) {
         console.error("Token validation error:", error);
         setIsAuthenticated(false);
@@ -35,7 +35,11 @@ const IsAuthenticated = () => {
     return null;
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/" />;
+  if (!token || !isAuthenticated) {
+    return <Navigate to="/" />;
+  }
+
+  return <Outlet />;
 };
 
 export default IsAuthenticated;

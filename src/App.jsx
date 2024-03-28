@@ -17,11 +17,6 @@ function App() {
   const selectedLanguage = Cookies.get("selectedLanguage");
   i18n.changeLanguage(selectedLanguage);
 
-  document.addEventListener("mousemove", (e) => {
-    document.body.style.backgroundPositionX = -e.pageX / 100 + "px";
-    document.body.style.backgroundPositionY = -e.pageY / 100 + "px";
-  });
-
   return (
     <Router>
       <I18nextProvider i18n={i18n}>
@@ -34,8 +29,6 @@ function App() {
           {/* Private Routes */}
           <Route element={<IsAuthenticated />}>
             <Route path="/dashboard" element={<Dashboard />} />
-
-            {/* Dynamic Routes */}
             <Route path="/chat/:conversationId" element={<Chat />} />
             <Route path="/profile/:userId" element={<Profile />} />
           </Route>

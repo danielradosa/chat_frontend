@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 html {
-  background-color: #d9d9d9;
+  background: url('https://pixelify.nyc3.cdn.digitaloceanspaces.com/wp-content/uploads/2020/06/20112726/runnerdesign_2020-3.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100svh;
 }
 
 * {
@@ -17,13 +20,15 @@ main {
 }
 
 body {
-  font-family: system-ui;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-smooth: always;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   max-height: 100svh;
   background-repeat: no-repeat;
   background-size: cover;
-  line-height: 1.6;
+  line-height: 1.618;
   overflow: hidden;
 }
 
@@ -41,7 +46,7 @@ code {
   bottom: 0;
   left: calc(-6px);
   top: calc(100% - 14px);
-  font-size: 1.35rem;
+  font-size: 1rem;
   transition: transform 0.2s ease-in-out;
   border-radius: 30px;
 }

@@ -82,9 +82,10 @@ const Profile = () => {
         <img
           src={userData?.profilePicture || loading || avatar}
           alt="profile"
-          className="w-[320px] h-[320px] object-cover rounded-full shadow-md bg-white"
+          className="w-[320px] h-[320px] object-cover rounded-full shadow-md bg-black/60"
         />
-        <h1 className="mt-8 text-2xl bg-white border-2 rounded-md w-[320px] text-center py-2 shadow-md">
+        <h1 className="mt-8 text-2xl bg-black/60 text-white border-2 
+        rounded-xl w-[320px] text-center py-2 shadow-md border-black">
           <b>
             {userData ? (
               `@` + userData.username
@@ -98,9 +99,9 @@ const Profile = () => {
             <label 
               htmlFor="file"
               onChange={changeBGColor}
-              className="mt-8 w-[320px] bg-white py-2 px-4 text-center rounded-md cursor-pointer
-              shadow-md hover:shadow-lg transition ease-in-out hover:bg-gray-100 flex items-center
-              justify-between"
+              className="mt-8 w-[320px] bg-black/60 py-2 px-4 text-center rounded-xl cursor-pointer
+              shadow-md hover:shadow-lg transition ease-in-out hover:bg-black/40 flex items-center
+              justify-between text-white"
             >{t("uploadPicture")}... <strong>+</strong></label>
             <input
               id="file"

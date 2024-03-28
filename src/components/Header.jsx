@@ -10,7 +10,7 @@ const Header = () => {
   const profileId = localStorage.getItem("userId");
 
   return (
-    <header className="bg-gray-300 z-10 shadow-lg w-full md:px-2">
+    <header className="z-10 w-full md:px-2 text-white">
       <div className="flex items-center justify-between px-4 py-4 align-middle md:px-6 md:py-2">
         <Logo />
 
@@ -21,23 +21,14 @@ const Header = () => {
         >
           {user ? (
             <>
-              <Link to="/dashboard" className="font-bold">
-                <button>{t("LinkChats")}</button>
-              </Link>
-              <Link to={`/profile/${profileId}`} className="font-bold">
-                <button>{t("LinkProfile")}</button>
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link to="/" className="font-bold text-gray-100">
-                <button className="line-through cursor-not-allowed">{t("LinkChats")}</button>
-              </Link>
-              <Link to="/" className="font-bold text-gray-100">
-                <button className="line-through cursor-not-allowed">{t("LinkProfile")}</button>
-              </Link>
-            </>
-          )}
+            <Link to="/dashboard" className="font-bold">
+              <button>{t("LinkChats")}</button>
+            </Link>
+            <Link to={`/profile/${profileId}`} className="font-bold">
+              <button>{t("LinkProfile")}</button>
+            </Link>
+          </>
+          ) : null}
         </nav>
 
         <div className="flex items-center gap-8">

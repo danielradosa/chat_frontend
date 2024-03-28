@@ -33,5 +33,7 @@
     "DeleteConversationConfirmationMessage": "Priebeh zmazania konverzácie",
     "Cancel": "Zrušiť",
     "Send": "Odoslať",
-    "uploadPicture": "Nahrať obrázok"
+    "uploadPicture": "Nahrať obrázok",
+    "notifs": "Povoliť notifikácie",
+    "notifs-disable": "Nepovoľovať notifikácie"
 }
