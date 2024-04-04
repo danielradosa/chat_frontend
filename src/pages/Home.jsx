@@ -5,11 +5,6 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   const { t } = useTranslation();
-  let user = localStorage.getItem("token");
-
-  if (user) {
-    window.location.href = "/dashboard";
-  }
 
   const renderButton = (to, buttonText, width = "w-48") => (
     <Link to={to} className="rounded-md transition-all shadow-lg text-white">

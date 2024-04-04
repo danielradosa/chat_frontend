@@ -16,6 +16,7 @@ const Chat = () => {
   const [participants, setParticipants] = useState([]);
   const [myId, setMyId] = useState("");
   const [loading, setLoading] = useState(true);
+  const [inputValue, setInputValue] = useState("");
   const [notificationPermission, setNotificationPermission] = useState(
     localStorage.getItem("notificationPermission") || "default"
   );
@@ -176,44 +177,45 @@ const Chat = () => {
     }
   
     Notification.requestPermission().then(permission => {
-      setNotificationPermission(permission);
-      localStorage.setItem('notificationPermission', permission);
+      if (permission === "granted") {
+        setNotificationPermission("granted");
+        localStorage.setItem('notificationPermission', permission);
+      } else if (permission === "denied") {
+        setNotificationPermission("denied");
+      } else {
+        setNotificationPermission("default");
+      }
     });
   };
-  
 
   useEffect(() => {
-    if (Notification.permission === "granted") {
+    if ('Notification' in window && Notification.permission === "granted") {
       setNotificationPermission("granted");
     }
   }, []);
 
   const showNotification = (message) => {
-    const senderUsername =
-    participants[0]?._id === myId
+    const senderUsername = participants[0]?._id === myId
       ? participants[1]?.username
       : participants[0]?.username;
-
+  
     if (Notification.permission === "granted") {
-      new Notification(senderUsername, {
-        body: message,
-        vibrate: [200],
-        icon: "logo.png",
-        tag: "NewMessage",
-      });
-    } else if (Notification.permission !== "denied") {
-      Notification.requestPermission().then((permission) => {
-        if (permission === "granted") {
-          new Notification(senderUsername, {
-            body: message,
-            vibrate: [200],
-            icon: "logo.png",
-            tag: "NewMessage",
-          });
-        }
-      });
+      try {
+        new Notification(senderUsername, {
+          body: message,
+          vibrate: [200],
+          icon: "logo.png",
+          tag: "NewMessage",
+        });
+      } catch (error) {
+        console.error('Error showing notification:', error);
+      }
     }
-  };
+  };  
+
+  const handleSendValue = (e) => {
+    setInputValue(e.target.innerText.trim());
+  }
 
   return (
     <div className="">
@@ -238,7 +240,7 @@ const Chat = () => {
                   : participants[0]?.profilePicture || avatar
               }
               alt=""
-              className="w-10 border-2 rounded-full border-white"
+              className="w-10 h-10 border-2 rounded-full border-white"
             />
             <h1 className="font-bold text-white text-lg">
               {participants[0]?._id === myId
@@ -246,7 +248,8 @@ const Chat = () => {
                 : participants[0]?.username}
             </h1>
           </div>
-          {notificationPermission === "granted" ? (
+          {('Notification' in window) && (
+          notificationPermission === "granted" ? (
             <button
               onClick={allowNotifications}
               className="py-2 px-4 bg-red-500 rounded-xl text-white font-semibold"
@@ -260,7 +263,8 @@ const Chat = () => {
             >
               {t("notifs")}
             </button>
-          )}
+          )
+        )}
         </div>
       </div>
 
@@ -292,17 +296,18 @@ const Chat = () => {
 
         <div
           className="flex w-full items-center justify-center py-8 px-4 text-center lg:p-8
-          bottom-0 absolute"
+          bottom-0 absolute backdrop-blur-sm"
         >
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="flex items-center w-full relative"
+            className="flex items-center w-full relative bg-white rounded-3xl overflow-auto min-h-[46px]"
           >
             <div
               ref={messageInputRef}
               aria-describedby=":r2r:"
               inputMode="text"
-              className="bg-white text-black w-full rounded-3xl h-auto max-h-[124px] outline-none
+              enterkeyhint="send"
+              className="bg-white text-black w-[90%] rounded-3xl h-auto max-h-[124px] outline-none
               p-2 px-4 leading-6 text-left min-h-[36px] resize-none overflow-auto md:mb-0"
               contentEditable={true}
               spellCheck={true}
@@ -315,18 +320,23 @@ const Chat = () => {
               role="textbox"
               data-lexical-editor="true"
               dir="ltr"
+              onInput={handleSendValue}
               onKeyDown={handleKeyDown}
               data-lexical-text="true"
             ></div>
 
             <button
-              className="ml-2 bg-white shadow-lg rounded-full w-11"
+              className={`bg-white rounded-full w-8 bottom-2 right-2 absolute ${
+                inputValue.length > 0 ? "bg-blue-400" : "bg-white"
+              }`}
               onClick={sendMessage}
             >
               <img
                 src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_send-512.png"
                 alt="send"
-                className="p-2 rotate-[-35deg]"
+                className={`p-2 ${
+                  inputValue.length > 0 ? "invert" : ""
+                }`}
               />
             </button>
           </form>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Header, Footer } from "../components";
 import { useTranslation } from "react-i18next";
-import { LOGIN_ROUTE } from "../utils/routes";
+import { LOGIN_ROUTE, VALIDATE_TOKEN } from "../utils/routes";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -15,9 +15,27 @@ const Login = () => {
   const navigate = useNavigate();
 
   let user = localStorage.getItem("token");
-
+  
   if (user) {
-    window.location.href = "/dashboard";
+    const validateToken = async () => {
+      try {
+        const response = await axios.post(VALIDATE_TOKEN, {
+          token: user,
+        });
+        if (response.data.valid) {
+          navigate("/dashboard");
+        } else {
+          localStorage.removeItem("token");
+          localStorage.removeItem("username");
+          localStorage.removeItem("userId");
+          localStorage.removeItem("profilePicture");
+        }
+      }
+      catch (error) {
+        console.error("Token validation error:", error);
+      }
+    };
+    validateToken();
   }
 
   const handleLogin = async (e) => {

@@ -35,7 +35,7 @@ const IsAuthenticated = () => {
     return null;
   }
 
-  if (!token || !isAuthenticated) {
+  if (!isAuthenticated) {
     return <Navigate to="/" />;
   }
 
