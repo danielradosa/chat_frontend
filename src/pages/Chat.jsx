@@ -327,7 +327,7 @@ const Chat = () => {
 
             <button
               className={`bg-white rounded-full w-8 bottom-2 right-2 absolute ${
-                inputValue.length > 0 ? "bg-blue-400" : "bg-white"
+                inputValue.length > 0 ? "bg-blue-500" : "bg-white"
               }`}
               onClick={sendMessage}
             >
