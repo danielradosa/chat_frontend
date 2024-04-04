@@ -2,9 +2,35 @@ import React from "react";
 import { Header, Footer } from "../components";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { VALIDATE_TOKEN } from "../utils/routes";
 
 const Home = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  let user = localStorage.getItem("token");
+
+  if (user) {
+    const validateToken = async () => {
+      try {
+        const response = await axios.post(VALIDATE_TOKEN, {
+          token: user,
+        });
+        if (response.data.valid) {
+          navigate("/dashboard");
+        } else {
+          localStorage.removeItem("token");
+          localStorage.removeItem("username");
+          localStorage.removeItem("userId");
+          localStorage.removeItem("profilePicture");
+        }
+      } catch (error) {
+        console.error("Token validation error:", error);
+      }
+    };
+    validateToken();
+  }
 
   const renderButton = (to, buttonText, width = "w-48") => (
     <Link to={to} className="rounded-md transition-all shadow-lg text-white">
