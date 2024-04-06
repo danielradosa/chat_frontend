@@ -15,12 +15,10 @@ const MessageList = ({
 }) => {
   const messageContainerRef = useRef(null);
   const apiURL = process.env.REACT_APP_API;
-  const socket = io(apiURL, {
-    extraHeaders: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
+  const socket = io(`${apiURL}?token=${localStorage.getItem("token")}`, {
     transports: ["websocket"],
-  });
+    autoConnect: true
+  });  
 
   const options = {
     target: "_blank",
@@ -128,7 +126,7 @@ const MessageList = ({
   return (
     <div
       className="flex overflow-auto flex-col w-full p-4 md:p-4 lg:pl-8 lg:pr-8 md:top-[8.6rem] 
-      absolute top-[8rem] max-h-[73svh] md:bottom-[65px] bottom-[105px]"
+      absolute top-[8rem] max-h-[72svh] md:bottom-[65px] bottom-[105px]"
       ref={messageContainerRef}
       onScroll={handleScroll}
     >
@@ -193,8 +191,8 @@ const MessageList = ({
             <div
               className={`${
                 message.sender === myId
-                  ? "self-end bg-cover leading-6 rounded-3xl break-words bg-black/80 text-white"
-                  : "self-start bg-cover leading-6 rounded-3xl break-words bg-black/20 text-white"
+                  ? "self-end bg-cover leading-6 rounded-3xl break-words bg-black text-white"
+                  : "self-start bg-cover leading-6 rounded-3xl break-words bg-white text-black"
               } px-4 py-2 mb-2 mt-2 lg:max-w-[75%] max-w-[85%]
               ${
                 isLastInGroup

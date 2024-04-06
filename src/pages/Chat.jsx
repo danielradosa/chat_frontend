@@ -22,13 +22,11 @@ const Chat = () => {
   );
   const apiURL = process.env.REACT_APP_API;
 
-  const socket = io(apiURL, {
-    extraHeaders: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
+  const socket = io(`${apiURL}?token=${localStorage.getItem("token")}`, {
     transports: ["websocket"],
-    autoConnect: true,
+    autoConnect: true
   });
+  
 
   const messageInputRef = useRef(null);
 
@@ -296,7 +294,7 @@ const Chat = () => {
 
         <div
           className="flex w-full items-center justify-center py-8 px-4 text-center lg:p-8
-          bottom-0 absolute backdrop-blur-sm"
+          absolute bottom-0 backdrop-blur-sm"
         >
           <form
             onSubmit={(e) => e.preventDefault()}
@@ -306,7 +304,7 @@ const Chat = () => {
               ref={messageInputRef}
               aria-describedby=":r2r:"
               inputMode="text"
-              enterkeyhint="send"
+              enterKeyHint="send"
               className="bg-white text-black w-[90%] rounded-3xl h-auto max-h-[124px] outline-none
               p-2 px-4 leading-6 text-left min-h-[36px] resize-none overflow-auto md:mb-0"
               contentEditable={true}
@@ -327,7 +325,7 @@ const Chat = () => {
 
             <button
               className={`bg-white rounded-full w-8 bottom-2 right-2 absolute ${
-                inputValue.length > 0 ? "bg-blue-500" : "bg-white"
+                inputValue.trim().length > 0 ? "bg-black" : "bg-white"
               }`}
               onClick={sendMessage}
             >
