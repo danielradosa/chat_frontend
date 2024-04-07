@@ -19,13 +19,12 @@ const Home = () => {
         });
         if (response.data.valid) {
           navigate("/dashboard");
-        } else {
-          localStorage.removeItem("token");
-          localStorage.removeItem("username");
-          localStorage.removeItem("userId");
-          localStorage.removeItem("profilePicture");
         }
       } catch (error) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("profilePicture");
         console.error("Token validation error:", error);
       }
     };

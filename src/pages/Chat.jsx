@@ -250,7 +250,7 @@ const Chat = () => {
           notificationPermission === "granted" ? (
             <button
               onClick={allowNotifications}
-              className="py-2 px-4 bg-red-500 rounded-xl text-white font-semibold"
+              className="py-2 px-4 bg-red-500 rounded-xl text-white font-semibold truncate max-w-[48%] md:w-auto"
             >
               {t("notifs-disable")}
             </button>

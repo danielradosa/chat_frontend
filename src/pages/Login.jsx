@@ -15,7 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   let user = localStorage.getItem("token");
-  
+
   if (user) {
     const validateToken = async () => {
       try {
@@ -24,14 +24,12 @@ const Login = () => {
         });
         if (response.data.valid) {
           navigate("/dashboard");
-        } else {
-          localStorage.removeItem("token");
-          localStorage.removeItem("username");
-          localStorage.removeItem("userId");
-          localStorage.removeItem("profilePicture");
         }
-      }
-      catch (error) {
+      } catch (error) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("profilePicture");
         console.error("Token validation error:", error);
       }
     };
