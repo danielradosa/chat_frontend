@@ -31,6 +31,7 @@ const Login = () => {
         localStorage.removeItem("userId");
         localStorage.removeItem("profilePicture");
         console.error("Token validation error:", error);
+        window.location.reload();
       }
     };
     validateToken();
