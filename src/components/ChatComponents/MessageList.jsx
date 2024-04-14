@@ -226,7 +226,7 @@ const MessageList = ({
                     animatedHearts[messageId] ? "animate-heart" : ""
                   }`}
                 >
-                  💙
+                  🩷
                 </span>
               )}
             </div>
