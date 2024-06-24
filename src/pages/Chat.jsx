@@ -24,9 +24,8 @@ const Chat = () => {
 
   const socket = io(`${apiURL}?token=${localStorage.getItem("token")}`, {
     transports: ["websocket"],
-    autoConnect: true
+    autoConnect: true,
   });
-  
 
   const messageInputRef = useRef(null);
 
@@ -169,15 +168,15 @@ const Chat = () => {
   };
 
   const allowNotifications = () => {
-    if (!('Notification' in window)) {
-      console.log('This browser does not support desktop notification');
+    if (!("Notification" in window)) {
+      console.log("This browser does not support desktop notification");
       return;
     }
-  
-    Notification.requestPermission().then(permission => {
+
+    Notification.requestPermission().then((permission) => {
       if (permission === "granted") {
         setNotificationPermission("granted");
-        localStorage.setItem('notificationPermission', permission);
+        localStorage.setItem("notificationPermission", permission);
       } else if (permission === "denied") {
         setNotificationPermission("denied");
       } else {
@@ -187,16 +186,17 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    if ('Notification' in window && Notification.permission === "granted") {
+    if ("Notification" in window && Notification.permission === "granted") {
       setNotificationPermission("granted");
     }
   }, []);
 
   const showNotification = (message) => {
-    const senderUsername = participants[0]?._id === myId
-      ? participants[1]?.username
-      : participants[0]?.username;
-  
+    const senderUsername =
+      participants[0]?._id === myId
+        ? participants[1]?.username
+        : participants[0]?.username;
+
     if (Notification.permission === "granted") {
       try {
         new Notification(senderUsername, {
@@ -206,14 +206,14 @@ const Chat = () => {
           tag: "NewMessage",
         });
       } catch (error) {
-        console.error('Error showing notification:', error);
+        console.error("Error showing notification:", error);
       }
     }
-  };  
+  };
 
   const handleSendValue = (e) => {
     setInputValue(e.target.innerText.trim());
-  }
+  };
 
   return (
     <div className="">
@@ -246,23 +246,22 @@ const Chat = () => {
                 : participants[0]?.username}
             </h1>
           </div>
-          {('Notification' in window) && (
-          notificationPermission === "granted" ? (
-            <button
-              onClick={allowNotifications}
-              className="py-2 px-4 bg-red-500 rounded-xl text-white font-semibold truncate max-w-[48%] md:w-auto"
-            >
-              {t("notifs-disable")}
-            </button>
-          ) : (
-            <button
-              onClick={allowNotifications}
-              className="py-2 px-4 bg-green-500 rounded-xl text-white font-semibold"
-            >
-              {t("notifs")}
-            </button>
-          )
-        )}
+          {"Notification" in window &&
+            (notificationPermission === "granted" ? (
+              <button
+                onClick={allowNotifications}
+                className="py-2 px-4 bg-red-500 rounded-xl text-white font-semibold truncate max-w-[48%] md:w-auto"
+              >
+                {t("notifs-disable")}
+              </button>
+            ) : (
+              <button
+                onClick={allowNotifications}
+                className="py-2 px-4 bg-green-500 rounded-xl text-white font-semibold"
+              >
+                {t("notifs")}
+              </button>
+            ))}
         </div>
       </div>
 
@@ -332,9 +331,7 @@ const Chat = () => {
               <img
                 src="https://cdn4.iconfinder.com/data/icons/glyphs/24/icons_send-512.png"
                 alt="send"
-                className={`p-2 ${
-                  inputValue.length > 0 ? "invert" : ""
-                }`}
+                className={`p-2 ${inputValue.length > 0 ? "invert" : ""}`}
               />
             </button>
           </form>
