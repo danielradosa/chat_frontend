@@ -33,10 +33,10 @@ const Home = () => {
   }
 
   const renderButton = (to, buttonText, width = "w-48") => (
-    <Link to={to} className="rounded-md transition-all shadow-lg text-white">
+    <Link to={to} className="rounded-md transition-all shadow-lg">
       <button
-        className={`px-4 py-2 font-bold h-auto ${width} hover:bg-black/40 bg-black/60
-        focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 rounded-xl
+        className={`px-4 py-2 font-bold h-auto ${width} hover:bg-blue-100 bg-white
+        focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 rounded-sm
         transition-all`}
       >
         {t(buttonText)}

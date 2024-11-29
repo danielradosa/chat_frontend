@@ -3,9 +3,8 @@
 @tailwind utilities;
 
 html {
-  background: url('https://cdn.wallpapersafari.com/74/96/JkgUAD.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
+  background: url('./assets/bgText.png');
+  background-repeat: repeat;
   height: 100svh;
 }
 

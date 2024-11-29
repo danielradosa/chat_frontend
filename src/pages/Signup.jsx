@@ -60,7 +60,7 @@ const Signup = () => {
               className="mx-auto mt-[-2rem] flex w-48"
             />
           )}
-          <div className="flex flex-col items-center justify-center align-middle text-white">
+          <div className="flex flex-col items-center justify-center align-middle text-black">
             <input
               type="text"
               autoComplete="off"
@@ -68,7 +68,7 @@ const Signup = () => {
               placeholder={t("SignupNamePlaceholder")}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="mb-4 px-4 py-2 bg-black/80 rounded-xl hover:bg-black/60 transition-all border-2 border-black"
+              className="mb-4 px-4 py-2 bg-white rounded-sm hover:bg-blue-100 transition-all border-2 border-white"
             />
             <input
               required
@@ -78,7 +78,7 @@ const Signup = () => {
               placeholder={t("SignupPasswordPlaceholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mb-4 px-4 py-2 bg-black/80 rounded-xl hover:bg-black/60 transition-all border-2 border-black"
+              className="mb-4 px-4 py-2 bg-white rounded-sm hover:bg-blue-100 transition-all border-2 border-white"
             />
             <input
               required
@@ -88,12 +88,12 @@ const Signup = () => {
               placeholder={t("SignupPasswordAgainPlaceholder")}
               value={passwordAgain}
               onChange={(e) => setPasswordAgain(e.target.value)}
-              className="mb-4 px-4 py-2 bg-black/80 rounded-xl hover:bg-black/60 transition-all border-2 border-black"
+              className="mb-4 px-4 py-2 bg-white rounded-sm hover:bg-blue-100 transition-all border-2 border-white"
             />
             <button
               type="submit"
-              className="font-bold py-2 px-4 mt-2 bg-white rounded-xl 
-              hover:bg-gray-100 focus:outline-none focus:ring-2 text-black
+              className="font-bold py-2 px-4 mt-2 bg-white rounded-sm 
+              hover:bg-blue-100 focus:outline-none focus:ring-2 text-black
         focus:ring-gray-300 focus:ring-offset-2 transition-all shadow-lg"
             >
               {t("SignupButtonText")}

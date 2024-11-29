@@ -82,14 +82,14 @@ const Login = () => {
               className="w-48 flex mx-auto mt-[-2rem]"
             />
           )}
-          <div className="flex justify-center align-middle flex-col items-center text-white">
+          <div className="flex justify-center align-middle flex-col items-center text-black">
             <input
               type="text"
               required
               placeholder={t("LoginNamePlaceholder")}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="px-4 py-2 mb-4 bg-black/80 rounded-xl hover:bg-black/60 transition-all border-2 border-black"
+              className="px-4 py-2 mb-4 bg-white rounded-sm hover:bg-blue-100 transition-all border-2 border-white"
             />
             <input
               type="password"
@@ -97,12 +97,12 @@ const Login = () => {
               placeholder={t("LoginPasswordPlaceholder")}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="px-4 py-2 mb-4 bg-black/80 rounded-xl hover:bg-black/60 transition-all border-2 border-black"
+              className="px-4 py-2 mb-4 bg-white rounded-sm hover:bg-blue-100 transition-all border-2 border-white"
             />
             <button
               type="submit"
-              className="font-bold py-2 px-4 mt-2 bg-white rounded-xl
-              hover:bg-gray-100 focus:outline-none focus:ring-2 text-black
+              className="font-bold py-2 px-4 mt-2 bg-white rounded-sm
+              hover:bg-blue-100 focus:outline-none focus:ring-2 text-black
         focus:ring-gray-300 focus:ring-offset-2 transition-all shadow-lg"
             >
               {t("LoginButtonText")}
